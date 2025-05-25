@@ -4,8 +4,8 @@
 format: jb-book
 root: content/intro
 chapters:
-- file: content/nb0_dictsarrs
-- file: content/nb1_uprootIO
+- file: content/0_dictsarrs
+- file: content/1_uprootawk
 - file: content/nb2_ttrees
 - file: content/nb3_combinatronics
 - file: content/nb4_dimuons
