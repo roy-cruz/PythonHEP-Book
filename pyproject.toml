@@ -1,0 +1,18 @@
+[project]
+name = "pythonhep-book"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Roy Cruz",email = "roy.cruz@upr.edu"}
+]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "jupyter (>=1.1.1,<2.0.0)",
+    "jupyter-book (>=1.0.4.post1,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
