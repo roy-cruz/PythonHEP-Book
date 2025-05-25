@@ -1,0 +1,903 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CoDaS-HEP Columnar Data Analysis, hands-on project workbook &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/project-workbook';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="PURSUE Python for HEP: Vectors and Histograms" href="nb5_vecthist.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="nb0_dictsarrs.html">PURSUE Python for HEP: Dictionaries and Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nb1_uprootIO.html">PURSUE Python for HEP: Uproot I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nb2_ttrees.html">PURSUE Python for HEP: Looking At Real Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nb3_combinatronics.html">PURSUE Python for HEP: Combinatronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nb4_dimuons.html">PURSUE Python for HEP: Dimuons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nb5_vecthist.html">PURSUE Python for HEP: Vectors and Histograms</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">CoDaS-HEP Columnar Data Analysis, hands-on project workbook</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/project-workbook.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/project-workbook.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>CoDaS-HEP Columnar Data Analysis, hands-on project workbook</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-discover-the-higgs">Project: discover the Higgs!</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-setup">Data Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-4-leptons-of-the-same-flavor">Higgs mass peak: 4 leptons of the same flavor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#charge-based-collections">Charge-based collections</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-the-h-zz-22e-final-state">Higgs mass peak: the H → ZZ → 2μ2e final state</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-on-shell-z-in-the-22e-final-state">Select on-shell Z in the 2μ2e final state</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#select-on-shell-z-in-the-4-final-state">Select on-shell Z in the 4μ final state</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commentary">Commentary</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="codas-hep-columnar-data-analysis-hands-on-project-workbook">
+<h1>CoDaS-HEP Columnar Data Analysis, hands-on project workbook<a class="headerlink" href="#codas-hep-columnar-data-analysis-hands-on-project-workbook" title="Link to this heading">#</a></h1>
+<p>CREDIT: This notebook was developed by Jim Pivarski and Ioana Ifrim for the <a class="reference external" href="https://indico.cern.ch/event/1287965/timetable/#41-columnar-data-analysis">columnar data analysis</a> tutorial, presented at CoDaS-HEP on July 20, 2023. For full material, please visit please visit this <a class="reference external" href="https://github.com/ioanaif/columnar-data-analysis-codas-hep-2023">repository</a>.</p>
+<section id="project-discover-the-higgs">
+<h2>Project: discover the Higgs!<a class="headerlink" href="#project-discover-the-higgs" title="Link to this heading">#</a></h2>
+<p>Gather into groups of 2 or 3 to work on the problems posed in the rest of this notebook. Mentors will be available to answer questions and provide hints.</p>
+</section>
+<section id="data-setup">
+<h2>Data Setup<a class="headerlink" href="#data-setup" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">hist</span><span class="o">,</span><span class="w"> </span><span class="nn">vector</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">awkward</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ak</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uproot</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="n">vector</span><span class="o">.</span><span class="n">register_awkward</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlopen</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="n">URL</span> <span class="o">=</span> <span class="s2">&quot;https://cernbox.cern.ch/remote.php/dav/public-files/RG1Xg8y1evEqFMA/worbook-data.json&quot;</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
+<span class="n">data_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_data</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data_json</span><span class="p">))</span>
+<span class="n">events</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">({</span>
+    <span class="s2">&quot;PV&quot;</span><span class="p">:</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">({</span>
+        <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;PV_x&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;PV_y&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;PV_z&quot;</span><span class="p">],</span>
+    <span class="p">},</span> <span class="n">with_name</span><span class="o">=</span><span class="s2">&quot;Vector3D&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;muon&quot;</span><span class="p">:</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">({</span>
+        <span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;phi&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_phi&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;eta&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_eta&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;mass&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_mass&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;charge&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_charge&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;pfRelIso03&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_pfRelIso03_all&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;pfRelIso04&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_pfRelIso04_all&quot;</span><span class="p">],</span>
+    <span class="p">},</span> <span class="n">with_name</span><span class="o">=</span><span class="s2">&quot;Momentum4D&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;electron&quot;</span><span class="p">:</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">({</span>
+        <span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Electron_pt&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;phi&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Electron_phi&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;eta&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Electron_eta&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;mass&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Electron_mass&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;charge&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Electron_charge&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;pfRelIso03&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Electron_pfRelIso03_all&quot;</span><span class="p">],</span>
+    <span class="p">},</span> <span class="n">with_name</span><span class="o">=</span><span class="s2">&quot;Momentum4D&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;MET&quot;</span><span class="p">:</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">({</span>
+        <span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;MET_pt&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;phi&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;MET_phi&quot;</span><span class="p">],</span>
+    <span class="p">},</span> <span class="n">with_name</span><span class="o">=</span><span class="s2">&quot;Momentum2D&quot;</span><span class="p">),</span>
+<span class="p">},</span> <span class="n">depth_limit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="higgs-mass-peak-4-leptons-of-the-same-flavor">
+<h3>Higgs mass peak: 4 leptons of the same flavor<a class="headerlink" href="#higgs-mass-peak-4-leptons-of-the-same-flavor" title="Link to this heading">#</a></h3>
+<p>Instead of a Z mass peak, formed with 2 muons (or 2 electrons), draw a Higgs mass peak with 4 muons (or 4 electrons).</p>
+<p>No need for any cuts, yet. Focus only on the combinatorics.</p>
+<p><strong>Hint:</strong> look at the <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.combinations.html">ak.combinations</a> documentation to find the argument you need to change.</p>
+<p><strong>Hint:</strong> do it in small steps! That’s what an interactive environment is for.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your work goes here. Make new cells if you need to!</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Should look like:</p>
+<p><img alt="image.png" src="content/attachment:eb9d1a70-c990-49b5-9c3f-98afcaf4478c.png" /></p>
+</section>
+<section id="charge-based-collections">
+<h3>Charge-based collections<a class="headerlink" href="#charge-based-collections" title="Link to this heading">#</a></h3>
+<p>Because of the way that particles are measured and reconstructed, different particle types (electron versus muon) are in different collections, but different charges are not.</p>
+<p>But physically, charge is a quantum number just like flavor (particle type), and it can be convenient to put different charges into different collections.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muons_plus</span>  <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">muons</span><span class="p">[</span><span class="n">events</span><span class="o">.</span><span class="n">muons</span><span class="o">.</span><span class="n">charge</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">muons_minus</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">muons</span><span class="p">[</span><span class="n">events</span><span class="o">.</span><span class="n">muons</span><span class="o">.</span><span class="n">charge</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">electrons_plus</span>  <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">electrons</span><span class="p">[</span><span class="n">events</span><span class="o">.</span><span class="n">electrons</span><span class="o">.</span><span class="n">charge</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">electrons_minus</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">electrons</span><span class="p">[</span><span class="n">events</span><span class="o">.</span><span class="n">electrons</span><span class="o">.</span><span class="n">charge</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can make opposite-sign Z peaks without applying a cut to the combinations.</p>
+<p>Also, the <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.combinations.html">ak.combinations</a> problem (picking <span class="math notranslate nohighlight">\(n\)</span> items from a single collection) has become an <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.cartesian.html">ak.cartesian</a> problem (finding all pairs of items drawn from different collections).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">cartesian</span><span class="p">((</span><span class="n">muons_plus</span><span class="p">,</span> <span class="n">muons_minus</span><span class="p">)))</span>
+<span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span><span class="o">.</span><span class="n">Double</span><span class="p">()</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">((</span><span class="n">mu1</span> <span class="o">+</span> <span class="n">mu2</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span><span class="p">))</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>(This section doesn’t have any questions; it’s to set things up for the next section.)</p>
+</section>
+<section id="higgs-mass-peak-the-h-zz-22e-final-state">
+<h3>Higgs mass peak: the H → ZZ → 2μ2e final state<a class="headerlink" href="#higgs-mass-peak-the-h-zz-22e-final-state" title="Link to this heading">#</a></h3>
+<p>Now that you have <code class="docutils literal notranslate"><span class="pre">muons_plus</span></code>, <code class="docutils literal notranslate"><span class="pre">muons_minus</span></code>, <code class="docutils literal notranslate"><span class="pre">electrons_plus</span></code>, and <code class="docutils literal notranslate"><span class="pre">electrons_minus</span></code>, how would you make a Higgs mass peak for decays into 2 muons and 2 electrons?</p>
+<p><strong>Hint:</strong> <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.cartesian.html">ak.cartesian</a> can take more than two input collections.</p>
+<p><strong>Hint:</strong> still no need for cuts, thanks to the input collections already having the charge-cut applied.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your work goes here. Make new cells if you need to!</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Should look like:</p>
+<p><img alt="image.png" src="content/attachment:1b990144-5727-4197-a3e9-3723a853a454.png" /></p>
+</section>
+<section id="select-on-shell-z-in-the-22e-final-state">
+<h3>Select on-shell Z in the 2μ2e final state<a class="headerlink" href="#select-on-shell-z-in-the-22e-final-state" title="Link to this heading">#</a></h3>
+<p>In H → ZZ, one of the two Z bosons will usually be close to its “on-shell” mass of 91 GeV.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">particle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hepunits</span>
+
+<span class="n">ZMASS</span> <span class="o">=</span> <span class="n">particle</span><span class="o">.</span><span class="n">Particle</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;Z0&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mass</span> <span class="o">/</span> <span class="n">hepunits</span><span class="o">.</span><span class="n">GeV</span>
+<span class="n">ZMASS</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With a pair of muons,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">cartesian</span><span class="p">((</span><span class="n">muons_plus</span><span class="p">,</span> <span class="n">muons_minus</span><span class="p">)))</span>
+<span class="n">e1</span><span class="p">,</span> <span class="n">e2</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">cartesian</span><span class="p">((</span><span class="n">electrons_plus</span><span class="p">,</span> <span class="n">electrons_minus</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span><span class="o">.</span><span class="n">Double</span><span class="p">()</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">((</span><span class="n">mu1</span> <span class="o">+</span> <span class="n">mu2</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span><span class="p">))</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can construct a dimuon mass and compute the absolute distance between that and the on-shell mass of 91 GeV.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">abs</span><span class="p">((</span><span class="n">mu1</span> <span class="o">+</span> <span class="n">mu2</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span> <span class="o">-</span> <span class="n">ZMASS</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="n">mu1</span> <span class="o">+</span> <span class="n">mu2</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span> <span class="o">-</span> <span class="n">ZMASS</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>When this is close enough—let’s say 20 GeV—we can call a given dimuon pair to be “on shell.”</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">onshell_mumu</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="n">mu1</span> <span class="o">+</span> <span class="n">mu2</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span> <span class="o">-</span> <span class="n">ZMASS</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">20</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The effect of this is a sharp cut-off in the Z mass distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span><span class="o">.</span><span class="n">Double</span><span class="p">()</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">((</span><span class="n">mu1</span> <span class="o">+</span> <span class="n">mu2</span><span class="p">)[</span><span class="n">onshell_mumu</span><span class="p">]</span><span class="o">.</span><span class="n">mass</span><span class="p">))</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this section, make another 2μ2e mass peak in which <em>either</em> the 2μ is on-shell <em>or</em> the 2e is on-shell.</p>
+<p>(That’s an “inclusive or”: having both be close to 91 GeV is allowed.)</p>
+<p><strong>Hint:</strong> You’ll have to compute the Z mass constraint from muons and electrons in a 4-way Cartesian product, not just the 2 muons as in my example above.</p>
+<p><strong>Hint:</strong> To make logical combinations of cuts, use <code class="docutils literal notranslate"><span class="pre">|</span></code> for “or” and <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> for “and”. Also, put parentheses around any comparisons: e.g. <code class="docutils literal notranslate"><span class="pre">is_good</span> <span class="pre">&amp;</span> <span class="pre">((1</span> <span class="pre">&lt;</span> <span class="pre">x)</span> <span class="pre">|</span> <span class="pre">(x</span> <span class="pre">&lt;</span> <span class="pre">2))</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your work goes here. Make new cells if you need to!</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Should look like:</p>
+<p><img alt="image.png" src="content/attachment:c1dbdd8a-bb09-479b-97c7-3037ec7c0930.png" /></p>
+</section>
+</section>
+<section id="select-on-shell-z-in-the-4-final-state">
+<h2>Select on-shell Z in the 4μ final state<a class="headerlink" href="#select-on-shell-z-in-the-4-final-state" title="Link to this heading">#</a></h2>
+<p>Addressing Z boson properties in the 2μ2e case is easier than in the 4μ or 4e cases because with each (μ⁺, μ⁻, e⁺, e⁻) quad-tuple, there is only one way to identify each of the two Z bosons: Zᵤᵤ → μ⁺μ⁻ and Zₑₑ → e⁺e⁻.</p>
+<p>In a same-flavor final state, you have quad-tuples like (μ⁺₁, μ⁻₁, μ⁺₂, μ⁻₂).</p>
+<p>The possible decays are</p>
+<ul class="simple">
+<li><p>Z₁₁ → μ⁺₁, μ⁻₁ and Z₂₂ → μ⁺₂, μ⁻₂</p></li>
+<li><p>Z₁₂ → μ⁺₁, μ⁻₂ and Z₂₁ → μ⁺₂, μ⁻₁</p></li>
+</ul>
+<p>and within each of the two possibilities, only one of the Z bosons will be on-shell. (The Higgs doesn’t have enough mass for both to be on-shell.)</p>
+<p>To apply Z cuts in this case, we need to apply a combinatoric primitive to the result of a combinatoric primitive: nested combinatorics.</p>
+<p>First, from the <code class="docutils literal notranslate"><span class="pre">muons_plus</span></code> collection, we draw two distinct muons and call them <code class="docutils literal notranslate"><span class="pre">muplus1</span></code> and <code class="docutils literal notranslate"><span class="pre">muplus2</span></code>.</p>
+<p>Then, from the <code class="docutils literal notranslate"><span class="pre">muons_minus</span></code> collection, we draw two distinct muons and call them <code class="docutils literal notranslate"><span class="pre">muminus1</span></code> and <code class="docutils literal notranslate"><span class="pre">muminus2</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muplus1</span><span class="p">,</span> <span class="n">muplus2</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">muons_plus</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">muminus1</span><span class="p">,</span> <span class="n">muminus2</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">muons_minus</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we need to find pairwise Cartesian products of each opposite-charge combination:</p>
+<ul class="simple">
+<li><p>pairs of <code class="docutils literal notranslate"><span class="pre">muplus1</span> <span class="pre">⊗</span> <span class="pre">muminus1</span></code>, which can be labeled “11”</p></li>
+<li><p>pairs of <code class="docutils literal notranslate"><span class="pre">muplus1</span> <span class="pre">⊗</span> <span class="pre">muminus2</span></code>, which can be labeled “12”</p></li>
+<li><p>pairs of <code class="docutils literal notranslate"><span class="pre">muplus2</span> <span class="pre">⊗</span> <span class="pre">muminus1</span></code>, which can be labeled “21”</p></li>
+<li><p>pairs of <code class="docutils literal notranslate"><span class="pre">muplus2</span> <span class="pre">⊗</span> <span class="pre">muminus2</span></code>, which can be labeled “22”</p></li>
+</ul>
+<p>Note that every real combination will either be a “11” and “22” or it will be a “12” and “21”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muplus11</span><span class="p">,</span> <span class="n">muminus11</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">cartesian</span><span class="p">((</span><span class="n">muplus1</span><span class="p">,</span> <span class="n">muminus1</span><span class="p">)))</span>
+<span class="n">muplus12</span><span class="p">,</span> <span class="n">muminus12</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">cartesian</span><span class="p">((</span><span class="n">muplus1</span><span class="p">,</span> <span class="n">muminus2</span><span class="p">)))</span>
+<span class="n">muplus21</span><span class="p">,</span> <span class="n">muminus21</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">cartesian</span><span class="p">((</span><span class="n">muplus2</span><span class="p">,</span> <span class="n">muminus1</span><span class="p">)))</span>
+<span class="n">muplus22</span><span class="p">,</span> <span class="n">muminus22</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">cartesian</span><span class="p">((</span><span class="n">muplus2</span><span class="p">,</span> <span class="n">muminus2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>By construction each of these four collections has the same number of items in each event.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ak</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="n">muplus11</span><span class="p">),</span> <span class="n">ak</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="n">muplus12</span><span class="p">),</span> <span class="n">ak</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="n">muplus21</span><span class="p">),</span> <span class="n">ak</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="n">muplus22</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ak</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">ak</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="n">muplus11</span><span class="p">)</span> <span class="o">==</span> <span class="n">ak</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="n">muplus12</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="n">muplus21</span><span class="p">)</span> <span class="o">==</span> <span class="n">ak</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="n">muplus22</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="n">muplus11</span><span class="p">)</span> <span class="o">==</span> <span class="n">ak</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="n">muplus22</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can look at the four possible Z bosons individually.</p>
+<p>First the “11” and “22”:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span><span class="o">.</span><span class="n">Double</span><span class="p">()</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">((</span><span class="n">muplus11</span> <span class="o">+</span> <span class="n">muminus11</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span><span class="p">))</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span><span class="o">.</span><span class="n">Double</span><span class="p">()</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">((</span><span class="n">muplus22</span> <span class="o">+</span> <span class="n">muminus22</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span><span class="p">))</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now the “12” and “21”:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span><span class="o">.</span><span class="n">Double</span><span class="p">()</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">((</span><span class="n">muplus12</span> <span class="o">+</span> <span class="n">muminus12</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span><span class="p">))</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span><span class="o">.</span><span class="n">Double</span><span class="p">()</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">((</span><span class="n">muplus21</span> <span class="o">+</span> <span class="n">muminus21</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span><span class="p">))</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>They all have large backgrounds because they’re often not the right combination.</p>
+<p>Now we’ll make distances as we did in the previous section.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dist11</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="n">muplus11</span> <span class="o">+</span> <span class="n">muminus11</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span> <span class="o">-</span> <span class="n">ZMASS</span><span class="p">)</span>
+<span class="n">dist12</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="n">muplus12</span> <span class="o">+</span> <span class="n">muminus12</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span> <span class="o">-</span> <span class="n">ZMASS</span><span class="p">)</span>
+<span class="n">dist21</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="n">muplus21</span> <span class="o">+</span> <span class="n">muminus21</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span> <span class="o">-</span> <span class="n">ZMASS</span><span class="p">)</span>
+<span class="n">dist22</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="n">muplus22</span> <span class="o">+</span> <span class="n">muminus22</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span> <span class="o">-</span> <span class="n">ZMASS</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because we have so many possibilities, let’s define cuts like <code class="docutils literal notranslate"><span class="pre">onshell_11</span></code> to mean “11 is the closest to being on-shell.”</p>
+<p>That doesn’t mean it’s within 20 GeV of 91 GeV; it just means that it’s closer than the others.</p>
+<p>(The organization of the cuts is as follows: for each “11”, “12”, “21”, “22”, the relevant <code class="docutils literal notranslate"><span class="pre">dist</span></code> is to the left of <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> in all comparisons, and the three other <code class="docutils literal notranslate"><span class="pre">dist</span></code> values it’s being compared to are every other “11”, “12”, “21”, “22” combination.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">onshell_11</span> <span class="o">=</span> <span class="p">(</span><span class="n">dist11</span> <span class="o">&lt;</span> <span class="n">dist12</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dist11</span> <span class="o">&lt;</span> <span class="n">dist21</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dist11</span> <span class="o">&lt;</span> <span class="n">dist22</span><span class="p">)</span>
+<span class="n">onshell_12</span> <span class="o">=</span> <span class="p">(</span><span class="n">dist12</span> <span class="o">&lt;</span> <span class="n">dist11</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dist12</span> <span class="o">&lt;</span> <span class="n">dist21</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dist12</span> <span class="o">&lt;</span> <span class="n">dist22</span><span class="p">)</span>
+<span class="n">onshell_21</span> <span class="o">=</span> <span class="p">(</span><span class="n">dist21</span> <span class="o">&lt;</span> <span class="n">dist11</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dist21</span> <span class="o">&lt;</span> <span class="n">dist12</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dist21</span> <span class="o">&lt;</span> <span class="n">dist22</span><span class="p">)</span>
+<span class="n">onshell_22</span> <span class="o">=</span> <span class="p">(</span><span class="n">dist22</span> <span class="o">&lt;</span> <span class="n">dist11</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dist22</span> <span class="o">&lt;</span> <span class="n">dist12</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dist22</span> <span class="o">&lt;</span> <span class="n">dist21</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s look at a Z → 2μ mass plot of “11” in which “11” is the closest to being on-shell.</p>
+<p>Naturally, there’s a more pronounced peak.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span><span class="o">.</span><span class="n">Double</span><span class="p">()</span>
+
+<span class="n">h</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">((</span><span class="n">muplus11</span> <span class="o">+</span> <span class="n">muminus11</span><span class="p">)[</span><span class="n">onshell_11</span><span class="p">]</span><span class="o">.</span><span class="n">mass</span><span class="p">))</span>
+
+<span class="n">h</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s look at H → ZZ → 4μ for</p>
+<ul class="simple">
+<li><p>“11” and “22” if “11” is on-shell or “22” is on-shell</p></li>
+<li><p>“12” and “21” if “12” is on-shell or “21” is on-shell</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span><span class="o">.</span><span class="n">Double</span><span class="p">()</span>
+
+<span class="n">h</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">((</span><span class="n">muplus11</span> <span class="o">+</span> <span class="n">muminus11</span> <span class="o">+</span> <span class="n">muplus22</span> <span class="o">+</span> <span class="n">muminus22</span><span class="p">)[</span><span class="n">onshell_11</span> <span class="o">|</span> <span class="n">onshell_22</span><span class="p">]</span><span class="o">.</span><span class="n">mass</span><span class="p">))</span>
+<span class="n">h</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">((</span><span class="n">muplus12</span> <span class="o">+</span> <span class="n">muminus21</span> <span class="o">+</span> <span class="n">muplus12</span> <span class="o">+</span> <span class="n">muminus21</span><span class="p">)[</span><span class="n">onshell_12</span> <span class="o">|</span> <span class="n">onshell_21</span><span class="p">]</span><span class="o">.</span><span class="n">mass</span><span class="p">))</span>
+
+<span class="n">h</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To go further and require “11” to be within 20 GeV of 91 GeV when it’s already the closest to it would be a cut like the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">onshell_11</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dist11</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now re-make the above plot, but require whichever muon pair is closest to being on-shell to be within 20 GeV of it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your work goes here. Make new cells if you need to!</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Should look like:</p>
+<p><img alt="image.png" src="content/attachment:532c2bed-fb68-4d0f-872d-b35b43b1c51c.png" /></p>
+<p>(And compare that to the 4 muon mass without any Z mass constraints!)</p>
+<section id="commentary">
+<h3>Commentary<a class="headerlink" href="#commentary" title="Link to this heading">#</a></h3>
+<p>Dealing with combinatorics is complex, but by reducing the single μ collection into a μ⁺ collection and a μ⁻ collection, it becomes easier (and more memory efficient) to consider all combinations without having to apply charge constraints after the fact.</p>
+<p>Objects like <code class="docutils literal notranslate"><span class="pre">muplus11</span></code>, representing the μ⁺ in all “11” combinations, can be dealt with like scalars, like the single “11” μ⁺ inside a nested loop over combinations in imperative programming. (No array-length changing operations were performed after the two <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.combinations.html">ak.combinations</a>, <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.cartesian.html">ak.cartesian</a> steps in the last section.)</p>
+<p>But because the <code class="docutils literal notranslate"><span class="pre">muplus11</span></code> object represents the μ⁺ in <em>all</em> “11” combinations, we can plot distributions of what we’re computing at every step, rather than just once at the end of a script, which is great for debugging.</p>
+<p>That’s the value of array-oriented programming—the ability to look at <em>distributions</em> of each step while you develop the script—if you take advantage of that opportunity.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="nb5_vecthist.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">PURSUE Python for HEP: Vectors and Histograms</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-discover-the-higgs">Project: discover the Higgs!</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-setup">Data Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-4-leptons-of-the-same-flavor">Higgs mass peak: 4 leptons of the same flavor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#charge-based-collections">Charge-based collections</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-the-h-zz-22e-final-state">Higgs mass peak: the H → ZZ → 2μ2e final state</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-on-shell-z-in-the-22e-final-state">Select on-shell Z in the 2μ2e final state</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#select-on-shell-z-in-the-4-final-state">Select on-shell Z in the 4μ final state</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commentary">Commentary</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
