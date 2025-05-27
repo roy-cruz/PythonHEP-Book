@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PURSUE Python for HEP: Uproot I/O &#8212; My sample book</title>
+    <title>Uproot I/O and Awkard Arrays &#8212; My sample book</title>
   
   
   
@@ -57,11 +57,11 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'content/nb1_uprootIO';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/1_uprootawk';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="PURSUE Python for HEP: Looking At Real Data" href="nb2_ttrees.html" />
-    <link rel="prev" title="PURSUE Python for HEP: Dictionaries and Arrays" href="nb0_dictsarrs.html" />
+    <link rel="prev" title="Python Review" href="0_dictsarrs.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -153,8 +153,8 @@
       
     
     
-    <img src="../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
-    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="../_static/logo.jpg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
   
   
 </a></div>
@@ -180,8 +180,8 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="nb0_dictsarrs.html">PURSUE Python for HEP: Dictionaries and Arrays</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">PURSUE Python for HEP: Uproot I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_dictsarrs.html">Python Review</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Uproot I/O and Awkard Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nb2_ttrees.html">PURSUE Python for HEP: Looking At Real Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nb3_combinatronics.html">PURSUE Python for HEP: Combinatronics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nb4_dimuons.html">PURSUE Python for HEP: Dimuons</a></li>
@@ -241,7 +241,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+      <li><a href="https://github.com/roy-cruz/PythonHEP-Book" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -258,7 +258,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/nb1_uprootIO.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/roy-cruz/PythonHEP-Book/issues/new?title=Issue%20on%20page%20%2Fcontent/1_uprootawk.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -288,7 +288,7 @@
       
       
       
-      <li><a href="../_sources/content/nb1_uprootIO.ipynb" target="_blank"
+      <li><a href="../_sources/content/1_uprootawk.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -372,7 +372,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>PURSUE Python for HEP: Uproot I/O</h1>
+    <h1>Uproot I/O and Awkard Arrays</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -398,37 +398,32 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="pursue-python-for-hep-uproot-i-o">
-<h1>PURSUE Python for HEP: Uproot I/O<a class="headerlink" href="#pursue-python-for-hep-uproot-i-o" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="uproot-i-o-and-awkard-arrays">
+<h1>Uproot I/O and Awkard Arrays<a class="headerlink" href="#uproot-i-o-and-awkard-arrays" title="Link to this heading">#</a></h1>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>Scikit-HEP is a community-driven project that provides a comprehensive software ecosystem for high energy physics (HEP) analysis in Python. Its goal is to standardize and streamline data analysis workflows in HEP by offering a coherent collection of libraries that integrate with widely used tools such as Numpy, Pandas, Matplotlib, and Scikit-Learn. Among its major packages are:</p>
 <ul class="simple">
-<li><p>Scikit-HEP is a community-driven project. It is a software ecosystem designed to provide a coherent collection of Python libraries for HEP. It is aimed at standardizing data analysis in HEP.</p></li>
-<li><p>It integrates with other tools such as Numpy, Pandas, Matplotlib and Scikit-Learn.</p></li>
-<li><p>Among its major packages we have</p>
-<ul>
 <li><p>Uproot: For reading and writing ROOT files without requiring ROOT.</p></li>
-<li><p>Awkward Arrays: For the handling of jagged data structures</p></li>
-<li><p>Hist: For creating and manipulating histograms</p></li>
-<li><p>Vector: For manipulating and oprating on vectors of different kinds in a high-performance manner</p></li>
-<li><p>Boost-Histogram: For fast, multi-dimensional histogramming</p></li>
-<li><p>Particle: For handling particle physics data, including properties and PDG codes</p></li>
-<li><p>Iminuit: For fitting</p></li>
+<li><p>Awkward Arrays: For the handling of jagged data structures.</p></li>
+<li><p>Hist: For creating and manipulating histograms.</p></li>
+<li><p>Vector: For manipulating and operating on vectors of different kinds in a high-performance manner.</p></li>
+<li><p>Boost-Histogram: For fast, multi-dimensional histogramming.</p></li>
+<li><p>Particle: For handling particle physics data, including properties and PDG codes.</p></li>
+<li><p>Iminuit: For fitting.</p></li>
 </ul>
-</li>
-<li><p>In this tutorial, you will be introduced to the main components of the Scikit-HEP project. We will start with Uproot and build from there.</p></li>
-<li><p>For more information on the Scikit-HEP project and the tools it offers, please visit the official website <a class="reference external" href="https://scikit-hep.org/">Scikit-HEP Project Website</a></p></li>
-</ul>
+<p>In this tutorial, you will be introduced to the main components of the Scikit-HEP project, starting with Uproot and building from there. For more information on the Scikit-HEP project and the tools it offers, please visit the official <a class="reference external" href="https://scikit-hep.org/">Scikit-HEP Project Website</a>.</p>
 </section>
 <section id="root-files">
 <h2>ROOT Files<a class="headerlink" href="#root-files" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>ROOT files are a binary format designed for storage and analysis of large amounts of HEP data. It structured hierarchically like a small filesystem which can contain nested directories.</p></li>
-<li><p>It can contain a variety of data types such as TTrees and histograms.</p></li>
-</ul>
-<div style="text-align: center;">
-  <img src="./assets/roottree.png" alt="roottree" style="width: 400px"/>
-</div>
+<p>ROOT files are a specialized binary file format developed for the efficient storage and analysis of large-scale data in high energy physics (HEP). They are structured hierarchically, much like a miniature filesystem, allowing for the organization of data into nested directories and subdirectories. Within these directories, ROOT files can store a wide variety of data types, including TTrees (which are analogous to tables or dataframes and are optimized for fast access to large datasets), histograms, graphs, and even user-defined objects. This flexible structure makes ROOT files particularly well-suited for complex experimental data, where different types of information (e.g., such as event records, calibration constants, and analysis results) need to be stored together in a single, organized file.</p>
+<figure class="align-default" id="roottree">
+<a class="reference internal image-reference" href="../_images/roottree.png"><img alt="../_images/roottree.png" src="../_images/roottree.png" style="height: 150px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">ROOT file structure example.</span><a class="headerlink" href="#roottree" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <section id="uproot">
 <h2>Uproot<a class="headerlink" href="#uproot" title="Link to this heading">#</a></h2>
@@ -738,12 +733,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="nb0_dictsarrs.html"
+       href="0_dictsarrs.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">PURSUE Python for HEP: Dictionaries and Arrays</p>
+        <p class="prev-next-title">Python Review</p>
       </div>
     </a>
     <a class="right-next"
