@@ -6,8 +6,8 @@ root: content/intro
 chapters:
 - file: content/0_dictsarrs
 - file: content/1_uprootawk
-- file: content/nb2_ttrees
-- file: content/nb3_combinatronics
-- file: content/nb4_dimuons
-- file: content/nb5_vecthist
+- file: content/2_ttrees
+- file: content/3_combinatronics
+- file: content/4_dimuons
+- file: content/5_vecthist
 - file: content/project-workbook
