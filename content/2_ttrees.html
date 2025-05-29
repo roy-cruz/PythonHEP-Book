@@ -1,0 +1,978 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>PURSUE Python for HEP: Looking At Real Data &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/2_ttrees';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PURSUE Python for HEP: Combinatronics" href="3_combinatronics.html" />
+    <link rel="prev" title="Uproot I/O and Awkard Arrays" href="1_uprootawk.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="../_static/logo.jpg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Python for High Energy Physics
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="0_dictsarrs.html">Python Review</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_uprootawk.html">Uproot I/O and Awkard Arrays</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">PURSUE Python for HEP: Looking At Real Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_combinatronics.html">PURSUE Python for HEP: Combinatronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_dimuons.html">PURSUE Python for HEP: Dimuons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_vecthist.html">PURSUE Python for HEP: Vectors and Histograms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project-workbook.html">CoDaS-HEP Columnar Data Analysis, hands-on project workbook</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/roy-cruz/PythonHEP-Book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/roy-cruz/PythonHEP-Book/issues/new?title=Issue%20on%20page%20%2Fcontent/2_ttrees.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/2_ttrees.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>PURSUE Python for HEP: Looking At Real Data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-data">Loading the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-the-data">Exploring the Data</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="pursue-python-for-hep-looking-at-real-data">
+<h1>PURSUE Python for HEP: Looking At Real Data<a class="headerlink" href="#pursue-python-for-hep-looking-at-real-data" title="Link to this heading">#</a></h1>
+<section id="loading-the-data">
+<h2>Loading the Data<a class="headerlink" href="#loading-the-data" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Uproot can open not just local ROOT files, but it can also open remote files. We will be working with a file which is hosted by CERN’s Open Data Portal.</p></li>
+<li><p>Note: If you are unable to access the remote file, uncomment the next cell and run it to download an alternative, smaller file.</p></li>
+</ul>
+<p>Note (Plan B): If the following cell doesn’t work, try running the following command in the LPC cluster in your working directory where your notebook is located.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>xrdcp<span class="w"> </span>root://eospublic.cern.ch//eos/opendata/cms/derived-data/AOD2NanoAODOutreachTool/Run2012BC_DoubleMuParked_Muons.root
+</pre></div>
+</div>
+<p>Note (Plan C): As a last resort, run the following command to copy another, smaller file in your working directory</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://github.com/masonproffitt/uproot-tutorial-notebooks/raw/master/uproot-tutorial-file.root
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">uproot</span>
+
+<span class="n">file</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+    <span class="s2">&quot;root://eospublic.cern.ch//eos/opendata/cms/derived-data/AOD2NanoAODOutreachTool/Run2012BC_DoubleMuParked_Muons.root&quot;</span>
+    <span class="c1"># Plan B (Required xrdcp of file to local directory)</span>
+    <span class="c1"># &quot;./Run2012BC_DoubleMuParked_Muons.root&quot;</span>
+    <span class="c1"># Plan C (Required wget of file to local directory)</span>
+    <span class="c1"># &quot;./uproot-tutorial-file.root&quot;</span>
+<span class="p">)</span>
+<span class="n">file</span><span class="o">.</span><span class="n">classnames</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">OSError</span><span class="g g-Whitespace">                                   </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">uproot</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">file</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="s2">&quot;root://eospublic.cern.ch//eos/opendata/cms/derived-data/AOD2NanoAODOutreachTool/Run2012BC_DoubleMuParked_Muons.root&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="c1"># &quot;./uproot-tutorial-file.root&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">file</span><span class="o">.</span><span class="n">classnames</span><span class="p">()</span>
+
+<span class="nn">File ~/Local/PythonHEP/venv/lib/python3.13/site-packages/uproot/reading.py:142,</span> in <span class="ni">open</span><span class="nt">(path, object_cache, array_cache, custom_classes, decompression_executor, interpretation_executor, **options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">133</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">134</span>     <span class="nb">hasattr</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;seek&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">135</span> <span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">136</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">137</span>         <span class="s2">&quot;&#39;path&#39; must be a string, pathlib.Path, an object with &#39;read&#39; and &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">138</span>         <span class="s2">&quot;&#39;seek&#39; methods, or a length-1 dict of {file_path: object_path}, &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">139</span>         <span class="sa">f</span><span class="s2">&quot;not </span><span class="si">{</span><span class="n">path</span><span class="si">!r}</span><span class="s2">&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">140</span>     <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">142</span> <span class="n">file</span> <span class="o">=</span> <span class="n">ReadOnlyFile</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">143</span>     <span class="n">file_path</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">144</span>     <span class="n">object_cache</span><span class="o">=</span><span class="n">object_cache</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">145</span>     <span class="n">array_cache</span><span class="o">=</span><span class="n">array_cache</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">146</span>     <span class="n">custom_classes</span><span class="o">=</span><span class="n">custom_classes</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">147</span>     <span class="n">decompression_executor</span><span class="o">=</span><span class="n">decompression_executor</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">148</span>     <span class="n">interpretation_executor</span><span class="o">=</span><span class="n">interpretation_executor</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">149</span>     <span class="o">**</span><span class="n">options</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">150</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">152</span> <span class="k">if</span> <span class="n">object_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">153</span>     <span class="k">return</span> <span class="n">file</span><span class="o">.</span><span class="n">root_directory</span>
+
+<span class="nn">File ~/Local/PythonHEP/venv/lib/python3.13/site-packages/uproot/reading.py:573,</span> in <span class="ni">ReadOnlyFile.__init__</span><span class="nt">(self, file_path, object_cache, array_cache, custom_classes, decompression_executor, interpretation_executor, **options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">565</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s2">&quot;begin_chunk_size&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">_file_header_fields_big</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">566</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">567</span>         <span class="s2">&quot;begin_chunk_size=</span><span class="si">{}</span><span class="s2"> is not enough to read the TFile header (</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">568</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s2">&quot;begin_chunk_size&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">    </span><span class="mi">569</span>             <span class="n">_file_header_fields_big</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">570</span>         <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">571</span>     <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">573</span> <span class="bp">self</span><span class="o">.</span><span class="n">_begin_chunk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="o">.</span><span class="n">chunk</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">574</span>     <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s2">&quot;begin_chunk_size&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">575</span> <span class="p">)</span><span class="o">.</span><span class="n">detach_memmap</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">577</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_before_interpret</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">579</span> <span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">580</span>     <span class="n">magic</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">581</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_fVersion</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">595</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_begin_chunk</span><span class="p">,</span> <span class="n">_file_header_fields_small</span><span class="p">,</span> <span class="p">{}</span>
+<span class="g g-Whitespace">    </span><span class="mi">596</span> <span class="p">)</span>
+
+<span class="nn">File ~/Local/PythonHEP/venv/lib/python3.13/site-packages/uproot/source/fsspec.py:95,</span> in <span class="ni">FSSpecSource.chunk</span><span class="nt">(self, start, stop)</span>
+<span class="g g-Whitespace">     </span><span class="mi">93</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_requested_chunks</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="g g-Whitespace">     </span><span class="mi">94</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_requested_bytes</span> <span class="o">+=</span> <span class="n">stop</span> <span class="o">-</span> <span class="n">start</span>
+<span class="ne">---&gt; </span><span class="mi">95</span> <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fs</span><span class="o">.</span><span class="n">cat_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file_path</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">stop</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">96</span> <span class="n">future</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">TrivialFuture</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span> <span class="k">return</span> <span class="n">uproot</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">chunk</span><span class="o">.</span><span class="n">Chunk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">future</span><span class="p">)</span>
+
+<span class="nn">File ~/Local/PythonHEP/venv/lib/python3.13/site-packages/fsspec/asyn.py:118,</span> in <span class="ni">sync_wrapper.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">115</span> <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">116</span> <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">117</span>     <span class="bp">self</span> <span class="o">=</span> <span class="n">obj</span> <span class="ow">or</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="ne">--&gt; </span><span class="mi">118</span>     <span class="k">return</span> <span class="n">sync</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~/Local/PythonHEP/venv/lib/python3.13/site-packages/fsspec/asyn.py:103,</span> in <span class="ni">sync</span><span class="nt">(loop, func, timeout, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">101</span>     <span class="k">raise</span> <span class="n">FSTimeoutError</span> <span class="kn">from</span><span class="w"> </span><span class="nn">return_result</span>
+<span class="g g-Whitespace">    </span><span class="mi">102</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">return_result</span><span class="p">,</span> <span class="ne">BaseException</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">103</span>     <span class="k">raise</span> <span class="n">return_result</span>
+<span class="g g-Whitespace">    </span><span class="mi">104</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">105</span>     <span class="k">return</span> <span class="n">return_result</span>
+
+<span class="nn">File ~/Local/PythonHEP/venv/lib/python3.13/site-packages/fsspec/asyn.py:56,</span> in <span class="ni">_runner</span><span class="nt">(event, coro, result, timeout)</span>
+<span class="g g-Whitespace">     </span><span class="mi">54</span>     <span class="n">coro</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">coro</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">55</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">56</span>     <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">coro</span>
+<span class="g g-Whitespace">     </span><span class="mi">57</span> <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">58</span>     <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">ex</span>
+
+<span class="nn">File ~/Local/PythonHEP/venv/lib/python3.13/site-packages/fsspec_xrootd/xrootd.py:499,</span> in <span class="ni">XRootDFileSystem._cat_file</span><span class="nt">(self, path, start, end, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">496</span> <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_cat_file</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">497</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+<span class="g g-Whitespace">    </span><span class="mi">498</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">499</span>     <span class="n">_myFile</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readonly_filehandle_cache</span><span class="o">.</span><span class="n">_open</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">500</span>         <span class="bp">self</span><span class="o">.</span><span class="n">unstrip_protocol</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">501</span>         <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">502</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">503</span>     <span class="n">n_bytes</span> <span class="o">=</span> <span class="n">end</span>
+<span class="g g-Whitespace">    </span><span class="mi">504</span>     <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">File ~/Local/PythonHEP/venv/lib/python3.13/site-packages/fsspec_xrootd/xrootd.py:217,</span> in <span class="ni">ReadonlyFileHandleCache._open</span><span class="nt">(self, url, timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">211</span> <span class="n">status</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_async_wrap</span><span class="p">(</span><span class="n">handle</span><span class="o">.</span><span class="n">open</span><span class="p">)(</span>
+<span class="g g-Whitespace">    </span><span class="mi">212</span>     <span class="n">url</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">213</span>     <span class="n">OpenFlags</span><span class="o">.</span><span class="n">READ</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">214</span>     <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">215</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">216</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">status</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">217</span>     <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to open file: </span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">218</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">url</span><span class="p">]</span> <span class="o">=</span> <span class="n">_CacheItem</span><span class="p">(</span><span class="n">accessed</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">(),</span> <span class="n">handle</span><span class="o">=</span><span class="n">handle</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">219</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prune_cache</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+
+<span class="ne">OSError</span>: Failed to open file: [ERROR] Operation expired
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Accesing the tree as such just provides you a handle for it.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">]</span>
+<span class="n">tree</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>So we use the <code class="docutils literal notranslate"><span class="pre">.array()</span></code> method to access the actual data. However, the amount of data in this file is large, so we can add arguments to this method to limit the amount of entries we read, thus reducing load times.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="p">[</span><span class="s2">&quot;nMuon&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">entry_start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>To read more than just a single TBranch, we can also specify the particular branches we want to load in the <code class="docutils literal notranslate"><span class="pre">array()</span></code> method.</p></li>
+<li><p>When we do this, we get an an Awkward array which contains Awkward records</p>
+<ul>
+<li><p>Awkward array: Awkward equivalent of a Numpy array</p></li>
+<li><p>Awkward record: Awkward equivalent of a dictionary</p></li>
+</ul>
+</li>
+<li><p>The true power of awkward arrays becomes evident when it contains records. In this situation, you can pass a key value in between brakets to the <em>array</em>, and you will get back an array containing the value for that key for every record in that array.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muons_npt</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;nMuon&quot;</span><span class="p">,</span> <span class="s2">&quot;Muon_pt&quot;</span><span class="p">],</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">1000</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">muons_npt</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">muons_npt</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">muons_npt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muons_npt</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>This lets us completely shift how we approach problems which might otherwise be cumbersome to deal with while doing analysis with HEP data: by having data structures that accomodate jagged arrays so well, we can adopt a fully array-oriented approach to our programming, allowing us to take advantage of vectorized operations at every step, simplfying the paralellization of our algorithms and helping us avoid slow loops.</strong></p></li>
+</ul>
+<p><strong>Exercise</strong>: Print out the pt and charge of the muons from events 100 to 115. Do this in two different ways, but only using Awkward array slicing+filtering. Once solved, determine which one of these ways is faster by using the <code class="docutils literal notranslate"><span class="pre">%%timeit</span></code> magic. Why do you think one is faster than the other?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>it
+<span class="n">muons_npt</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">115</span><span class="p">][</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>it
+<span class="n">muons_npt</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">][</span><span class="mi">100</span><span class="p">:</span><span class="mi">115</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Given that the data we typically deal with is huge, unless neccesary, its good practice to specify the particular TBranches you want instead of doing something like <code class="docutils literal notranslate"><span class="pre">tree.arrays()</span></code> as this will load in everything, including things you might not be interested in.</p></li>
+<li><p>In addition to the way shown before, you can also get a subset of the branches by passing a <code class="docutils literal notranslate"><span class="pre">filter_name</span></code> argument to <code class="docutils literal notranslate"><span class="pre">tree.arrays()</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="s2">&quot;Muon_*&quot;</span><span class="p">,</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>If you don’t know what the name of the available branches are and you don’t want to print them all, you can search for them using the following syntax.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="s2">&quot;Muon_*&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>You can use the same type of filtering when calling <code class="docutils literal notranslate"><span class="pre">arrays()</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="s2">&quot;Muon_*&quot;</span><span class="p">,</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exploring-the-data">
+<h2>Exploring the Data<a class="headerlink" href="#exploring-the-data" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Loading in some data from all branches</span>
+<span class="n">muons</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">entry_stop</span><span class="o">=</span><span class="mi">1500</span><span class="p">)</span>
+<span class="n">muons</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Accoring to the above cell output, each events in this dataset have 6 total “attributes”:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">nMuon</span></code>: The number of muons in the event</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Muon_pt</span></code>: The <span class="math notranslate nohighlight">\(p_T\)</span> of each of those muons</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Muon_eta</span></code>: The <span class="math notranslate nohighlight">\(\eta\)</span> coordinate of each muon</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Muon_phi</span></code>: The <span class="math notranslate nohighlight">\(\phi\)</span> coordinate of each muon</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Muon_mass</span></code>: The mass of each muon</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Muon_charge</span></code>: The charge of each muon</p></li>
+</ul>
+</li>
+<li><p>Here, <code class="docutils literal notranslate"><span class="pre">Muon_phi</span></code> and <code class="docutils literal notranslate"><span class="pre">Muon_eta</span></code> refers to the corresponding spacial coordinates used in the CMS coordinate system.</p></li>
+</ul>
+<div style="text-align: center;">
+  <img src="./assets/axis3D_CMS.png" alt="roottree" style="width: 600px"/>
+</div>
+<ul class="simple">
+<li><p>We can take a quick look at a small sample of the data to get an idea of how it is structured in the following way. Note that this is not the usual way to do it is simply for pedagogical purposes.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">library</span><span class="o">=</span><span class="s2">&quot;pd&quot;</span><span class="p">,</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Knowing what is in this data, we can go ahead and start doing something with it. Let’s begin by constructing the masses. To do this, we can use a feature that exists for Awkward arrays that we saw in Numpy arrays: filtering through a mask array.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># If an event has 2 muons, its corresponding element in the mask is True. False otherwise.</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">muons</span><span class="p">[</span><span class="s2">&quot;nMuon&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="n">mask</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Only keeping di-muon events</span>
+<span class="n">dimuons</span> <span class="o">=</span> <span class="n">muons</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">dimuons</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Getting the eta, pt and phi of each of the muons in the dimuon events</span>
+<span class="n">pt0</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">][:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">pt1</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">][:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">eta0</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_eta&quot;</span><span class="p">][:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">eta1</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_eta&quot;</span><span class="p">][:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">phi0</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_phi&quot;</span><span class="p">][:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">phi1</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_phi&quot;</span><span class="p">][:,</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The mass is computed using the following equation</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+m_{\mu\mu} = \sqrt{(E_1 + E_2)^2 - \|\textbf{p}_1 + \textbf{p}_2 \| ^2} = \sqrt{(E_1+E_2)^2-((p_{1_x}+p_{2_x})^2+(p_{1_y}+p_{2_y})^2+(p_{1_z}+p_{2_z})^2)}|
+\]</div>
+<ul class="simple">
+<li><p>If we have that <span class="math notranslate nohighlight">\(E &gt;&gt; m\)</span>, then we can rewrite this as:
+$<span class="math notranslate nohighlight">\(
+m_{\mu\mu} = \sqrt{
+  2p_{T,0} p_{T,1} * \left(\cosh(\eta_0 - \eta_1) - \cos(\phi_0- \phi_1)\right)
+}
+\)</span>$</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pt0</span> <span class="o">*</span> <span class="n">pt1</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">eta0</span> <span class="o">-</span> <span class="n">eta1</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi0</span> <span class="o">-</span> <span class="n">phi1</span><span class="p">)))</span>
+<span class="n">mass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>We now use the Hist library, one of the many tools offered by Scikit-HEP. This library offers a user-friendly API for the Boost-histogram Python library which offers a highly efficient and flexible histogramming framework. Some example features are:</p>
+<ul>
+<li><p>Built on the C++ Boost.Histogram libary, so offers good performance</p></li>
+<li><p>Flexibility: supports multiple types of histograms</p></li>
+<li><p>N-dimensional histograms</p></li>
+<li><p>Axis customization</p></li>
+<li><p>Named axes</p></li>
+<li><p>Built-in support for plotting histograms using Matplotlib</p></li>
+<li><p>Integrates well with numpy and pandas</p></li>
+</ul>
+</li>
+<li><p>Making a histogram for the dimuon mass.</p></li>
+</ul>
+<p>(<a class="reference external" href="https://hist.readthedocs.io/en/latest/user-guide/axes.html">Hist docs</a>)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">hist</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mplhep</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hep</span>
+<span class="n">hep</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;CMS&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using Hist + Matplotlib</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="n">masshist</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span>
+    <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mass [GeV]&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mass&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">masshist</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">mass</span><span class="p">)</span>
+<span class="n">masshist</span><span class="o">.</span><span class="n">plot1d</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Dimuon mass [GeV]&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Mass [GeV]&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Dimuon Mass Distribution&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>In the above plot, you can clearly see a peak around 90 GeV. This corresponds to the mass of the Z bosons and shows that we have been able to succesfully reconstruct its mass! However, what we have done so far is rather rudimentary. Firslty, we got rid of a bunch of events which have more than 2 muons, but which might also have 2 (or more) muons which came from Z. Also, we didn’t make sure that quantities such as the charge were conserved. We just added the masses of the muons and hoped for the best. We will deal with these sorts of consdierations later on.</p></li>
+<li><p>Before we continue, lets pause and see the whole code for procuding out plot.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muons</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="s2">&quot;/nMuon|Muon_(phi|eta|pt)/&quot;</span><span class="p">,</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+<span class="n">dimuons_cut</span> <span class="o">=</span> <span class="n">muons</span><span class="p">[</span><span class="s2">&quot;nMuon&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="n">dimuons</span> <span class="o">=</span> <span class="n">muons</span><span class="p">[</span><span class="n">dimuons_cut</span><span class="p">]</span>
+
+<span class="n">pt0</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">][:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">pt1</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">][:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">eta0</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_eta&quot;</span><span class="p">][:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">eta1</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_eta&quot;</span><span class="p">][:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">phi0</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_phi&quot;</span><span class="p">][:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">phi1</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_phi&quot;</span><span class="p">][:,</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pt0</span> <span class="o">*</span> <span class="n">pt1</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">eta0</span> <span class="o">-</span> <span class="n">eta1</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi0</span> <span class="o">-</span> <span class="n">phi1</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="n">masshist</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span><span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mass [GeV]&quot;</span><span class="p">))</span>
+<span class="n">masshist</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">mass</span><span class="p">)</span>
+<span class="n">masshist</span><span class="o">.</span><span class="n">plot1d</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Dimuon Mass&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$m_{\mu\mu}$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>We will be focusing on Z and H for the most part. However, you might wonder what those extra peaks are from to the left of the Z peak. If we make the plot logarithmic, we’ll be able to appreciate what going on there…</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">hist_data</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span>
+    <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">0.1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mi">1000</span><span class="p">),</span> <span class="mi">100</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mass&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Invariant Mass [GeV]&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">hist_data</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">mass</span><span class="o">=</span><span class="n">mass</span><span class="p">)</span>
+<span class="n">hist_data</span><span class="o">.</span><span class="n">plot1d</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Invariant Mass [GeV]&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Dimuon Invariant Mass Distribution&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Compare the previous plot with this one…</p></li>
+</ul>
+<div style="text-align: center;">
+  <img src="./assets/dimuonspectrumplt.png" alt="roottree" style="width: 400px"/>
+</div></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="1_uprootawk.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uproot I/O and Awkard Arrays</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="3_combinatronics.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">PURSUE Python for HEP: Combinatronics</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-data">Loading the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-the-data">Exploring the Data</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'content/1_uprootawk';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="PURSUE Python for HEP: Looking At Real Data" href="nb2_ttrees.html" />
+    <link rel="next" title="PURSUE Python for HEP: Looking At Real Data" href="2_ttrees.html" />
     <link rel="prev" title="Python Review" href="0_dictsarrs.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -175,17 +175,17 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Welcome to your Jupyter Book
+                    Python for High Energy Physics
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="0_dictsarrs.html">Python Review</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Uproot I/O and Awkard Arrays</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nb2_ttrees.html">PURSUE Python for HEP: Looking At Real Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nb3_combinatronics.html">PURSUE Python for HEP: Combinatronics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nb4_dimuons.html">PURSUE Python for HEP: Dimuons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nb5_vecthist.html">PURSUE Python for HEP: Vectors and Histograms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_ttrees.html">PURSUE Python for HEP: Looking At Real Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_combinatronics.html">PURSUE Python for HEP: Combinatronics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_dimuons.html">PURSUE Python for HEP: Dimuons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_vecthist.html">PURSUE Python for HEP: Vectors and Histograms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project-workbook.html">CoDaS-HEP Columnar Data Analysis, hands-on project workbook</a></li>
 </ul>
 
@@ -385,8 +385,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#root-files">ROOT Files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uproot">Uproot</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opening-a-file">Opening a File</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opening-a-file">Opening a File</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-the-histogram">Reading the histogram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accesing-the-ttree">Accesing the TTree</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-to-a-root-file">Writing to a ROOT file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moving-on">Moving on</a></li>
 </ul>
             </nav>
         </div>
@@ -416,26 +421,30 @@ document.write(`
 </section>
 <section id="root-files">
 <h2>ROOT Files<a class="headerlink" href="#root-files" title="Link to this heading">#</a></h2>
-<p>ROOT files are a specialized binary file format developed for the efficient storage and analysis of large-scale data in high energy physics (HEP). They are structured hierarchically, much like a miniature filesystem, allowing for the organization of data into nested directories and subdirectories. Within these directories, ROOT files can store a wide variety of data types, including TTrees (which are analogous to tables or dataframes and are optimized for fast access to large datasets), histograms, graphs, and even user-defined objects. This flexible structure makes ROOT files particularly well-suited for complex experimental data, where different types of information (e.g., such as event records, calibration constants, and analysis results) need to be stored together in a single, organized file.</p>
+<p>ROOT files are a specialized binary file format developed for the efficient storage and analysis of large-scale data in high energy physics (HEP). They are structured hierarchically, much like a miniature filesystem, allowing for the organization of data into nested directories and subdirectories. Within these directories, ROOT files can store a wide variety of data types, including TTrees (which are analogous to tables or dataframes and are optimized for fast access to large datasets), histograms, graphs, and even user-defined objects. This flexible structure makes ROOT files particularly well-suited for complex experimental data, where different types of information (e.g., event records, calibration constants, and analysis results) need to be stored together in a single, organized file.</p>
+<p>An example ROOT file structure can be seen in <a class="reference internal" href="#roottree"><span class="std std-numref">Fig. 5</span></a>.</p>
 <figure class="align-default" id="roottree">
-<a class="reference internal image-reference" href="../_images/roottree.png"><img alt="../_images/roottree.png" src="../_images/roottree.png" style="height: 150px;" />
+<a class="reference internal image-reference" href="../_images/roottree.png"><img alt="../_images/roottree.png" src="../_images/roottree.png" style="height: 350px;" />
 </a>
 <figcaption>
 <p><span class="caption-number">Fig. 5 </span><span class="caption-text">ROOT file structure example.</span><a class="headerlink" href="#roottree" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
+<p>Let’s look a bit more closely at what each part of this example ROOT file are.</p>
+<ul class="simple">
+<li><p>TDirectorys are container objects that act like a directory in a filesystem. I can hold other objects such as histograms, TTrees, or even other TDirectories.</p></li>
+<li><p>TTrees are a high-performance data structure designed with storing large tabular datasets in ROOT files. It is conceptually similar to a table or a DataFrame, where each row (i.e., “entry” or “event”) represents a single data record, and each column (i.e., “branch”) holds a specific variable or array of variables.</p></li>
+<li><p>TBranches corresponds to a column in a TTree. Each contains data for a specific variable or set of variables. They can store simple types (like numbers) or complex objects (like arrays or custom classes).</p></li>
+<li><p>A TBasket is a chunck or block of data in a TBranch. They allow for more efficient access to parts of the data without having to load the entire branch into memory.</p></li>
+</ul>
 </section>
 <section id="uproot">
 <h2>Uproot<a class="headerlink" href="#uproot" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Uproot allows us to read and write ROOT files. It interacts with Numpy, Pandas as well as the packages offered by Scikit-HEP.</p></li>
-</ul>
+<p>Uproot allows us to read and write ROOT files. It interacts with Numpy, Pandas as well as the packages offered by Scikit-HEP. It was created to not have to use ROOT in order to quickly work with ROOT files, which can be slow to load.</p>
 </section>
 <section id="opening-a-file">
 <h2>Opening a File<a class="headerlink" href="#opening-a-file" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>To move forward, run the following cells to import <code class="docutils literal notranslate"><span class="pre">Uproot</span></code> and to download the sample data.</p></li>
-</ul>
+<p>To move forward, run the following cells to import <code class="docutils literal notranslate"><span class="pre">Uproot</span></code> and to download the sample data. This data is part of the <code class="docutils literal notranslate"><span class="pre">skhep_testdata</span></code> package which is another Scikit-HEP package which provides example files for testing and development.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this cell to import Uproot</span>
@@ -449,41 +458,30 @@ document.write(`
 </pre></div>
 </div>
 </div>
-</div>
-<ul class="simple">
-<li><p>This file object actually represents a directory and its contents are accesible through a dict-like interface.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ReadOnlyDirectory &#39;/&#39; at 0x00011e99d090&gt;
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>This file object actually represents a directory and its contents are accesible through a dict-like interface. Let’s see what keys is has available.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file</span><span class="o">.</span><span class="n">classnames</span><span class="p">()</span>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;ProcessID0;1&#39;, &lt;TProcessID (version 1) at 0x00011e99d310&gt;),
+ (&#39;htime;1&#39;, &lt;TH1F (version 2) at 0x00011e829e00&gt;),
+ (&#39;T;1&#39;, &lt;TTree &#39;T&#39; (1 branches) at 0x00011e99d450&gt;),
+ (&#39;hstat;1&#39;, &lt;TH1F (version 2) at 0x00011dfe3bf0&gt;)]
 </pre></div>
 </div>
 </div>
 </div>
+<p>We can see tha it contains multiple values, each of different type. The types seen here are:</p>
 <ul class="simple">
-<li><p>The types seen here are</p>
-<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">TProcessID</span></code>:</p>
 <ul>
 <li><p>ROOT class that keeps track of process IDs in ROOT files. It is used internally by ROOT to manage object and their references, ensuring that object have unique identifiers across files or sessions. Typically useful for analysis.</p></li>
@@ -502,10 +500,9 @@ document.write(`
 </ul>
 </li>
 </ul>
-</li>
-<li><p>We can read the histogram and use use useful methods provided by Uproot to convert the data to something like numpy.</p></li>
-<li><p>The reason there is a <code class="docutils literal notranslate"><span class="pre">;1</span></code> in front of</p></li>
-</ul>
+<p>We can easily read the histograms and utilize useful method provided by Uproot to convert the data to something more friendly, like NumPy or Awkawrd arrays (more on that later). For instance, if we want to do the former, we can access the histogram using the dict-like interphase you should already be familiar with:</p>
+<section id="reading-the-histogram">
+<h3>Reading the histogram<a class="headerlink" href="#reading-the-histogram" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;hstat;1&quot;</span><span class="p">]</span>
@@ -513,7 +510,47 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;TH1F (version 2) at 0x00011dfe3bf0&gt;
+</pre></div>
 </div>
+</div>
+</div>
+<p>That doesn’t look like a histogram! If we want to visualize it, we can use the <code class="docutils literal notranslate"><span class="pre">to_hist</span></code> method. The output of this method is an object of type <code class="docutils literal notranslate"><span class="pre">hist.Hist</span></code> which is visualized in a Jupyter Notebook in a simplified way if just displayed directly (we will discuss the <code class="docutils literal notranslate"><span class="pre">hist</span></code> library in more detail later!).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h</span><span class="o">.</span><span class="n">to_hist</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><html>
+<div style="display:flex; align-items:center;">
+<div style="width:290px;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -105 270 120">
+<line x1="-5" y1="0" x2="255" y2="0" style="fill:none;stroke-width:2;stroke:currentColor"/>
+<text text-anchor="middle" x="0" y="15" style="fill:currentColor;">
+0
+</text>
+<text text-anchor="middle" x="250" y="15" style="fill:currentColor;">
+1
+</text>
+<text text-anchor="middle" x="125.0" y="15" style="fill:currentColor;">
+xaxis
+</text>
+<polyline points="  0,0   0,-77.8 2.5,-77.8 2.5,-100   5,-100   5,-77.8 7.5,-77.8 7.5,-61.1  10,-61.1  10,-83.3 12.5,-83.3 12.5,-72.2  15,-72.2  15,-66.7 17.5,-66.7 17.5,-72.2  20,-72.2  20,-44.4 22.5,-44.4 22.5,-44.4  25,-44.4  25,-50 27.5,-50 27.5,-55.6  30,-55.6  30,-55.6 32.5,-55.6 32.5,-38.9  35,-38.9  35,-44.4 37.5,-44.4 37.5,-55.6  40,-55.6  40,-44.4 42.5,-44.4 42.5,-66.7  45,-66.7  45,-33.3 47.5,-33.3 47.5,-44.4  50,-44.4  50,-38.9 52.5,-38.9 52.5,-50  55,-50  55,-55.6 57.5,-55.6 57.5,-66.7  60,-66.7  60,-55.6 62.5,-55.6 62.5,-61.1  65,-61.1  65,-55.6 67.5,-55.6 67.5,-55.6  70,-55.6  70,-55.6 72.5,-55.6 72.5,-44.4  75,-44.4  75,-77.8 77.5,-77.8 77.5,-72.2  80,-72.2  80,-50 82.5,-50 82.5,-38.9  85,-38.9  85,-66.7 87.5,-66.7 87.5,-55.6  90,-55.6  90,-38.9 92.5,-38.9 92.5,-33.3  95,-33.3  95,-50 97.5,-50 97.5,-72.2 100,-72.2 100,-61.1 102.5,-61.1 102.5,-44.4 105,-44.4 105,-55.6 107.5,-55.6 107.5,-50 110,-50 110,-38.9 112.5,-38.9 112.5,-22.2 115,-22.2 115,-38.9 117.5,-38.9 117.5,-55.6 120,-55.6 120,-44.4 122.5,-44.4 122.5,-44.4 125,-44.4 125,-50 127.5,-50 127.5,-50 130,-50 130,-38.9 132.5,-38.9 132.5,-66.7 135,-66.7 135,-61.1 137.5,-61.1 137.5,-50 140,-50 140,-55.6 142.5,-55.6 142.5,-38.9 145,-38.9 145,-55.6 147.5,-55.6 147.5,-72.2 150,-72.2 150,-72.2 152.5,-72.2 152.5,-61.1 155,-61.1 155,-50 157.5,-50 157.5,-50 160,-50 160,-44.4 162.5,-44.4 162.5,-44.4 165,-44.4 165,-55.6 167.5,-55.6 167.5,-66.7 170,-66.7 170,-38.9 172.5,-38.9 172.5,-27.8 175,-27.8 175,-50 177.5,-50 177.5,-55.6 180,-55.6 180,-66.7 182.5,-66.7 182.5,-72.2 185,-72.2 185,-55.6 187.5,-55.6 187.5,-77.8 190,-77.8 190,-55.6 192.5,-55.6 192.5,-55.6 195,-55.6 195,-44.4 197.5,-44.4 197.5,-66.7 200,-66.7 200,-66.7 202.5,-66.7 202.5,-61.1 205,-61.1 205,-88.9 207.5,-88.9 207.5,-66.7 210,-66.7 210,-44.4 212.5,-44.4 212.5,-66.7 215,-66.7 215,-38.9 217.5,-38.9 217.5,-50 220,-50 220,-50 222.5,-50 222.5,-38.9 225,-38.9 225,-55.6 227.5,-55.6 227.5,-38.9 230,-38.9 230,-61.1 232.5,-61.1 232.5,-61.1 235,-61.1 235,-44.4 237.5,-44.4 237.5,-72.2 240,-72.2 240,-50 242.5,-50 242.5,-44.4 245,-44.4 245,-77.8 247.5,-77.8 247.5,-88.9 250,-88.9 250,0" style="fill:none; stroke:currentColor;"/>
+</svg>
+</div>
+<div style="flex=grow:1;">
+Regular(100, 0, 1, name='xaxis')<br/>
+<hr style="margin-top:.2em; margin-bottom:.2em;"/>
+Double() Σ=1000.0
+
+</div>
+</div>
+</html></div></div>
+</div>
+<p>If we want to properly plot this histogram and be able to modify how it looks, we can use the <code class="docutils literal notranslate"><span class="pre">plot</span></code> method of the <code class="docutils literal notranslate"><span class="pre">hist.Hist</span></code> object. This method uses <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> to make a nice looking plot which we can then modify in any way we wish.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using the hist Scikit-HEP library (more on that later...)</span>
@@ -521,7 +558,18 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/roycruz/Local/PythonHEP/venv/lib/python3.13/site-packages/mplhep/utils.py:577: UserWarning: Integer weights indicate poissonian data. Will calculate Garwood interval if ``scipy`` is installed. Otherwise errors will be set to ``sqrt(w2)``.
+  self.errors()
+</pre></div>
 </div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[StairsArtists(stairs=&lt;matplotlib.patches.StepPatch object at 0x11ecb4910&gt;, errorbar=&lt;ErrorbarContainer object of 3 artists&gt;, legend_artist=&lt;ErrorbarContainer object of 3 artists&gt;)]
+</pre></div>
+</div>
+<img alt="../_images/5a3f2a1a4dd81bc9d66d49ffb6853f3b4613b68d21077ac8f8a41f1658023fc7.png" src="../_images/5a3f2a1a4dd81bc9d66d49ffb6853f3b4613b68d21077ac8f8a41f1658023fc7.png" />
+</div>
+</div>
+<p>We can also convert the histogram to NumPy objects by using the <code class="docutils literal notranslate"><span class="pre">to_numpy</span></code> method. This method gives us a tuple. The first element is an array with the height of each bin, and the second element is an array with the edges of the histogram bins.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Converting the histogram object to numpy arrays</span>
@@ -530,7 +578,30 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([14., 18., 14., 11., 15., 13., 12., 13.,  8.,  8.,  9., 10., 10.,
+         7.,  8., 10.,  8., 12.,  6.,  8.,  7.,  9., 10., 12., 10., 11.,
+        10., 10., 10.,  8., 14., 13.,  9.,  7., 12., 10.,  7.,  6.,  9.,
+        13., 11.,  8., 10.,  9.,  7.,  4.,  7., 10.,  8.,  8.,  9.,  9.,
+         7., 12., 11.,  9., 10.,  7., 10., 13., 13., 11.,  9.,  9.,  8.,
+         8., 10., 12.,  7.,  5.,  9., 10., 12., 13., 10., 14., 10., 10.,
+         8., 12., 12., 11., 16., 12.,  8., 12.,  7.,  9.,  9.,  7., 10.,
+         7., 11., 11.,  8., 13.,  9.,  8., 14., 16.], dtype=float32),
+ array([0.  , 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1 ,
+        0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.2 , 0.21,
+        0.22, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28, 0.29, 0.3 , 0.31, 0.32,
+        0.33, 0.34, 0.35, 0.36, 0.37, 0.38, 0.39, 0.4 , 0.41, 0.42, 0.43,
+        0.44, 0.45, 0.46, 0.47, 0.48, 0.49, 0.5 , 0.51, 0.52, 0.53, 0.54,
+        0.55, 0.56, 0.57, 0.58, 0.59, 0.6 , 0.61, 0.62, 0.63, 0.64, 0.65,
+        0.66, 0.67, 0.68, 0.69, 0.7 , 0.71, 0.72, 0.73, 0.74, 0.75, 0.76,
+        0.77, 0.78, 0.79, 0.8 , 0.81, 0.82, 0.83, 0.84, 0.85, 0.86, 0.87,
+        0.88, 0.89, 0.9 , 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98,
+        0.99, 1.  ]))
+</pre></div>
 </div>
+</div>
+</div>
+<p>We can also use these arrays to make a plot of this histogram manually with matplotlib.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can then use plot this data using matplotlib</span>
@@ -542,28 +613,167 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/3a7a9c8ae35f8754bcbf993af4bce3e7bea08985eadd22f927fd034c704c5dc8.png" src="../_images/3a7a9c8ae35f8754bcbf993af4bce3e7bea08985eadd22f927fd034c704c5dc8.png" />
 </div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">hist.Hist</span></code> object also lets us directly accessthe values, errors and bin edges.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># `h` also has methods which lets us directly access the values, errors and bin edges</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">errors</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">edges</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[14. 18. 14. 11. 15. 13. 12. 13.  8.  8.  9. 10. 10.  7.  8. 10.  8. 12.
+  6.  8.  7.  9. 10. 12. 10. 11. 10. 10. 10.  8. 14. 13.  9.  7. 12. 10.
+  7.  6.  9. 13. 11.  8. 10.  9.  7.  4.  7. 10.  8.  8.  9.  9.  7. 12.
+ 11.  9. 10.  7. 10. 13. 13. 11.  9.  9.  8.  8. 10. 12.  7.  5.  9. 10.
+ 12. 13. 10. 14. 10. 10.  8. 12. 12. 11. 16. 12.  8. 12.  7.  9.  9.  7.
+ 10.  7. 11. 11.  8. 13.  9.  8. 14. 16.]
 </pre></div>
 </div>
 </div>
 </div>
-<ul class="simple">
-<li><p>We can also read the TTree and show a list of its contents as follows</p></li>
-</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">errors</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[3.74165739 4.24264069 3.74165739 3.31662479 3.87298335 3.60555128
+ 3.46410162 3.60555128 2.82842712 2.82842712 3.         3.16227766
+ 3.16227766 2.64575131 2.82842712 3.16227766 2.82842712 3.46410162
+ 2.44948974 2.82842712 2.64575131 3.         3.16227766 3.46410162
+ 3.16227766 3.31662479 3.16227766 3.16227766 3.16227766 2.82842712
+ 3.74165739 3.60555128 3.         2.64575131 3.46410162 3.16227766
+ 2.64575131 2.44948974 3.         3.60555128 3.31662479 2.82842712
+ 3.16227766 3.         2.64575131 2.         2.64575131 3.16227766
+ 2.82842712 2.82842712 3.         3.         2.64575131 3.46410162
+ 3.31662479 3.         3.16227766 2.64575131 3.16227766 3.60555128
+ 3.60555128 3.31662479 3.         3.         2.82842712 2.82842712
+ 3.16227766 3.46410162 2.64575131 2.23606798 3.         3.16227766
+ 3.46410162 3.60555128 3.16227766 3.74165739 3.16227766 3.16227766
+ 2.82842712 3.46410162 3.46410162 3.31662479 4.         3.46410162
+ 2.82842712 3.46410162 2.64575131 3.         3.         2.64575131
+ 3.16227766 2.64575131 3.31662479 3.31662479 2.82842712 3.60555128
+ 3.         2.82842712 3.74165739 4.        ]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">edges</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.   0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1  0.11 0.12 0.13
+ 0.14 0.15 0.16 0.17 0.18 0.19 0.2  0.21 0.22 0.23 0.24 0.25 0.26 0.27
+ 0.28 0.29 0.3  0.31 0.32 0.33 0.34 0.35 0.36 0.37 0.38 0.39 0.4  0.41
+ 0.42 0.43 0.44 0.45 0.46 0.47 0.48 0.49 0.5  0.51 0.52 0.53 0.54 0.55
+ 0.56 0.57 0.58 0.59 0.6  0.61 0.62 0.63 0.64 0.65 0.66 0.67 0.68 0.69
+ 0.7  0.71 0.72 0.73 0.74 0.75 0.76 0.77 0.78 0.79 0.8  0.81 0.82 0.83
+ 0.84 0.85 0.86 0.87 0.88 0.89 0.9  0.91 0.92 0.93 0.94 0.95 0.96 0.97
+ 0.98 0.99 1.  ]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="accesing-the-ttree">
+<h3>Accesing the TTree<a class="headerlink" href="#accesing-the-ttree" title="Link to this heading">#</a></h3>
+<p>The TTree present in this example file contains simulated collisions data. To get us started, lets read the data using the dict-like interphase.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;T;1&quot;</span><span class="p">]</span>
-<span class="n">t</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">t</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;TTree &#39;T&#39; (1 branches) at 0x00011e99d450&gt;
 </pre></div>
 </div>
 </div>
 </div>
+<p>As you can see, directly printing <code class="docutils literal notranslate"><span class="pre">t</span></code> is not very useful and does not gives us much insight into the actual contents of the TTree. In order to get a glimpse of the data, it conveniently has a method called <code class="docutils literal notranslate"><span class="pre">show</span></code> which gives you a list of the name of each branch, as well as the type of data that is contained in each branch.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>name                 | typename                 | interpretation                
+---------------------+--------------------------+-------------------------------
+event                | Event                    | AsGroup(&lt;TBranchElement &#39;ev...
+event/TObject        | (group of fUniqueID:u... | AsGroup(&lt;TBranchElement &#39;TO...
+event/TObject/fUn... | uint32_t                 | AsDtype(&#39;&gt;u4&#39;)
+event/TObject/fBits  | uint32_t                 | AsDtype(&#39;&gt;u4&#39;)
+event/fType[20]      | int8_t[20]               | AsDtype(&quot;(&#39;i1&#39;, (20,))&quot;)
+event/fEventName     | char*                    | AsStrings(length_bytes=&#39;4&#39;)
+event/fNtrack        | int32_t                  | AsDtype(&#39;&gt;i4&#39;)
+event/fNseg          | int32_t                  | AsDtype(&#39;&gt;i4&#39;)
+event/fNvertex       | uint32_t                 | AsDtype(&#39;&gt;u4&#39;)
+event/fFlag          | uint32_t                 | AsDtype(&#39;&gt;u4&#39;)
+event/fTemperature   | float                    | AsDtype(&#39;&gt;f4&#39;, &#39;float64&#39;)
+event/fMeasures[10]  | int32_t[10]              | AsDtype(&quot;(&#39;&gt;i4&#39;, (10,))&quot;)
+event/fMatrix[4][4]  | float[4][4]              | AsDtype(&quot;(&#39;&gt;f4&#39;, (4, 4))&quot;, ...
+event/fClosestDis... | unknown[]                | AsObjects(AsArray(False, Tr...
+event/fEvtHdr        | EventHeader              | AsGroup(&lt;TBranchElement &#39;fE...
+event/fEvtHdr/fEv... | int32_t                  | AsDtype(&#39;&gt;i4&#39;)
+event/fEvtHdr/fEv... | int32_t                  | AsDtype(&#39;&gt;i4&#39;)
+event/fEvtHdr/fEv... | int32_t                  | AsDtype(&#39;&gt;i4&#39;)
+event/fTracks        | TClonesArray*            | AsGroup(&lt;TBranchElement &#39;fT...
+event/fTracks/fTr... | uint32_t[]               | AsJagged(AsDtype(&#39;&gt;u4&#39;))
+event/fTracks/fTr... | uint32_t[]               | AsJagged(AsDtype(&#39;&gt;u4&#39;))
+event/fTracks/fTr... | float[]                  | AsJagged(AsDtype(&#39;&gt;f4&#39;))
+event/fTracks/fTr... | float[]                  | AsJagged(AsDtype(&#39;&gt;f4&#39;))
+event/fTracks/fTr... | float[]                  | AsJagged(AsDtype(&#39;&gt;f4&#39;))
+event/fTracks/fTr... | float[]                  | AsJagged(AsDtype(&#39;&gt;f4&#39;))
+event/fTracks/fTr... | Float16_t[]              | AsJagged(AsFloat16(0.0, 0.0...
+event/fTracks/fTr... | Float16_t[]              | AsJagged(AsFloat16(0.0, 0.0...
+event/fTracks/fTr... | Float16_t[]              | AsJagged(AsFloat16(0.0, 0.0...
+event/fTracks/fTr... | float[]                  | AsJagged(AsDtype(&#39;&gt;f4&#39;))
+event/fTracks/fTr... | Float16_t[]              | AsJagged(AsFloat16(0, 0, 12))
+event/fTracks/fTr... | Float16_t[]              | AsJagged(AsFloat16(0, 0, 12))
+event/fTracks/fTr... | Float16_t[]              | AsJagged(AsFloat16(0, 0, 12))
+event/fTracks/fTr... | Float16_t[]              | AsJagged(AsFloat16(0, 0, 12))
+event/fTracks/fTr... | Float16_t[]              | AsJagged(AsFloat16(0, 0, 12))
+event/fTracks/fTr... | Float16_t[]              | AsJagged(AsFloat16(0, 0, 12))
+event/fTracks/fTr... | Double32_t[]             | AsJagged(AsDouble32(-1.0, 1...
+event/fTracks/fTr... | Double32_t[][3]          | AsJagged(AsDouble32(-30.0, ...
+event/fTracks/fTr... | int32_t[]                | AsJagged(AsDtype(&#39;&gt;i4&#39;))
+event/fTracks/fTr... | int16_t[]                | AsJagged(AsDtype(&#39;&gt;i2&#39;))
+event/fTracks/fTr... | uint32_t[]               | AsJagged(AsDtype(&#39;&gt;u4&#39;))
+event/fTracks/fTr... | unknown[][]              | AsObjects(AsArray(True, Fal...
+event/fTracks/fTr... | uint32_t[]               | AsJagged(AsDtype(&#39;&gt;u4&#39;))
+event/fTracks/fTr... | uint32_t[]               | AsJagged(AsDtype(&#39;&gt;u4&#39;))
+event/fTracks/fTr... | uint32_t[]               | AsJagged(AsDtype(&#39;&gt;u4&#39;))
+event/fTracks/fTr... | uint32_t[]               | AsJagged(AsDtype(&#39;&gt;u4&#39;))
+event/fTracks/fTr... | uint8_t[][]              | AsObjects(AsArray(True, Fal...
+event/fTracks/fTr... | float[][3]               | AsJagged(AsDtype(&quot;(&#39;&gt;f4&#39;, (...
+event/fHighPt        | TRefArray*               | AsObjects(AsPointer(Model_T...
+event/fMuons         | TRefArray*               | AsObjects(AsPointer(Model_T...
+event/fLastTrack     | TRef                     | AsStridedObjects(Model_TRef)
+event/fWebHistogram  | TRef                     | AsStridedObjects(Model_TRef)
+event/fH             | TH1F                     | AsObjects(Model_TH1F)
+event/fTriggerBits   | TBits                    | AsGroup(&lt;TBranchElement &#39;fT...
+event/fTriggerBit... | (group of fTriggerBit... | AsGroup(&lt;TBranchElement &#39;fT...
+event/fTriggerBit... | uint32_t                 | AsDtype(&#39;&gt;u4&#39;)
+event/fTriggerBit... | uint32_t                 | AsDtype(&#39;&gt;u4&#39;)
+event/fTriggerBit... | uint32_t                 | AsDtype(&#39;&gt;u4&#39;)
+event/fTriggerBit... | uint32_t                 | AsDtype(&#39;&gt;u4&#39;)
+event/fTriggerBit... | uint8_t[]                | AsJagged(AsDtype(&#39;uint8&#39;), ...
+event/fIsValid       | bool                     | AsDtype(&#39;bool&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>If the large output from the <code class="docutils literal notranslate"><span class="pre">show</span></code> method is not to your liking, you can also use the <code class="docutils literal notranslate"><span class="pre">keys</span></code> method (more dict-like interphase!) to just get a list of the names of each field. Then, once you identify the one you are interested in, you can do the following to get more information on that particular branch.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Other ways to get the same information</span>
@@ -572,30 +782,131 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>int32_t
+AsDtype(&#39;&gt;i4&#39;)
+</pre></div>
 </div>
-<ul class="simple">
-<li><p>The most direct way to read the data from each of these branches of this TTree is to use the <code class="docutils literal notranslate"><span class="pre">array</span></code> method.</p></li>
-</ul>
+</div>
+</div>
+<p>Suppose you already know the exact branch you want to access, and you just want to work with the data. To do that, you need to use the <code class="docutils literal notranslate"><span class="pre">array</span></code> method for a particular branch, which will return a special type of array.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="p">[</span><span class="s2">&quot;event/fNtrack&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">array</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[600,
+ 604,
+ 603,
+ 594,
+ 595,
+ 598,
+ 595,
+ 600,
+ 592,
+ 598,
+ ...,
+ 603,
+ 605,
+ 609,
+ 599,
+ 587,
+ 598,
+ 600,
+ 596,
+ 593]
+------------------
+backend: cpu
+nbytes: 4.0 kB
+type: 1000 * int32</pre></div></div>
 </div>
-<ul class="simple">
-<li><p>Notice that this is not a regular Numpy array, but is in fact a new class of object. This is an Awkard array. We will see more of them later and see just how powerful they are, but for now, just know that these arrays solve the limitation we saw Numpy arrays have: Awkward arrays can store jagged data (i.e. it can contain sub-arrays of different sizes).</p></li>
-</ul>
+<p>Notice that this is not a regular Numpy array, but is in fact a new class of object. This is an <em>Awkard</em> array. We will see more of them later and see just how powerful they are, but for now just know that these arrays solve the limitation we saw Numpy arrays have: Awkward arrays can store jagged data (i.e. it can contain sub-arrays of different sizes).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s2">&quot;event/fNtrack&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">array</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>awkward.highlevel.Array
+</pre></div>
 </div>
-<ul class="simple">
-<li><p>The data we have at hand at the moment does not contain anything that would allow us to see this in action, but we can synthesize an example. We will see what other things Awkward arrays allow us to do later.</p></li>
-</ul>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;event&#39;,
+ &#39;event/TObject&#39;,
+ &#39;event/TObject/fUniqueID&#39;,
+ &#39;event/TObject/fBits&#39;,
+ &#39;event/fType[20]&#39;,
+ &#39;event/fEventName&#39;,
+ &#39;event/fNtrack&#39;,
+ &#39;event/fNseg&#39;,
+ &#39;event/fNvertex&#39;,
+ &#39;event/fFlag&#39;,
+ &#39;event/fTemperature&#39;,
+ &#39;event/fMeasures[10]&#39;,
+ &#39;event/fMatrix[4][4]&#39;,
+ &#39;event/fClosestDistance&#39;,
+ &#39;event/fEvtHdr&#39;,
+ &#39;event/fEvtHdr/fEvtHdr.fEvtNum&#39;,
+ &#39;event/fEvtHdr/fEvtHdr.fRun&#39;,
+ &#39;event/fEvtHdr/fEvtHdr.fDate&#39;,
+ &#39;event/fTracks&#39;,
+ &#39;event/fTracks/fTracks.fUniqueID&#39;,
+ &#39;event/fTracks/fTracks.fBits&#39;,
+ &#39;event/fTracks/fTracks.fPx&#39;,
+ &#39;event/fTracks/fTracks.fPy&#39;,
+ &#39;event/fTracks/fTracks.fPz&#39;,
+ &#39;event/fTracks/fTracks.fRandom&#39;,
+ &#39;event/fTracks/fTracks.fMass2&#39;,
+ &#39;event/fTracks/fTracks.fBx&#39;,
+ &#39;event/fTracks/fTracks.fBy&#39;,
+ &#39;event/fTracks/fTracks.fMeanCharge&#39;,
+ &#39;event/fTracks/fTracks.fXfirst&#39;,
+ &#39;event/fTracks/fTracks.fXlast&#39;,
+ &#39;event/fTracks/fTracks.fYfirst&#39;,
+ &#39;event/fTracks/fTracks.fYlast&#39;,
+ &#39;event/fTracks/fTracks.fZfirst&#39;,
+ &#39;event/fTracks/fTracks.fZlast&#39;,
+ &#39;event/fTracks/fTracks.fCharge&#39;,
+ &#39;event/fTracks/fTracks.fVertex[3]&#39;,
+ &#39;event/fTracks/fTracks.fNpoint&#39;,
+ &#39;event/fTracks/fTracks.fValid&#39;,
+ &#39;event/fTracks/fTracks.fNsp&#39;,
+ &#39;event/fTracks/fTracks.fPointValue&#39;,
+ &#39;event/fTracks/fTracks.fTriggerBits.fUniqueID&#39;,
+ &#39;event/fTracks/fTracks.fTriggerBits.fBits&#39;,
+ &#39;event/fTracks/fTracks.fTriggerBits.fNbits&#39;,
+ &#39;event/fTracks/fTracks.fTriggerBits.fNbytes&#39;,
+ &#39;event/fTracks/fTracks.fTriggerBits.fAllBits&#39;,
+ &#39;event/fTracks/fTracks.fTArray[3]&#39;,
+ &#39;event/fHighPt&#39;,
+ &#39;event/fMuons&#39;,
+ &#39;event/fLastTrack&#39;,
+ &#39;event/fWebHistogram&#39;,
+ &#39;event/fH&#39;,
+ &#39;event/fTriggerBits&#39;,
+ &#39;event/fTriggerBits/fTriggerBits.TObject&#39;,
+ &#39;event/fTriggerBits/fTriggerBits.TObject/fTriggerBits.fUniqueID&#39;,
+ &#39;event/fTriggerBits/fTriggerBits.TObject/fTriggerBits.fBits&#39;,
+ &#39;event/fTriggerBits/fTriggerBits.fNbits&#39;,
+ &#39;event/fTriggerBits/fTriggerBits.fNbytes&#39;,
+ &#39;event/fTriggerBits/fTriggerBits.fAllBits&#39;,
+ &#39;event/fIsValid&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The data we have at hand at the moment does not contain anything that would allow us to see this in action, but we can synthesize an example. We will see what other things Awkward arrays allow us to do later.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">awkward</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ak</span>
@@ -610,51 +921,187 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>awkward.highlevel.Array
+</pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[[1, 2],
+ [1, 2, 5, 8],
+ [],
+ [2, 5, 8, 2, 5, 8]]
+---------------------
+backend: cpu
+nbytes: 136 B
+type: 4 * var * int64</pre></div></div>
+</div>
+<p>One important thing to note is that not all data in a TTree can be loaded using into Awkard arrays. While Uproot and Awkward Arrays provide powerful tools for reading and manipulating data from ROOt TTrees in Python, there are certain limitations. For instance:</p>
+<ul class="simple">
+<li><p><strong>Unsupported Data Types:</strong> Some complex or custom ROOT data types (such as user-defined C++ classes, certain objects, or containers) may not be fully supported by Uproot or may not map cleanly into Awkward Arrays.</p></li>
+<li><p><strong>Unusual Branch Structures:</strong> TTrees with deeply nested or highly irregular structures, or those using features specific to ROOT (like pointers, references, or certain compression schemes), might not be accessible or interpretable outside of ROOT itself.</p></li>
+<li><p><strong>ROOT-Specific Functionality:</strong> Features like friend trees, certain types of object references, or on-the-fly C++ computations (via ROOT’s TTree::Draw or TTree::Scan) are not available in Uproot/Awkward.</p></li>
+</ul>
+<p>In such cases, you may need to use the ROOT framework directly (typically via PyROOT or C++) to access, interpret, or process the data. Uproot and Awkward Arrays are best suited for standard, well-structured TTrees with basic data types (numbers, arrays, simple objects) and are not a complete replacement for all ROOT functionalities.</p>
+</section>
 </section>
 <section id="writing-to-a-root-file">
 <h2>Writing to a ROOT file<a class="headerlink" href="#writing-to-a-root-file" title="Link to this heading">#</a></h2>
+<p>Uproot can not only read ROOT files, but it can also write them too! To do this, the file must be opened first. We can choose to create a completly new file to open or update an existing one. The funtions we can use to open a ROOT file to write to it are:</p>
 <ul class="simple">
-<li><p>In addition to reading, you can also write data with Uproot. To do this, the file must be opened first. We can choose to create a completly new file or update an existing one.</p></li>
-<li><p>The functions we can use to open a ROOT file to write to it are:</p>
-<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">uproot.recreate()</span></code>: Creates a new ROOT file with the given filename. If it already exists, it will be overwritten by an empty ROOT file of the same name. Returns a file handle that can be used to write data.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">uproot.update()</span></code>: Opens an existing ROOT file in “update” mode. It is used for modigying existing files without deleting them. Returns a file handle that can be used to write data.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uproot.update()</span></code>: Opens an existing ROOT file in “update” mode. It is used for modifying existing files without deleting them. Returns a file handle that can be used to write data.</p></li>
 </ul>
-</li>
-</ul>
+<p>For instance, we can create a file called <code class="docutils literal notranslate"><span class="pre">newrootfile.root</span></code> in the following way.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output1</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">recreate</span><span class="p">(</span><span class="s2">&quot;newrootfile.root&quot;</span><span class="p">)</span>
-<span class="n">output1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myfile</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">recreate</span><span class="p">(</span><span class="s2">&quot;newrootfile.root&quot;</span><span class="p">)</span>
+<span class="n">myfile</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;WritableDirectory &#39;/&#39; at 0x00011e82a780&gt;
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>ls<span class="w"> </span>newrootfile.root
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>newrootfile.root
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can then use the dict-like interphase of the <code class="docutils literal notranslate"><span class="pre">myfile</span></code> object to add things to the root file! For instance, we could store a string in the file.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adding a string</span>
-<span class="n">output1</span><span class="p">[</span><span class="s2">&quot;some_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Wow! I added this to a ROOT file myself!&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Keys: </span><span class="si">{</span><span class="n">output1</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">output1</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="n">myfile</span><span class="p">[</span><span class="s2">&quot;some_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Wow! I added this to a ROOT file myself!&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Keys: </span><span class="si">{</span><span class="n">myfile</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">myfile</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Keys: [&#39;some_str;1&#39;]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;TObjString &#39;Wow! I added this to a ROOT file myself!&#39; at 0x00011ee47d10&gt;]
 </pre></div>
 </div>
 </div>
 </div>
+<p>Side note: note that if we re-write the string in the ROOT file, it appears as if a new element is added with a new suffix <code class="docutils literal notranslate"><span class="pre">;2</span></code>. What’s actually happening is that the old value is conserved, but you can only access it by specifying that you want the value with key <code class="docutils literal notranslate"><span class="pre">some_str;1</span></code>. If you try to access the value with key <code class="docutils literal notranslate"><span class="pre">some_str</span></code>, it will default to the latest version of the value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myfile</span><span class="p">[</span><span class="s2">&quot;some_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;I added the same key again, but with a different value!&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Keys: </span><span class="si">{</span><span class="n">myfile</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">myfile</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Keys: [&#39;some_str;1&#39;, &#39;some_str;2&#39;]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;TObjString &#39;Wow! I added this to a ROOT file myself!&#39; at 0x00011ee47f50&gt;,
+ &lt;TObjString &#39;I added the same key again, but with a different value!&#39; at 0x00011ee68110&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myfile</span><span class="p">[</span><span class="s2">&quot;some_str;1&quot;</span><span class="p">]</span> <span class="c1"># Note the versioning</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;TObjString &#39;Wow! I added this to a ROOT file myself!&#39; at 0x00011ee68410&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myfile</span><span class="p">[</span><span class="s2">&quot;some_str;2&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;TObjString &#39;I added the same key again, but with a different value!&#39; at 0x00011ee685f0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myfile</span><span class="p">[</span><span class="s2">&quot;some_str&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;TObjString &#39;I added the same key again, but with a different value!&#39; at 0x00011ee68650&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s now add something a bit more interesting: a histogram! If we already have a <code class="docutils literal notranslate"><span class="pre">hist.Hist</span></code> object, or a histogram that is already in another ROOT file, we can copy that to our own ROOT file.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adding a histogram</span>
-<span class="n">output1</span><span class="p">[</span><span class="s2">&quot;some_histogram&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;hstat;1&quot;</span><span class="p">]</span>
-<span class="n">output1</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="n">myfile</span><span class="p">[</span><span class="s2">&quot;some_histogram&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;hstat;1&quot;</span><span class="p">]</span>
+<span class="n">myfile</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;TObjString &#39;Wow! I added this to a ROOT file myself!&#39; at 0x00011ed6b590&gt;,
+ &lt;TObjString &#39;I added the same key again, but with a different value!&#39; at 0x00011ed6b0b0&gt;,
+ &lt;TH1F (version 3) at 0x00011ed44050&gt;]
 </pre></div>
 </div>
 </div>
 </div>
+<p>Alternatively, we can pass a tuple where the first element is an array representing the height of the bins, and the second element corresponds to the edges of these same bins. Just as an illustrative example, lets make a normal distribution that we can generate with NumPy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adding a histogram withing a nested directory</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="n">output1</span><span class="p">[</span><span class="s2">&quot;nested_directory/another_histogram&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">hist_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">hist_data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([    78,   2035,  26527, 142092, 328250, 329578, 142890,  26409,
+          2069,     72]),
+ array([-4.74956297e+00, -3.79984746e+00, -2.85013196e+00, -1.90041645e+00,
+        -9.50700940e-01, -9.85432722e-04,  9.48730075e-01,  1.89844558e+00,
+         2.84816109e+00,  3.79787660e+00,  4.74759211e+00]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>This time, instead of placing the histogram at the root directory of the ROOT file, lets put it in a sub-directory. Doing this is as easy as giving the path and name of the histogram you are introducing into the ROOT file using the dict-like interphase.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adding a histogram within a nested directory</span>
+<span class="n">myfile</span><span class="p">[</span><span class="s2">&quot;nested_directory/another_histogram&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
@@ -663,42 +1110,78 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myfile</span><span class="p">[</span><span class="s2">&quot;nested_directory/another_histogram;1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_hist</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/roycruz/Local/PythonHEP/venv/lib/python3.13/site-packages/mplhep/utils.py:577: UserWarning: Integer weights indicate poissonian data. Will calculate Garwood interval if ``scipy`` is installed. Otherwise errors will be set to ``sqrt(w2)``.
+  self.errors()
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[StairsArtists(stairs=&lt;matplotlib.patches.StepPatch object at 0x11ed9ad50&gt;, errorbar=&lt;ErrorbarContainer object of 3 artists&gt;, legend_artist=&lt;ErrorbarContainer object of 3 artists&gt;)]
+</pre></div>
+</div>
+<img alt="../_images/0b967ebee1a8fc5a2f977da623fb6e30c1b514c9cd39e3bbd0ad3b3fbb1bc4e8.png" src="../_images/0b967ebee1a8fc5a2f977da623fb6e30c1b514c9cd39e3bbd0ad3b3fbb1bc4e8.png" />
+</div>
+</div>
+<p>Lets now add a TTree to our file. We can do this in two ways. First, we can use the dict-like interphase as we have been doing so far, and pass a dictionary as the value. Each key of the dictionary will correspond to the name of the TBranch that forms part of the TTree, and the value for each key corresponds to the actual data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># One way to add branches</span>
-<span class="n">output1</span><span class="p">[</span><span class="s2">&quot;tree1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+<span class="n">myfile</span><span class="p">[</span><span class="s2">&quot;tree1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">),</span>
     <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">),</span>
 <span class="p">}</span>
-<span class="n">output1</span><span class="p">[</span><span class="s2">&quot;tree1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you wanted to add more data to this TTree, you can use the <code class="docutils literal notranslate"><span class="pre">extend</span></code> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myfile</span><span class="p">[</span><span class="s2">&quot;tree1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
     <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">),</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)}</span>
 <span class="p">)</span>
-<span class="n">output1</span><span class="p">[</span><span class="s2">&quot;tree1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+<span class="n">myfile</span><span class="p">[</span><span class="s2">&quot;tree1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
     <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">),</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)}</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Another way to add data to instantiate a TTree and store data in it is by using the <code class="docutils literal notranslate"><span class="pre">mktree</span></code> (i.e., “make tree”) method. This way of adding data can be better, as it gives you more control over the type of each TBranch (notice that we didn’t specify what type of data we put in the tree when we used the previous method; we left the computer to figure that out by itself!).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Another way to add baskets</span>
-<span class="n">output1</span><span class="o">.</span><span class="n">mktree</span><span class="p">(</span><span class="s2">&quot;tree2&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">})</span>
+<span class="n">myfile</span><span class="o">.</span><span class="n">mktree</span><span class="p">(</span><span class="s2">&quot;tree2&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">})</span>
 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
-    <span class="n">output1</span><span class="p">[</span><span class="s2">&quot;tree2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+    <span class="n">myfile</span><span class="p">[</span><span class="s2">&quot;tree2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
         <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">),</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)}</span>
     <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Once we have stored data in our TTree, we can check the number of baskets into which the data is divided.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Each call to extend create a new basket in the `tree2` branch</span>
-<span class="n">output1</span><span class="p">[</span><span class="s2">&quot;tree2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">num_baskets</span>
+<span class="n">myfile</span><span class="p">[</span><span class="s2">&quot;tree2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">num_baskets</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20
 </pre></div>
 </div>
 </div>
 </div>
 <p>The list of data types that can be written to files can be found here: <a class="reference external" href="https://uproot.readthedocs.io/en/latest/basic.html#writing-objects-to-a-file">link</a></p>
+</section>
+<section id="moving-on">
+<h2>Moving on<a class="headerlink" href="#moving-on" title="Link to this heading">#</a></h2>
+<p>We now have some of the basic knowledge required to work with ROOT files using Uproot. We will now go on to apply what we have learned to explore and analyze some simulated data!</p>
 </section>
 </section>
 
@@ -742,7 +1225,7 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="nb2_ttrees.html"
+       href="2_ttrees.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
@@ -769,8 +1252,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#root-files">ROOT Files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uproot">Uproot</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opening-a-file">Opening a File</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opening-a-file">Opening a File</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-the-histogram">Reading the histogram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accesing-the-ttree">Accesing the TTree</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-to-a-root-file">Writing to a ROOT file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moving-on">Moving on</a></li>
 </ul>
   </nav></div>
 
