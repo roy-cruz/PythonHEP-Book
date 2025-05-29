@@ -1,11 +1,6 @@
-# Welcome to your Jupyter Book
+# Python for High Energy Physics
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
-
-Check out the content pages bundled with this sample book to see more.
+This Jupyter Book contains the course material for the "Python for High Energy Physics" (HEP) workshop, which will be offered as part of PURSUE 2025. The content is designed for students who have some familiarity with the basics of pure Python (i.e., standard Python without external libraries), but it does not require formal programming experience. The primary goal of this material and the associated workshop is to provide a solid foundation for students to begin working with widely used data analysis libraries such as NumPy and Matplotlib, as well as essential tools from the Scikit-HEP ecosystem. By the end of the workshop, students will be equipped to start exploring and analyzing HEP data.
 
 ```{tableofcontents}
 ```
