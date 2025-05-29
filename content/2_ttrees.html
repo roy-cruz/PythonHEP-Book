@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PURSUE Python for HEP: Looking At Real Data &#8212; My sample book</title>
+    <title>Awkward Arrays for Simulated Data &#8212; My sample book</title>
   
   
   
@@ -63,7 +63,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="PURSUE Python for HEP: Combinatronics" href="3_combinatronics.html" />
-    <link rel="prev" title="Uproot I/O and Awkard Arrays" href="1_uprootawk.html" />
+    <link rel="prev" title="Uproot I/O" href="1_uprootawk.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -183,8 +183,8 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="0_dictsarrs.html">Python Review</a></li>
-<li class="toctree-l1"><a class="reference internal" href="1_uprootawk.html">Uproot I/O and Awkard Arrays</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">PURSUE Python for HEP: Looking At Real Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_uprootawk.html">Uproot I/O</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Awkward Arrays for Simulated Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_combinatronics.html">PURSUE Python for HEP: Combinatronics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_dimuons.html">PURSUE Python for HEP: Dimuons</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5_vecthist.html">PURSUE Python for HEP: Vectors and Histograms</a></li>
@@ -374,7 +374,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>PURSUE Python for HEP: Looking At Real Data</h1>
+    <h1>Awkward Arrays for Simulated Data</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -385,7 +385,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-data">Loading the Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-the-data">Exploring the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reconstructing-the-mass">Reconstructing the mass</a></li>
 </ul>
             </nav>
         </div>
@@ -397,32 +397,32 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="pursue-python-for-hep-looking-at-real-data">
-<h1>PURSUE Python for HEP: Looking At Real Data<a class="headerlink" href="#pursue-python-for-hep-looking-at-real-data" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="awkward-arrays-for-simulated-data">
+<h1>Awkward Arrays for Simulated Data<a class="headerlink" href="#awkward-arrays-for-simulated-data" title="Link to this heading">#</a></h1>
 <section id="loading-the-data">
 <h2>Loading the Data<a class="headerlink" href="#loading-the-data" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Uproot can open not just local ROOT files, but it can also open remote files. We will be working with a file which is hosted by CERN’s Open Data Portal.</p></li>
 <li><p>Note: If you are unable to access the remote file, uncomment the next cell and run it to download an alternative, smaller file.</p></li>
 </ul>
-<p>Note (Plan B): If the following cell doesn’t work, try running the following command in the LPC cluster in your working directory where your notebook is located.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>xrdcp<span class="w"> </span>root://eospublic.cern.ch//eos/opendata/cms/derived-data/AOD2NanoAODOutreachTool/Run2012BC_DoubleMuParked_Muons.root
+<p>Run the following command to copy another, smaller file in your working directory</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://cernbox.cern.ch/remote.php/dav/public-files/d0FqsjN68SsBlul/uproot-tutorial-file.root
 </pre></div>
 </div>
-<p>Note (Plan C): As a last resort, run the following command to copy another, smaller file in your working directory</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://github.com/masonproffitt/uproot-tutorial-notebooks/raw/master/uproot-tutorial-file.root
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uncomment the following line and run to download the data file directly from the notebook</span>
+<span class="c1"># !wget wget https://cernbox.cern.ch/remote.php/dav/public-files/d0FqsjN68SsBlul/uproot-tutorial-file.root</span>
 </pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">uproot</span>
 
 <span class="n">file</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
-    <span class="c1"># &quot;root://eospublic.cern.ch//eos/opendata/cms/derived-data/AOD2NanoAODOutreachTool/Run2012BC_DoubleMuParked_Muons.root&quot;</span>
-    <span class="c1"># Plan B (Required xrdcp of file to local directory)</span>
-    <span class="c1"># &quot;./Run2012BC_DoubleMuParked_Muons.root&quot;</span>
-    <span class="c1"># Plan C (Required wget of file to local directory)</span>
-    <span class="s2">&quot;../../uproot-tutorial-file.root&quot;</span>
+    <span class="s2">&quot;./uproot-tutorial-file.root&quot;</span>
 <span class="p">)</span>
 <span class="n">file</span><span class="o">.</span><span class="n">classnames</span><span class="p">()</span>
 </pre></div>
@@ -435,7 +435,7 @@ document.write(`
 </div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">uproot.open</span></code> function provides a handle to the ROOT file, but does not actually read any data into memory at this stage. Instead, it allows you to explore the file structure and access its contents on demand. This approach is efficient because it avoids loading large datasets until you specifically request them. For example, after opening the file, you can inspect the available objects (such as TTrees or histograms) and only read the branches or entries you need for your analysis. This lazy-loading behavior is especially useful when working with large high-energy physics datasets.</p>
-<p>So, now that we have a hande on the ROOT file we want to use, let’s use that to now get a handle on the “Events” TTree.</p>
+<p>Now that we have a hande on the ROOT file we want to use, let’s use that to now get a handle on the “Events” TTree.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">]</span>
@@ -444,12 +444,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;TTree &#39;Events&#39; (6 branches) at 0x00010a10b380&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;TTree &#39;Events&#39; (6 branches) at 0x000131f9d6d0&gt;
 </pre></div>
 </div>
 </div>
 </div>
-<p>We still have not read any data! Before doing that, its important that we see what is inside the TTree using the <code class="docutils literal notranslate"><span class="pre">show</span></code> method we learned about in the last chapter.</p>
+<p>Keep in mind that we still have not read any data. Before doing that, its important that we see what is inside the TTree using the <code class="docutils literal notranslate"><span class="pre">show</span></code> method we learned about in the last chapter.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -469,7 +469,6 @@ Muon_charge          | int32_t[]                | AsJagged(AsDtype(&#39;&gt;i4&#
 </div>
 </div>
 </div>
-<p>We can also see the number of events.</p>
 <p>We can see that it contains some physics observables. Getting some understanding of this data is important for the next steps we will be taking, so lets go through each observable:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">nMuon</span></code>: The number of muons in the event</p></li>
@@ -487,112 +486,350 @@ Muon_charge          | int32_t[]                | AsJagged(AsDtype(&#39;&gt;i4&#
 <p><span class="caption-number">Fig. 6 </span><span class="caption-text">Coordinate system in CMS</span><a class="headerlink" href="#cmsaxis" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>With this in mind, lets</p>
-<ul class="simple">
-<li><p>So we use the <code class="docutils literal notranslate"><span class="pre">.array()</span></code> method to access the actual data. However, the amount of data in this file is large, so we can add arguments to this method to limit the amount of entries we read, thus reducing load times.</p></li>
-</ul>
+<p>With this in mind, lets go ahead and finally load some data. We can do this by specifying the TBranch we want through the dict-like interphase of <code class="docutils literal notranslate"><span class="pre">tree</span></code> and then using the <code class="docutils literal notranslate"><span class="pre">array</span></code> or <code class="docutils literal notranslate"><span class="pre">arrays</span></code> method that are provided. For now, however, lets only load some of the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="p">[</span><span class="s2">&quot;nMuon&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">entry_start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Only loading 100 events</span>
+<span class="n">tree</span><span class="p">[</span><span class="s2">&quot;nMuon&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">entry_start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[2,
+ 2,
+ 1,
+ 4,
+ 4,
+ 3,
+ 2,
+ 2,
+ 2,
+ 2,
+ ...,
+ 3,
+ 2,
+ 2,
+ 3,
+ 4,
+ 1,
+ 2,
+ 0,
+ 2]
+------------------
+backend: cpu
+nbytes: 400 B
+type: 100 * uint32</pre></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Alternative: (Not neccessarily the preferred way if you&#39;re only interested in loading a single branch)</span>
+<span class="n">tree</span><span class="p">[</span><span class="s2">&quot;nMuon&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">arrays</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[{nMuon: 2},
+ {nMuon: 2},
+ {nMuon: 1},
+ {nMuon: 4},
+ {nMuon: 4},
+ {nMuon: 3},
+ {nMuon: 2},
+ {nMuon: 2},
+ {nMuon: 2},
+ {nMuon: 2},
+ ...,
+ {nMuon: 3},
+ {nMuon: 2},
+ {nMuon: 1},
+ {nMuon: 0},
+ {nMuon: 3},
+ {nMuon: 2},
+ {nMuon: 3},
+ {nMuon: 2},
+ {nMuon: 3}]
+------------------------------------
+backend: cpu
+nbytes: 400.0 kB
+type: 100000 * {
+    nMuon: uint32
+}</pre></div></div>
+</div>
+<p>If we wanted to load more than a single branch, we could use the <code class="docutils literal notranslate"><span class="pre">arrays</span></code> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event_data</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">([</span><span class="s2">&quot;nMuon&quot;</span><span class="p">,</span> <span class="s2">&quot;Muon_pt&quot;</span><span class="p">],</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<ul class="simple">
-<li><p>To read more than just a single TBranch, we can also specify the particular branches we want to load in the <code class="docutils literal notranslate"><span class="pre">array()</span></code> method.</p></li>
-<li><p>When we do this, we get an an Awkward array which contains Awkward records</p>
-<ul>
-<li><p>Awkward array: Awkward equivalent of a Numpy array</p></li>
-<li><p>Awkward record: Awkward equivalent of a dictionary</p></li>
-</ul>
-</li>
-<li><p>The true power of awkward arrays becomes evident when it contains records. In this situation, you can pass a key value in between brakets to the <em>array</em>, and you will get back an array containing the value for that key for every record in that array.</p></li>
-</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muons_npt</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span>
-    <span class="p">[</span><span class="s2">&quot;nMuon&quot;</span><span class="p">,</span> <span class="s2">&quot;Muon_pt&quot;</span><span class="p">],</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">1000</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">muons_npt</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">muons_npt</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-<span class="n">muons_npt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">event_data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">event_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;awkward.highlevel.Array&#39;&gt;
+&lt;class &#39;awkward.highlevel.Record&#39;&gt;
 </pre></div>
 </div>
 </div>
 </div>
+<p>Note that what we obtain is rather special and it sort of looks like dictionaries inside an array. The object we are working with is actually an Awkward array, the Awkward library’s equivalent of a NumPy array, which contains Awkard records, the equivalent to a dictionary. This might seem trivial, but this data structure is actually quite powerful. For instance, suppose you want to only get the <code class="docutils literal notranslate"><span class="pre">Muon_pt</span></code> of this loaded data. To do that, you pass a key value in between brakets to the Awkward array, and you will get in return an Awkward array containing the value for that key for every record/event in that array.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muons_npt</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event_data</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[[10.8, 15.7],
+ [10.5, 16.3],
+ [3.28],
+ [11.4, 17.6, 9.62, 3.5],
+ [3.28, 3.64, 32.9, 23.7],
+ [3.57, 4.57, 4.37],
+ [57.6, 53],
+ [11.3, 23.9],
+ [10.2, 14.2],
+ [11.5, 3.47],
+ ...,
+ [6.24, 14.4, 6.71],
+ [14.9, 9.29],
+ [32.3, 8.69],
+ [22.2, 8.6, 6.3],
+ [22.6, 11, 3.21, 3.96],
+ [16.2],
+ [22.4, 11.6],
+ [],
+ [24.1, 13.1]]
+--------------------------
+backend: cpu
+nbytes: 1.7 kB
+type: 100 * var * float32</pre></div></div>
 </div>
-<ul class="simple">
-<li><p><strong>This lets us completely shift how we approach problems which might otherwise be cumbersome to deal with while doing analysis with HEP data: by having data structures that accomodate jagged arrays so well, we can adopt a fully array-oriented approach to our programming, allowing us to take advantage of vectorized operations at every step, simplfying the paralellization of our algorithms and helping us avoid slow loops.</strong></p></li>
-</ul>
-<p><strong>Exercise</strong>: Print out the pt and charge of the muons from events 100 to 115. Do this in two different ways, but only using Awkward array slicing+filtering. Once solved, determine which one of these ways is faster by using the <code class="docutils literal notranslate"><span class="pre">%%timeit</span></code> magic. Why do you think one is faster than the other?</p>
+<p>Note that we are now dealing with a jagged array. We can work with it similarly to how we work with NumPy arrays.*</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>it
-<span class="n">muons_npt</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">115</span><span class="p">][</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event_data</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[[10.8, 15.7],
+ [10.5, 16.3],
+ [3.28],
+ [11.4, 17.6, 9.62, 3.5],
+ [3.28, 3.64, 32.9, 23.7],
+ [3.57, 4.57, 4.37],
+ [57.6, 53],
+ [11.3, 23.9],
+ [10.2, 14.2],
+ [11.5, 3.47]]
+--------------------------
+backend: cpu
+nbytes: 992 B
+type: 10 * var * float32</pre></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>it
-<span class="n">muons_npt</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">][</span><span class="mi">100</span><span class="p">:</span><span class="mi">115</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note: Only possible if there is at least one Muon in each event. Try with `event_data[&quot;nMuon&quot;][:, 0]` to see what happens if we include events with no Muons.</span>
+<span class="n">event_data</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> 
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[10.8,
+ 10.5,
+ 3.28,
+ 11.4,
+ 3.28,
+ 3.57,
+ 57.6,
+ 11.3,
+ 10.2,
+ 11.5]
+------------------
+backend: cpu
+nbytes: 40 B
+type: 10 * float32</pre></div></div>
 </div>
-<ul class="simple">
-<li><p>Given that the data we typically deal with is huge, unless neccesary, its good practice to specify the particular TBranches you want instead of doing something like <code class="docutils literal notranslate"><span class="pre">tree.arrays()</span></code> as this will load in everything, including things you might not be interested in.</p></li>
-<li><p>In addition to the way shown before, you can also get a subset of the branches by passing a <code class="docutils literal notranslate"><span class="pre">filter_name</span></code> argument to <code class="docutils literal notranslate"><span class="pre">tree.arrays()</span></code>.</p></li>
-</ul>
+<p><strong>Exercise</strong>: Print out the <span class="math notranslate nohighlight">\(p_T\)</span> and charge of the muons from events 100 to 115. There are two main ways to do this. Can you figure out what they are? Which method is faster? (Hint: Use the <code class="docutils literal notranslate"><span class="pre">%%timeit</span></code> magic)</p>
+<p>Before moving on to exploring the data, its important to keep something in mind: because the data we typically deal with is quite large, unless neccesary, its good practice to specify the particular TBranches you want instead of doing something like <code class="docutils literal notranslate"><span class="pre">tree.arrays()</span></code> as this will load in everything, including things you might not be interested in. We already saw one way of loading specific branches, namely:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">([</span><span class="s2">&quot;nMuon&quot;</span><span class="p">,</span> <span class="s2">&quot;Muon_pt&quot;</span><span class="p">],</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[{nMuon: 2, Muon_pt: [10.8, 15.7]},
+ {nMuon: 2, Muon_pt: [10.5, 16.3]},
+ {nMuon: 1, Muon_pt: [3.28]},
+ {nMuon: 4, Muon_pt: [11.4, 17.6, ..., 3.5]},
+ {nMuon: 4, Muon_pt: [3.28, 3.64, ..., 23.7]},
+ {nMuon: 3, Muon_pt: [3.57, 4.57, 4.37]},
+ {nMuon: 2, Muon_pt: [57.6, 53]},
+ {nMuon: 2, Muon_pt: [11.3, 23.9]},
+ {nMuon: 2, Muon_pt: [10.2, 14.2]},
+ {nMuon: 2, Muon_pt: [11.5, 3.47]},
+ ...,
+ {nMuon: 3, Muon_pt: [6.24, 14.4, 6.71]},
+ {nMuon: 2, Muon_pt: [14.9, 9.29]},
+ {nMuon: 2, Muon_pt: [32.3, 8.69]},
+ {nMuon: 3, Muon_pt: [22.2, 8.6, 6.3]},
+ {nMuon: 4, Muon_pt: [22.6, 11, ..., 3.96]},
+ {nMuon: 1, Muon_pt: [16.2]},
+ {nMuon: 2, Muon_pt: [22.4, 11.6]},
+ {nMuon: 0, Muon_pt: []},
+ {nMuon: 2, Muon_pt: [24.1, 13.1]}]
+-------------------------------------------------------------
+backend: cpu
+nbytes: 2.1 kB
+type: 100 * {
+    nMuon: uint32,
+    Muon_pt: var * float32
+}</pre></div></div>
+</div>
+<p>Another way would be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;nMuon&quot;</span><span class="p">,</span> <span class="s2">&quot;Muon_pt&quot;</span><span class="p">],</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[{nMuon: 2, Muon_pt: [10.8, 15.7]},
+ {nMuon: 2, Muon_pt: [10.5, 16.3]},
+ {nMuon: 1, Muon_pt: [3.28]},
+ {nMuon: 4, Muon_pt: [11.4, 17.6, ..., 3.5]},
+ {nMuon: 4, Muon_pt: [3.28, 3.64, ..., 23.7]},
+ {nMuon: 3, Muon_pt: [3.57, 4.57, 4.37]},
+ {nMuon: 2, Muon_pt: [57.6, 53]},
+ {nMuon: 2, Muon_pt: [11.3, 23.9]},
+ {nMuon: 2, Muon_pt: [10.2, 14.2]},
+ {nMuon: 2, Muon_pt: [11.5, 3.47]},
+ ...,
+ {nMuon: 3, Muon_pt: [6.24, 14.4, 6.71]},
+ {nMuon: 2, Muon_pt: [14.9, 9.29]},
+ {nMuon: 2, Muon_pt: [32.3, 8.69]},
+ {nMuon: 3, Muon_pt: [22.2, 8.6, 6.3]},
+ {nMuon: 4, Muon_pt: [22.6, 11, ..., 3.96]},
+ {nMuon: 1, Muon_pt: [16.2]},
+ {nMuon: 2, Muon_pt: [22.4, 11.6]},
+ {nMuon: 0, Muon_pt: []},
+ {nMuon: 2, Muon_pt: [24.1, 13.1]}]
+-------------------------------------------------------------
+backend: cpu
+nbytes: 2.1 kB
+type: 100 * {
+    nMuon: uint32,
+    Muon_pt: var * float32
+}</pre></div></div>
+</div>
+<p>Note that we can also use wildcards in the TBranch filter.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="s2">&quot;Muon_*&quot;</span><span class="p">,</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[{Muon_pt: [10.8, 15.7], Muon_eta: [1.07, -0.564], Muon_phi: [...], ...},
+ {Muon_pt: [10.5, 16.3], Muon_eta: [-0.428, ...], Muon_phi: [...], ...},
+ {Muon_pt: [3.28], Muon_eta: [2.21], Muon_phi: [-1.22], Muon_mass: ..., ...},
+ {Muon_pt: [11.4, 17.6, 9.62, 3.5], Muon_eta: [-1.59, ...], Muon_phi: ..., ...},
+ {Muon_pt: [3.28, 3.64, 32.9, 23.7], Muon_eta: [-2.17, ...], ...},
+ {Muon_pt: [3.57, 4.57, 4.37], Muon_eta: [-1.37, ...], Muon_phi: [...], ...},
+ {Muon_pt: [57.6, 53], Muon_eta: [-0.532, -1], Muon_phi: [...], ...},
+ {Muon_pt: [11.3, 23.9], Muon_eta: [-0.772, ...], Muon_phi: [...], ...},
+ {Muon_pt: [10.2, 14.2], Muon_eta: [0.442, 0.702], Muon_phi: [...], ...},
+ {Muon_pt: [11.5, 3.47], Muon_eta: [2.34, 2.35], Muon_phi: [...], ...},
+ ...,
+ {Muon_pt: [6.24, 14.4, 6.71], Muon_eta: [-1.18, ...], Muon_phi: [...], ...},
+ {Muon_pt: [14.9, 9.29], Muon_eta: [-0.861, ...], Muon_phi: [...], ...},
+ {Muon_pt: [32.3, 8.69], Muon_eta: [0.148, 0.173], Muon_phi: [...], ...},
+ {Muon_pt: [22.2, 8.6, 6.3], Muon_eta: [-0.291, ...], Muon_phi: [...], ...},
+ {Muon_pt: [22.6, 11, 3.21, 3.96], Muon_eta: [-1.6, ...], Muon_phi: [...], ...},
+ {Muon_pt: [16.2], Muon_eta: [0.167], Muon_phi: [3.02], Muon_mass: ..., ...},
+ {Muon_pt: [22.4, 11.6], Muon_eta: [0.907, 1.02], Muon_phi: [...], ...},
+ {Muon_pt: [], Muon_eta: [], Muon_phi: [], Muon_mass: [], ...},
+ {Muon_pt: [24.1, 13.1], Muon_eta: [-0.0221, ...], Muon_phi: [...], ...}]
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+backend: cpu
+nbytes: 8.6 kB
+type: 100 * {
+    Muon_pt: var * float32,
+    Muon_eta: var * float32,
+    Muon_phi: var * float32,
+    Muon_mass: var * float32,
+    Muon_charge: var * int32
+}</pre></div></div>
 </div>
-<ul class="simple">
-<li><p>If you don’t know what the name of the available branches are and you don’t want to print them all, you can search for them using the following syntax.</p></li>
-</ul>
+<p>If your TTree has a lot of branches, and <code class="docutils literal notranslate"><span class="pre">show</span></code> is impractical, you can also use <code class="docutils literal notranslate"><span class="pre">tree.keys</span></code>, which also accepts <code class="docutils literal notranslate"><span class="pre">filter_name</span></code> with wildcards. Then you can also verify the data type contained in each column by doing <code class="docutils literal notranslate"><span class="pre">tree.typenames()</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note: No filtering. But that&#39;s okay, because we&#39;re not reading data here.</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;nMuon&#39;, &#39;Muon_pt&#39;, &#39;Muon_eta&#39;, &#39;Muon_phi&#39;, &#39;Muon_mass&#39;, &#39;Muon_charge&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">typenames</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;nMuon&#39;: &#39;uint32_t&#39;,
+ &#39;Muon_pt&#39;: &#39;float[]&#39;,
+ &#39;Muon_eta&#39;: &#39;float[]&#39;,
+ &#39;Muon_phi&#39;: &#39;float[]&#39;,
+ &#39;Muon_mass&#39;: &#39;float[]&#39;,
+ &#39;Muon_charge&#39;: &#39;int32_t[]&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Just like the <code class="docutils literal notranslate"><span class="pre">arrays</span></code> method, methods accept a <code class="docutils literal notranslate"><span class="pre">filter_name</span></code> argument.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="s2">&quot;Muon_*&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-</div>
-<ul class="simple">
-<li><p>You can use the same type of filtering when calling <code class="docutils literal notranslate"><span class="pre">arrays()</span></code></p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="s2">&quot;Muon_*&quot;</span><span class="p">,</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Muon_pt&#39;, &#39;Muon_eta&#39;, &#39;Muon_phi&#39;, &#39;Muon_mass&#39;, &#39;Muon_charge&#39;]
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="exploring-the-data">
-<h2>Exploring the Data<a class="headerlink" href="#exploring-the-data" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Loading in some data from all branches</span>
-<span class="n">muons</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">entry_stop</span><span class="o">=</span><span class="mi">1500</span><span class="p">)</span>
-<span class="n">muons</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">typenames</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;nMuon&#39;: &#39;uint32_t&#39;,
+ &#39;Muon_pt&#39;: &#39;float[]&#39;,
+ &#39;Muon_eta&#39;: &#39;float[]&#39;,
+ &#39;Muon_phi&#39;: &#39;float[]&#39;,
+ &#39;Muon_mass&#39;: &#39;float[]&#39;,
+ &#39;Muon_charge&#39;: &#39;int32_t[]&#39;}
 </pre></div>
 </div>
 </div>
 </div>
-<ul class="simple">
-<li><p>We can take a quick look at a small sample of the data to get an idea of how it is structured in the following way. Note that this is not the usual way to do it is simply for pedagogical purposes.</p></li>
-</ul>
+<p>As a last point, for pedagogical purposes, we can also load the data in the form of a Pandas DataFrame, which will highlight the tabular nature of the data. Note, however, that doing this is not usual, and it is usually preferrable to use Awkward Arrays to handle your data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -601,10 +838,174 @@ Muon_charge          | int32_t[]                | AsJagged(AsDtype(&#39;&gt;i4&#
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>nMuon</th>
+      <th>Muon_pt</th>
+      <th>Muon_eta</th>
+      <th>Muon_phi</th>
+      <th>Muon_mass</th>
+      <th>Muon_charge</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>[10.763696670532227, 15.736522674560547]</td>
+      <td>[1.0668272972106934, -0.563786506652832]</td>
+      <td>[-0.03427272289991379, 2.5426154136657715]</td>
+      <td>[0.10565836727619171, 0.10565836727619171]</td>
+      <td>[-1, -1]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>[10.538490295410156, 16.327096939086914]</td>
+      <td>[-0.42778006196022034, 0.34922507405281067]</td>
+      <td>[-0.2747921049594879, 2.539781332015991]</td>
+      <td>[0.10565836727619171, 0.10565836727619171]</td>
+      <td>[1, -1]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>[3.2753264904022217]</td>
+      <td>[2.210855484008789]</td>
+      <td>[-1.2234135866165161]</td>
+      <td>[0.10565836727619171]</td>
+      <td>[1]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>[11.429154396057129, 17.634033203125, 9.624728...</td>
+      <td>[-1.5882395505905151, -1.7511844635009766, -1....</td>
+      <td>[-2.0773041248321533, 0.25135836005210876, -2....</td>
+      <td>[0.10565836727619171, 0.10565836727619171, 0.1...</td>
+      <td>[1, 1, 1, 1]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>[3.2834417819976807, 3.64400577545166, 32.9112...</td>
+      <td>[-2.1724836826324463, -2.18253493309021, -1.12...</td>
+      <td>[-2.3700082302093506, -2.3051390647888184, -0....</td>
+      <td>[0.10565836727619171, 0.10565836727619171, 0.1...</td>
+      <td>[-1, -1, 1, 1]</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3</td>
+      <td>[3.566528081893921, 4.572504043579102, 4.37186...</td>
+      <td>[-1.371932029724121, -0.703264594078064, -1.03...</td>
+      <td>[-2.9090449810028076, 2.4552080631256104, -3.0...</td>
+      <td>[0.10565836727619171, 0.10565836727619171, 0.1...</td>
+      <td>[-1, 1, -1]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2</td>
+      <td>[57.6067008972168, 53.04507827758789]</td>
+      <td>[-0.5320892930030823, -1.0041686296463013]</td>
+      <td>[-0.07179804146289825, 3.089515209197998]</td>
+      <td>[0.10565836727619171, 0.10565836727619171]</td>
+      <td>[-1, 1]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2</td>
+      <td>[11.31967544555664, 23.906352996826172]</td>
+      <td>[-0.7716585397720337, -0.700996994972229]</td>
+      <td>[-2.2452728748321533, -2.1809616088867188]</td>
+      <td>[0.10565836727619171, 0.10565836727619171]</td>
+      <td>[1, -1]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2</td>
+      <td>[10.19356918334961, 14.204060554504395]</td>
+      <td>[0.4418068528175354, 0.7021172642707825]</td>
+      <td>[0.6778520345687866, -2.0344009399414062]</td>
+      <td>[0.10565836727619171, 0.10565836727619171]</td>
+      <td>[-1, 1]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2</td>
+      <td>[11.470704078674316, 3.4690065383911133]</td>
+      <td>[2.3417420387268066, 2.3523731231689453]</td>
+      <td>[3.1309704780578613, 3.0211737155914307]</td>
+      <td>[0.10565836727619171, 0.10565836727619171]</td>
+      <td>[-1, 1]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-<ul class="simple">
-<li><p>Knowing what is in this data, we can go ahead and start doing something with it. Let’s begin by constructing the masses. To do this, we can use a feature that exists for Awkward arrays that we saw in Numpy arrays: filtering through a mask array.</p></li>
-</ul>
+</section>
+<section id="reconstructing-the-mass">
+<h2>Reconstructing the mass<a class="headerlink" href="#reconstructing-the-mass" title="Link to this heading">#</a></h2>
+<p>Now that we know what the branches look like and what is the data type each one contains, let’s explore the data and try to do something useful with it. Note that the data contains physical observables for muons in each collision event. What would happen if we add the mass of two muons in an event? Let’s find out! First, lets load a sub-set of the events contained in the sample.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Loading in some data from all branches</span>
+<span class="n">muons</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">entry_stop</span><span class="o">=</span><span class="mi">1500</span><span class="p">)</span>
+<span class="n">muons</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[{nMuon: 2, Muon_pt: [10.8, 15.7], Muon_eta: [1.07, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [10.5, 16.3], Muon_eta: [-0.428, ...], Muon_phi: ..., ...},
+ {nMuon: 1, Muon_pt: [3.28], Muon_eta: [2.21], Muon_phi: [-1.22], ...},
+ {nMuon: 4, Muon_pt: [11.4, 17.6, ..., 3.5], Muon_eta: [...], ...},
+ {nMuon: 4, Muon_pt: [3.28, 3.64, ..., 23.7], Muon_eta: [...], ...},
+ {nMuon: 3, Muon_pt: [3.57, 4.57, 4.37], Muon_eta: [...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [57.6, 53], Muon_eta: [-0.532, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [11.3, 23.9], Muon_eta: [-0.772, ...], Muon_phi: ..., ...},
+ {nMuon: 2, Muon_pt: [10.2, 14.2], Muon_eta: [0.442, ...], Muon_phi: ..., ...},
+ {nMuon: 2, Muon_pt: [11.5, 3.47], Muon_eta: [2.34, ...], Muon_phi: [...], ...},
+ ...,
+ {nMuon: 2, Muon_pt: [26.3, 14.5], Muon_eta: [-0.0269, ...], ...},
+ {nMuon: 1, Muon_pt: [26.4], Muon_eta: [1.69], Muon_phi: [-0.706], ...},
+ {nMuon: 3, Muon_pt: [8.54, 13.5, 3.98], Muon_eta: [2.33, ...], ...},
+ {nMuon: 3, Muon_pt: [11.6, 8.81, 118], Muon_eta: [1.82, ...], ...},
+ {nMuon: 2, Muon_pt: [13, 6.75], Muon_eta: [1.39, ...], Muon_phi: [...], ...},
+ {nMuon: 3, Muon_pt: [15.7, 9.23, 9.23], Muon_eta: [1.36, ...], ...},
+ {nMuon: 2, Muon_pt: [13.7, 9.42], Muon_eta: [1.13, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [23.7, 33.6], Muon_eta: [1.71, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [28.9, 9.25], Muon_eta: [-0.189, ...], Muon_phi: ..., ...}]
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+backend: cpu
+nbytes: 138.1 kB
+type: 1500 * {
+    nMuon: uint32,
+    Muon_pt: var * float32,
+    Muon_eta: var * float32,
+    Muon_phi: var * float32,
+    Muon_mass: var * float32,
+    Muon_charge: var * int32
+}</pre></div></div>
+</div>
+<p>Just for simplicity, let’s ensure there are two muons in each event. Later on, we will do something more sophisticated. To do this, we can create a filer or mask similarly to how we created masks for NumPy arrays. What we want is for mask to be <code class="docutils literal notranslate"><span class="pre">True</span></code> when an event has exactly 2 events, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise. Fortunately, we have the field <code class="docutils literal notranslate"><span class="pre">nMuon</span></code> which immediately provides us with the information we need to construct this mask as follows.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># If an event has 2 muons, its corresponding element in the mask is True. False otherwise.</span>
@@ -613,7 +1014,33 @@ Muon_charge          | int32_t[]                | AsJagged(AsDtype(&#39;&gt;i4&#
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[True,
+ True,
+ False,
+ False,
+ False,
+ False,
+ True,
+ True,
+ True,
+ True,
+ ...,
+ True,
+ False,
+ False,
+ False,
+ True,
+ False,
+ True,
+ True,
+ True]
+-----------------
+backend: cpu
+nbytes: 1.5 kB
+type: 1500 * bool</pre></div></div>
 </div>
+<p>We can now apply this mask the exact same way we applied masks with NumPy array!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Only keeping di-muon events</span>
@@ -622,7 +1049,54 @@ Muon_charge          | int32_t[]                | AsJagged(AsDtype(&#39;&gt;i4&#
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[{nMuon: 2, Muon_pt: [10.8, 15.7], Muon_eta: [1.07, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [10.5, 16.3], Muon_eta: [-0.428, ...], Muon_phi: ..., ...},
+ {nMuon: 2, Muon_pt: [57.6, 53], Muon_eta: [-0.532, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [11.3, 23.9], Muon_eta: [-0.772, ...], Muon_phi: ..., ...},
+ {nMuon: 2, Muon_pt: [10.2, 14.2], Muon_eta: [0.442, ...], Muon_phi: ..., ...},
+ {nMuon: 2, Muon_pt: [11.5, 3.47], Muon_eta: [2.34, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [8.82, 17.6], Muon_eta: [1.65, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [14.6, 12.3], Muon_eta: [1.26, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [4.34, 13.1], Muon_eta: [-1.88, ...], Muon_phi: ..., ...},
+ {nMuon: 2, Muon_pt: [15.2, 10.5], Muon_eta: [1.34, ...], Muon_phi: [...], ...},
+ ...,
+ {nMuon: 2, Muon_pt: [14.1, 5.6], Muon_eta: [-1.27, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [9.91, 18.6], Muon_eta: [1.02, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [30.5, 11.7], Muon_eta: [0.0693, ...], Muon_phi: ..., ...},
+ {nMuon: 2, Muon_pt: [18.5, 13.9], Muon_eta: [-1.59, ...], Muon_phi: ..., ...},
+ {nMuon: 2, Muon_pt: [26.3, 14.5], Muon_eta: [-0.0269, ...], ...},
+ {nMuon: 2, Muon_pt: [13, 6.75], Muon_eta: [1.39, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [13.7, 9.42], Muon_eta: [1.13, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [23.7, 33.6], Muon_eta: [1.71, ...], Muon_phi: [...], ...},
+ {nMuon: 2, Muon_pt: [28.9, 9.25], Muon_eta: [-0.189, ...], Muon_phi: ..., ...}]
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+backend: cpu
+nbytes: 144.6 kB
+type: 812 * {
+    nMuon: uint32,
+    Muon_pt: var * float32,
+    Muon_eta: var * float32,
+    Muon_phi: var * float32,
+    Muon_mass: var * float32,
+    Muon_charge: var * int32
+}</pre></div></div>
 </div>
+<p>We can make sure that the resulting filtered array only has events with two muons by using the function <code class="docutils literal notranslate"><span class="pre">ak.all</span></code> provided by Awkward. This function takes in an array of booleans (although not neccesary that the elements are booleans), and tells you whether <em>all</em> elements are <code class="docutils literal notranslate"><span class="pre">True</span></code>. This would be equivalent to applying the <code class="docutils literal notranslate"><span class="pre">AND</span></code> boolean operator over the whole array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">awkward</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ak</span>
+<span class="n">ak</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;nMuon&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.True_
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s now get the observables into their own variables for future convenience.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Getting the eta, pt and phi of each of the muons in the dimuon events</span>
@@ -636,21 +1110,18 @@ Muon_charge          | int32_t[]                | AsJagged(AsDtype(&#39;&gt;i4&#
 </div>
 </div>
 </div>
-<ul class="simple">
-<li><p>The mass is computed using the following equation</p></li>
-</ul>
+<p>Let’s assume the two muons came from the decay of a particle <span class="math notranslate nohighlight">\(A\)</span>. We make use of the fact that the square of the total 4-momentum of the system is an invariant quantity to establish that</p>
 <div class="math notranslate nohighlight">
-\[
-m_{\mu\mu} = \sqrt{(E_1 + E_2)^2 - \|\textbf{p}_1 + \textbf{p}_2 \| ^2} = \sqrt{(E_1+E_2)^2-((p_{1_x}+p_{2_x})^2+(p_{1_y}+p_{2_y})^2+(p_{1_z}+p_{2_z})^2)}|
-\]</div>
-<ul class="simple">
-<li><p>If we have that <span class="math notranslate nohighlight">\(E &gt;&gt; m\)</span>, then we can rewrite this as:
-$<span class="math notranslate nohighlight">\(
-m_{\mu\mu} = \sqrt{
-  2p_{T,0} p_{T,1} * \left(\cosh(\eta_0 - \eta_1) - \cos(\phi_0- \phi_1)\right)
-}
-\)</span>$</p></li>
-</ul>
+\[(p_A)^\nu (p_A)_\nu = (p_1+p_2)^\sigma (p_1+p_2)_\sigma\]</div>
+<p>where the left side comes from the initial state of the system, in an inertial reference frame where the <span class="math notranslate nohighlight">\(A\)</span> is stationary, and the right side corresponds to the final state of the system (i.e., when we have two muons) in the lab reference frame. This reduces to:</p>
+<div class="math notranslate nohighlight">
+\[m_{A} = \sqrt{(E_1 + E_2)^2 - \|\textbf{p}_1 + \textbf{p}_2 \| ^2} = \sqrt{(E_1+E_2)^2-((p_{1_x}+p_{2_x})^2+(p_{1_y}+p_{2_y})^2+(p_{1_z}+p_{2_z})^2)}|\]</div>
+<p>which, under the assumption that <span class="math notranslate nohighlight">\(E \gg m\)</span> and changing the coordinates this equation is written in, this reduces to:</p>
+<div class="math notranslate nohighlight">
+\[m_{A} = \sqrt{
+    2p_{T,0} p_{T,1} * \left(\cosh(\eta_0 - \eta_1) - \cos(\phi_0- \phi_1)\right)
+}\]</div>
+<p>We can then use this equation to compute the mass of the hypothetical particle these pairs of muons came from. This is easy to do with Awkward arrays!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -659,22 +1130,36 @@ m_{\mu\mu} = \sqrt{
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre>[34.4,
+ 27.9,
+ 114,
+ 1.57,
+ 23.7,
+ 0.696,
+ 27.1,
+ 46.2,
+ 1.55,
+ 1.62,
+ ...,
+ 1.24,
+ 27.6,
+ 2.06,
+ 40.8,
+ 40.2,
+ 3.1,
+ 2.51,
+ 91.1,
+ 29]
+-------------------
+backend: cpu
+nbytes: 3.2 kB
+type: 812 * float32</pre></div></div>
 </div>
-<ul class="simple">
-<li><p>We now use the Hist library, one of the many tools offered by Scikit-HEP. This library offers a user-friendly API for the Boost-histogram Python library which offers a highly efficient and flexible histogramming framework. Some example features are:</p>
-<ul>
-<li><p>Built on the C++ Boost.Histogram libary, so offers good performance</p></li>
-<li><p>Flexibility: supports multiple types of histograms</p></li>
-<li><p>N-dimensional histograms</p></li>
-<li><p>Axis customization</p></li>
-<li><p>Named axes</p></li>
-<li><p>Built-in support for plotting histograms using Matplotlib</p></li>
-<li><p>Integrates well with numpy and pandas</p></li>
-</ul>
-</li>
-<li><p>Making a histogram for the dimuon mass.</p></li>
-</ul>
-<p>(<a class="reference external" href="https://hist.readthedocs.io/en/latest/user-guide/axes.html">Hist docs</a>)</p>
+<p>The raw data for the reconstructed mass is difficult to interpret without an effective way to visualize it. One of the most common tools in a high energy physicist’s toolkit is the histogram. Histograms display the frequency of data values within specified ranges (bins). This allows us to see the distribution and identify features such as peaks or tails in the data and will make it much easier for us to understand the underlying physics represented by the reconstructed mass values.</p>
+<p>To make the histogram, we will use the Hist library, one of the many tools offered by Scikit-HEP. This library offers a user-friendly API for the Boost-histogram Python library which offers a highly efficient and flexible histogramming framework. You can find detailed information about this libarry in the documentation, which you can access through this link: <a class="reference external" href="https://hist.readthedocs.io/en/latest/user-guide/axes.html">link</a>.</p>
+<p>In addition, to easily make our plot look pretty and to follow the conventions used in HEP publications, we will use the <code class="docutils literal notranslate"><span class="pre">mplhep</span></code> library, also from Scikit-HEP. This library provides convenient plotting styles and functions for HEP data, making it straightforward to produce publication-quality figures that match the look and feel of experiments like CMS or ATLAS. By combining <code class="docutils literal notranslate"><span class="pre">Hist</span></code> for efficient histogramming and <code class="docutils literal notranslate"><span class="pre">mplhep</span></code> for styling, we can quickly generate insightful and professional plots of our reconstructed mass distributions.</p>
+<p>Under the hood, Hist actually uses Matplotlib to render plots, which means we can take advantage of all the customization and flexibility that Matplotlib offers. Thus, we will import Matplotlib as well to get full access to the plotting tools that this library has to offer.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">hist</span>
@@ -685,37 +1170,166 @@ m_{\mu\mu} = \sqrt{
 </div>
 </div>
 </div>
+<p>Let’s create a histogram object (i.e., <code class="docutils literal notranslate"><span class="pre">hist.Hist</span></code>) with a single axis. We do this as follows.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">masshist</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span>
+    <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mass [GeV]&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mass&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we were to plot the histogram right now, we would see that it would be empty, as we have not put any data into it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">masshist</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><html>
+<div style="display:flex; align-items:center;">
+<div style="width:290px;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -105 270 120">
+<line x1="-5" y1="0" x2="255" y2="0" style="fill:none;stroke-width:2;stroke:currentColor"/>
+<text text-anchor="middle" x="0" y="15" style="fill:currentColor;">
+0
+</text>
+<text text-anchor="middle" x="250" y="15" style="fill:currentColor;">
+200
+</text>
+<text text-anchor="middle" x="125.0" y="15" style="fill:currentColor;">
+Mass [GeV]
+</text>
+<polyline points="  0,0   0,-0 2.08333,-0 2.08333,-0 4.16667,-0 4.16667,-0 6.25,-0 6.25,-0 8.33333,-0 8.33333,-0 10.4167,-0 10.4167,-0 12.5,-0 12.5,-0 14.5833,-0 14.5833,-0 16.6667,-0 16.6667,-0 18.75,-0 18.75,-0 20.8333,-0 20.8333,-0 22.9167,-0 22.9167,-0  25,-0  25,-0 27.0833,-0 27.0833,-0 29.1667,-0 29.1667,-0 31.25,-0 31.25,-0 33.3333,-0 33.3333,-0 35.4167,-0 35.4167,-0 37.5,-0 37.5,-0 39.5833,-0 39.5833,-0 41.6667,-0 41.6667,-0 43.75,-0 43.75,-0 45.8333,-0 45.8333,-0 47.9167,-0 47.9167,-0  50,-0  50,-0 52.0833,-0 52.0833,-0 54.1667,-0 54.1667,-0 56.25,-0 56.25,-0 58.3333,-0 58.3333,-0 60.4167,-0 60.4167,-0 62.5,-0 62.5,-0 64.5833,-0 64.5833,-0 66.6667,-0 66.6667,-0 68.75,-0 68.75,-0 70.8333,-0 70.8333,-0 72.9167,-0 72.9167,-0  75,-0  75,-0 77.0833,-0 77.0833,-0 79.1667,-0 79.1667,-0 81.25,-0 81.25,-0 83.3333,-0 83.3333,-0 85.4167,-0 85.4167,-0 87.5,-0 87.5,-0 89.5833,-0 89.5833,-0 91.6667,-0 91.6667,-0 93.75,-0 93.75,-0 95.8333,-0 95.8333,-0 97.9167,-0 97.9167,-0 100,-0 100,-0 102.083,-0 102.083,-0 104.167,-0 104.167,-0 106.25,-0 106.25,-0 108.333,-0 108.333,-0 110.417,-0 110.417,-0 112.5,-0 112.5,-0 114.583,-0 114.583,-0 116.667,-0 116.667,-0 118.75,-0 118.75,-0 120.833,-0 120.833,-0 122.917,-0 122.917,-0 125,-0 125,-0 127.083,-0 127.083,-0 129.167,-0 129.167,-0 131.25,-0 131.25,-0 133.333,-0 133.333,-0 135.417,-0 135.417,-0 137.5,-0 137.5,-0 139.583,-0 139.583,-0 141.667,-0 141.667,-0 143.75,-0 143.75,-0 145.833,-0 145.833,-0 147.917,-0 147.917,-0 150,-0 150,-0 152.083,-0 152.083,-0 154.167,-0 154.167,-0 156.25,-0 156.25,-0 158.333,-0 158.333,-0 160.417,-0 160.417,-0 162.5,-0 162.5,-0 164.583,-0 164.583,-0 166.667,-0 166.667,-0 168.75,-0 168.75,-0 170.833,-0 170.833,-0 172.917,-0 172.917,-0 175,-0 175,-0 177.083,-0 177.083,-0 179.167,-0 179.167,-0 181.25,-0 181.25,-0 183.333,-0 183.333,-0 185.417,-0 185.417,-0 187.5,-0 187.5,-0 189.583,-0 189.583,-0 191.667,-0 191.667,-0 193.75,-0 193.75,-0 195.833,-0 195.833,-0 197.917,-0 197.917,-0 200,-0 200,-0 202.083,-0 202.083,-0 204.167,-0 204.167,-0 206.25,-0 206.25,-0 208.333,-0 208.333,-0 210.417,-0 210.417,-0 212.5,-0 212.5,-0 214.583,-0 214.583,-0 216.667,-0 216.667,-0 218.75,-0 218.75,-0 220.833,-0 220.833,-0 222.917,-0 222.917,-0 225,-0 225,-0 227.083,-0 227.083,-0 229.167,-0 229.167,-0 231.25,-0 231.25,-0 233.333,-0 233.333,-0 235.417,-0 235.417,-0 237.5,-0 237.5,-0 239.583,-0 239.583,-0 241.667,-0 241.667,-0 243.75,-0 243.75,-0 245.833,-0 245.833,-0 247.917,-0 247.917,-0 250,-0 250,0" style="fill:none; stroke:currentColor;"/>
+</svg>
+</div>
+<div style="flex=grow:1;">
+Regular(120, 0, 200, name='mass', label='Mass [GeV]')<br/>
+<hr style="margin-top:.2em; margin-bottom:.2em;"/>
+Double() Σ=0.0
+
+</div>
+</div>
+</html></div></div>
+</div>
+<p>To add our data, we use the <code class="docutils literal notranslate"><span class="pre">fill</span></code> method and pass the array of the reconstructed masses we made. This method immediately returns the histogram, from which we can get a glimpse of how it looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">masshist</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">mass</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><html>
+<div style="display:flex; align-items:center;">
+<div style="width:290px;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -105 270 120">
+<line x1="-5" y1="0" x2="255" y2="0" style="fill:none;stroke-width:2;stroke:currentColor"/>
+<text text-anchor="middle" x="0" y="15" style="fill:currentColor;">
+0
+</text>
+<text text-anchor="middle" x="250" y="15" style="fill:currentColor;">
+200
+</text>
+<text text-anchor="middle" x="125.0" y="15" style="fill:currentColor;">
+Mass [GeV]
+</text>
+<polyline points="  0,0   0,-72.9 2.08333,-72.9 2.08333,-100 4.16667,-100 4.16667,-17.6 6.25,-17.6 6.25,-11.2 8.33333,-11.2 8.33333,-10.3 10.4167,-10.3 10.4167,-13.9 12.5,-13.9 12.5,-10.9 14.5833,-10.9 14.5833,-8.07 16.6667,-8.07 16.6667,-7.84 18.75,-7.84 18.75,-8.44 20.8333,-8.44 20.8333,-7.97 22.9167,-7.97 22.9167,-7.56  25,-7.56  25,-10.5 27.0833,-10.5 27.0833,-13.2 29.1667,-13.2 29.1667,-15.2 31.25,-15.2 31.25,-15.6 33.3333,-15.6 33.3333,-16 35.4167,-16 35.4167,-14.5 37.5,-14.5 37.5,-13.1 39.5833,-13.1 39.5833,-11.8 41.6667,-11.8 41.6667,-10.4 43.75,-10.4 43.75,-9.47 45.8333,-9.47 45.8333,-8.56 47.9167,-8.56 47.9167,-7  50,-7  50,-6.77 52.0833,-6.77 52.0833,-5.8 54.1667,-5.8 54.1667,-5.24 56.25,-5.24 56.25,-4.88 58.3333,-4.88 58.3333,-4.15 60.4167,-4.15 60.4167,-3.8 62.5,-3.8 62.5,-3.3 64.5833,-3.3 64.5833,-2.88 66.6667,-2.88 66.6667,-2.75 68.75,-2.75 68.75,-3.12 70.8333,-3.12 70.8333,-1.71 72.9167,-1.71 72.9167,-2.19  75,-2.19  75,-1.85 77.0833,-1.85 77.0833,-1.59 79.1667,-1.59 79.1667,-1.66 81.25,-1.66 81.25,-1.65 83.3333,-1.65 83.3333,-1.29 85.4167,-1.29 85.4167,-1.47 87.5,-1.47 87.5,-1.37 89.5833,-1.37 89.5833,-1.33 91.6667,-1.33 91.6667,-1.29 93.75,-1.29 93.75,-1.21 95.8333,-1.21 95.8333,-1.66 97.9167,-1.66 97.9167,-1.64 100,-1.64 100,-1.87 102.083,-1.87 102.083,-2.17 104.167,-2.17 104.167,-2.93 106.25,-2.93 106.25,-4.87 108.333,-4.87 108.333,-7.2 110.417,-7.2 110.417,-14.3 112.5,-14.3 112.5,-21 114.583,-21 114.583,-15 116.667,-15 116.667,-7.06 118.75,-7.06 118.75,-3.14 120.833,-3.14 120.833,-1.81 122.917,-1.81 122.917,-1.04 125,-1.04 125,-1.05 127.083,-1.05 127.083,-0.659 129.167,-0.659 129.167,-0.388 131.25,-0.388 131.25,-0.471 133.333,-0.471 133.333,-0.377 135.417,-0.377 135.417,-0.235 137.5,-0.235 137.5,-0.235 139.583,-0.235 139.583,-0.247 141.667,-0.247 141.667,-0.306 143.75,-0.306 143.75,-0.177 145.833,-0.177 145.833,-0.165 147.917,-0.165 147.917,-0.224 150,-0.224 150,-0.118 152.083,-0.118 152.083,-0.118 154.167,-0.118 154.167,-0.0706 156.25,-0.0706 156.25,-0.106 158.333,-0.106 158.333,-0.0942 160.417,-0.0942 160.417,-0.106 162.5,-0.106 162.5,-0.0942 164.583,-0.0942 164.583,-0.129 166.667,-0.129 166.667,-0.0588 168.75,-0.0588 168.75,-0.106 170.833,-0.106 170.833,-0.0588 172.917,-0.0588 172.917,-0.118 175,-0.118 175,-0.0353 177.083,-0.0353 177.083,-0.0353 179.167,-0.0353 179.167,-0.0471 181.25,-0.0471 181.25,-0.0353 183.333,-0.0353 183.333,-0.0706 185.417,-0.0706 185.417,-0.0353 187.5,-0.0353 187.5,-0.0353 189.583,-0.0353 189.583,-0.0706 191.667,-0.0706 191.667,-0.0588 193.75,-0.0588 193.75,-0.0118 195.833,-0.0118 195.833,-0.0471 197.917,-0.0471 197.917,-0.0471 200,-0.0471 200,-0.0706 202.083,-0.0706 202.083,-0.0235 204.167,-0.0235 204.167,-0.0118 206.25,-0.0118 206.25,-0.0118 208.333,-0.0118 208.333,-0.0353 210.417,-0.0353 210.417,-0.0118 212.5,-0.0118 212.5,-0.0824 214.583,-0.0824 214.583,-0.0235 216.667,-0.0235 216.667,-0.0235 218.75,-0.0235 218.75,-0.0118 220.833,-0.0118 220.833,-0.0235 222.917,-0.0235 222.917,-0.0118 225,-0.0118 225,-0.0118 227.083,-0.0118 227.083,-0.0118 229.167,-0.0118 229.167,-0.0118 231.25,-0.0118 231.25,-0.0235 233.333,-0.0235 233.333,-0.0235 235.417,-0.0235 235.417,-0.0471 237.5,-0.0471 237.5,-0.0235 239.583,-0.0235 239.583,-0.0353 241.667,-0.0353 241.667,-0.0118 243.75,-0.0118 243.75,-0.0353 245.833,-0.0353 245.833,-0 247.917,-0 247.917,-0.0118 250,-0.0118 250,0" style="fill:none; stroke:currentColor;"/>
+</svg>
+</div>
+<div style="flex=grow:1;">
+Regular(120, 0, 200, name='mass', label='Mass [GeV]')<br/>
+<hr style="margin-top:.2em; margin-bottom:.2em;"/>
+Double() Σ=48922.0 <em>(48976.0 with flow)</em>
+
+</div>
+</div>
+</html></div></div>
+</div>
+<p>To make a proper plot of this histogram, we will use Matplotlib to create a figure with an axis, and then use the <code class="docutils literal notranslate"><span class="pre">plot1d</span></code> method of the <code class="docutils literal notranslate"><span class="pre">hist.Hist</span></code> object to plot the histogram we have created on those axis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using Hist + Matplotlib</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-<span class="n">masshist</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span>
-    <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mass [GeV]&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mass&quot;</span><span class="p">),</span>
+<span class="n">masshist</span><span class="o">.</span><span class="n">plot1d</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> 
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Dimuon mass [GeV]&quot;</span><span class="p">,</span> 
 <span class="p">)</span>
-<span class="n">masshist</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">mass</span><span class="p">)</span>
-<span class="n">masshist</span><span class="o">.</span><span class="n">plot1d</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Dimuon mass [GeV]&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Mass [GeV]&quot;</span><span class="p">)</span>
+<span class="c1"># Adding label for the y-axis</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="c1"># Adding axis title</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Dimuon Mass Distribution&quot;</span><span class="p">)</span>
+<span class="c1"># Adding legend</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Show the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e98d087d667eea0f21172dcf127a3367caf5702a46ec547b191c44fdd7e2301c.png" src="../_images/e98d087d667eea0f21172dcf127a3367caf5702a46ec547b191c44fdd7e2301c.png" />
+</div>
+</div>
+<p>From this plot, we see multiple peaks. Notice, however that there is a peak very near <span class="math notranslate nohighlight">\(90 \text{ GeV}\)</span>. This corresponds to the mass of the Z boson, and it means that we have been able to reconstruct its mass even though our approach was quite rudimentary. We can confirm the exact value for the mass of the Z boson by using the particle Particle library which provides particle data from the Particle Data Group (<a class="reference external" href="https://pdg.lbl.gov/">PDF website</a>). We will also use the <code class="docutils literal notranslate"><span class="pre">hepunits</span></code> library which provivdes units and constants for the HEP system of units.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">particle</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hepunits</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeV</span>
+
+<span class="c1"># Getting the mass of the Z boson</span>
+<span class="n">z_mass</span> <span class="o">=</span> <span class="n">particle</span><span class="o">.</span><span class="n">Particle</span><span class="o">.</span><span class="n">from_name</span><span class="p">(</span><span class="s2">&quot;Z0&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Z boson mass in GeV:&quot;</span><span class="p">,</span> <span class="n">z_mass</span><span class="o">.</span><span class="n">mass</span> <span class="o">/</span> <span class="n">GeV</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Z boson mass in GeV: 91.188
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also make the previous histogram, but now lets add a vertical line on the Z mass for emphasis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting a a vertical line at the Z boson mass</span>
+<span class="c1"># Using Hist + Matplotlib</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="n">masshist</span><span class="o">.</span><span class="n">plot1d</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> 
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Dimuon mass [GeV]&quot;</span><span class="p">,</span> 
+<span class="p">)</span>
+
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Dimuon Mass Distribution&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">z_mass</span><span class="o">.</span><span class="n">mass</span> <span class="o">/</span> <span class="n">GeV</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Z boson mass&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">z_mass</span><span class="o">.</span><span class="n">mass</span> <span class="o">/</span> <span class="n">GeV</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7200</span><span class="p">,</span> <span class="s2">&quot;Z boson mass&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/6cd409bc8d719d28b6b114f9e4a09288165c2125862bca547c149f1399619570.png" src="../_images/6cd409bc8d719d28b6b114f9e4a09288165c2125862bca547c149f1399619570.png" />
 </div>
-<ul class="simple">
-<li><p>In the above plot, you can clearly see a peak around 90 GeV. This corresponds to the mass of the Z bosons and shows that we have been able to succesfully reconstruct its mass! However, what we have done so far is rather rudimentary. Firslty, we got rid of a bunch of events which have more than 2 muons, but which might also have 2 (or more) muons which came from Z. Also, we didn’t make sure that quantities such as the charge were conserved. We just added the masses of the muons and hoped for the best. We will deal with these sorts of consdierations later on.</p></li>
-<li><p>Before we continue, lets pause and see the whole code for procuding out plot.</p></li>
-</ul>
+</div>
+<p>While we have been successful at reconstructing the mass of the Z boson to some extent, our approach is quite basic. First, we excluded many events that have more than two muons, even though some of these events might contain two or more muons that originated from a Z boson. Additionally, we did not ensure that quantities such as charge were conserved. We simply added the masses of the muons without verifying these important details. We will address these considerations in the next chapter. For now, lets review once again the code we have developed so far for reconstructing the masses.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muons</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="s2">&quot;/nMuon|Muon_(phi|eta|pt)/&quot;</span><span class="p">,</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Loading data</span>
+<span class="n">muons</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="s2">&quot;/nMuon|Muon_(phi|eta|pt)/&quot;</span><span class="p">,</span> <span class="n">entry_stop</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+
+<span class="c1"># Applying a cut</span>
 <span class="n">dimuons_cut</span> <span class="o">=</span> <span class="n">muons</span><span class="p">[</span><span class="s2">&quot;nMuon&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
 <span class="n">dimuons</span> <span class="o">=</span> <span class="n">muons</span><span class="p">[</span><span class="n">dimuons_cut</span><span class="p">]</span>
 
+<span class="c1"># Getting the eta, pt and phi of each of the muons in the dimuon events</span>
 <span class="n">pt0</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">][:,</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">pt1</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">][:,</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">eta0</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_eta&quot;</span><span class="p">][:,</span><span class="mi">0</span><span class="p">]</span>
@@ -723,14 +1337,11 @@ m_{\mu\mu} = \sqrt{
 <span class="n">phi0</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_phi&quot;</span><span class="p">][:,</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">phi1</span> <span class="o">=</span> <span class="n">dimuons</span><span class="p">[</span><span class="s2">&quot;Muon_phi&quot;</span><span class="p">][:,</span><span class="mi">1</span><span class="p">]</span>
 
+<span class="c1"># Calculating the mass of the dimuon system</span>
 <span class="n">mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pt0</span> <span class="o">*</span> <span class="n">pt1</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">eta0</span> <span class="o">-</span> <span class="n">eta1</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi0</span> <span class="o">-</span> <span class="n">phi1</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="c1"># Plotting the mass distribution using Hist + Matplotlib</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
 <span class="n">masshist</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span><span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mass [GeV]&quot;</span><span class="p">))</span>
 <span class="n">masshist</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">mass</span><span class="p">)</span>
@@ -744,13 +1355,22 @@ m_{\mu\mu} = \sqrt{
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:27: SyntaxWarning: invalid escape sequence &#39;\m&#39;
+&lt;&gt;:27: SyntaxWarning: invalid escape sequence &#39;\m&#39;
+/var/folders/t8/8pnmh4rj2lbbd7gfq8tf09180000gn/T/ipykernel_23517/3237670559.py:27: SyntaxWarning: invalid escape sequence &#39;\m&#39;
+  ax.set_xlabel(&quot;$m_{\mu\mu}$&quot;)
+</pre></div>
 </div>
-<ul class="simple">
-<li><p>We will be focusing on Z and H for the most part. However, you might wonder what those extra peaks are from to the left of the Z peak. If we make the plot logarithmic, we’ll be able to appreciate what going on there…</p></li>
-</ul>
+<img alt="../_images/973492221e5aedd72a9e88b360705edae30b2d92fc18e80742fb21ae01e91cc6.png" src="../_images/973492221e5aedd72a9e88b360705edae30b2d92fc18e80742fb21ae01e91cc6.png" />
+</div>
+</div>
+<p>For the rest of this workshop, we will focus on the Z and Higgs boson. However, you might be wondering what those extra peaks are to the left of the Z peak. To emphasize these peaks, let’s make the plot logarithmic.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="c1"># Note: Making a logarithmic hist axis (i.e. hist with variable binning)</span>
 <span class="n">hist_data</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span>
     <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">0.1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mi">1000</span><span class="p">),</span> <span class="mi">100</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mass&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Invariant Mass [GeV]&quot;</span><span class="p">)</span>
 <span class="p">)</span>
@@ -767,13 +1387,19 @@ m_{\mu\mu} = \sqrt{
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/8ce6d21be782f53c75ae386290f6a62c370453c54120b296fa771b6c284a3472.png" src="../_images/8ce6d21be782f53c75ae386290f6a62c370453c54120b296fa771b6c284a3472.png" />
 </div>
-<ul class="simple">
-<li><p>Compare the previous plot with this one…</p></li>
-</ul>
-<div style="text-align: center;">
-  <img src="./assets/dimuonspectrumplt.png" alt="roottree" style="width: 400px"/>
-</div></section>
+</div>
+<p>Compare this to this cleaner dimuon mass spectrum with labels identifying what each peak corresponds to.</p>
+<figure class="align-default" id="dimuon-spectrum">
+<a class="reference internal image-reference" href="../_images/dimuonspectrumplt.png"><img alt="../_images/dimuonspectrumplt.png" src="../_images/dimuonspectrumplt.png" style="height: 350px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Dimuon mass spectrum</span><a class="headerlink" href="#dimuon-spectrum" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -812,7 +1438,7 @@ m_{\mu\mu} = \sqrt{
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Uproot I/O and Awkard Arrays</p>
+        <p class="prev-next-title">Uproot I/O</p>
       </div>
     </a>
     <a class="right-next"
@@ -841,7 +1467,7 @@ m_{\mu\mu} = \sqrt{
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-data">Loading the Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-the-data">Exploring the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reconstructing-the-mass">Reconstructing the mass</a></li>
 </ul>
   </nav></div>
 
