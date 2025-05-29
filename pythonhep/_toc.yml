@@ -6,7 +6,7 @@ root: content/intro
 chapters:
 - file: content/0_dictsarrs
 - file: content/1_uprootawk
-- file: content/2_ttrees
+- file: content/2_awksim
 - file: content/3_combinatronics
 - file: content/4_dimuons
 - file: content/5_vecthist
