@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PURSUE Python for HEP: Dimuons &#8212; My sample book</title>
+    <title>Dimuons Revisited &#8212; My sample book</title>
   
   
   
@@ -63,7 +63,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="PURSUE Python for HEP: Vectors and Histograms" href="5_vecthist.html" />
-    <link rel="prev" title="PURSUE Python for HEP: Combinatronics" href="3_combinatronics.html" />
+    <link rel="prev" title="Combinatronics" href="3_combinatronics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -184,9 +184,9 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="0_dictsarrs.html">Python Review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="1_uprootawk.html">Uproot I/O</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_ttrees.html">Awkward Arrays for Simulated Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3_combinatronics.html">PURSUE Python for HEP: Combinatronics</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">PURSUE Python for HEP: Dimuons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_awksim.html">Awkward Arrays for Simulated Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_combinatronics.html">Combinatronics</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Dimuons Revisited</a></li>
 <li class="toctree-l1"><a class="reference internal" href="5_vecthist.html">PURSUE Python for HEP: Vectors and Histograms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project-workbook.html">CoDaS-HEP Columnar Data Analysis, hands-on project workbook</a></li>
 </ul>
@@ -361,7 +361,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -372,11 +374,20 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>PURSUE Python for HEP: Dimuons</h1>
+    <h1>Dimuons Revisited</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-oppositely-charged-muons">Choosing oppositely charged muons</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-highest-dimuon-mass">Choosing highest dimuon mass</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -386,11 +397,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="pursue-python-for-hep-dimuons">
-<h1>PURSUE Python for HEP: Dimuons<a class="headerlink" href="#pursue-python-for-hep-dimuons" title="Link to this heading">#</a></h1>
-<ul class="simple">
-<li><p>We will now once again reconstruct the mass of the Z using dimuons, but we will take a more careful approach now using the new things we have learned. We will first use a small sample of our data before using a larger one to have increased statistics.</p></li>
-</ul>
+  <section class="tex2jax_ignore mathjax_ignore" id="dimuons-revisited">
+<h1>Dimuons Revisited<a class="headerlink" href="#dimuons-revisited" title="Link to this heading">#</a></h1>
+<p>We will now reconstruct the mass of the Z boson using dimuon events, applying a more careful and systematic approach based on the techniques we have learned so far. We begin my importing all of the libraries we need, as well as re-loading the muon data we previously downloaded.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import all neccesary libraries</span>
@@ -401,7 +410,7 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">hist</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">mplhep</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">hep</span>
-<span class="n">hep</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;CMS&quot;</span><span class="p">)</span>
+<span class="n">hep</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;CMS&quot;</span><span class="p">)</span> <span class="c1"># use CMS style for plots</span>
 </pre></div>
 </div>
 </div>
@@ -409,19 +418,19 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
-    <span class="s2">&quot;root://eospublic.cern.ch//eos/opendata/cms/derived-data/AOD2NanoAODOutreachTool/Run2012BC_DoubleMuParked_Muons.root&quot;</span>
+    <span class="s2">&quot;./uproot-tutorial-file.root&quot;</span>
 <span class="p">)</span>
 <span class="n">tree</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">]</span>
+<span class="n">muons</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">()</span>
+<span class="n">muons</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>For future convenience, we will re-organize the branches of the loaded data to something a bit more intuitive. First, we will have each muon in an event correspond to an Awkard record (recall: the equivalent to a dictionary) with all of the particle’s properties. We will also rename the observables to something less redundant, since we know we are dealing only with muon data. We can achieve this by using the <code class="docutils literal notranslate"><span class="pre">ak.zip</span></code> function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muons</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">entry_stop</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
-
-<span class="c1"># For convenience, lets rename the branches</span>
-<span class="n">muons</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muons</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">(</span>
     <span class="p">{</span>
         <span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="n">muons</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">],</span>
         <span class="s2">&quot;eta&quot;</span><span class="p">:</span> <span class="n">muons</span><span class="p">[</span><span class="s2">&quot;Muon_eta&quot;</span><span class="p">],</span>
@@ -429,21 +438,20 @@ document.write(`
         <span class="s2">&quot;charge&quot;</span><span class="p">:</span> <span class="n">muons</span><span class="p">[</span><span class="s2">&quot;Muon_charge&quot;</span><span class="p">]</span>
     <span class="p">}</span>
 <span class="p">)</span>
-
 <span class="n">muons</span>
 </pre></div>
 </div>
 </div>
 </div>
-<ul class="simple">
-<li><p>The process of interest for now is the decay of Z into two leptons, the two leptons being muons.</p></li>
-</ul>
-<div style="text-align: center;">
-  <img src="./assets/Zdimuon.png" alt="roottree" style="width: 400px"/>
+<p>Before continuing, keep in mind that the process of interest is the decay of the <span class="math notranslate nohighlight">\(Z\)</span> into a pair of leptons. The Feynman diagram for this can be seen below.</p>
+<div class="highlight-{figure}./assets/Zdimuon.png notranslate"><div class="highlight"><pre><span></span>---
+height: 350px
+name: Z2mumu
+---
+$Z\to\mu\mu$ Feynman diagram
+</pre></div>
 </div>
-<ul class="simple">
-<li><p>Firsltly, we need to find all possible unique combination of two muons per event. For this we use <code class="docutils literal notranslate"><span class="pre">ak.combinations()</span></code>. One of the convenient things with this function is that if there is less than 2 muons in an event, and thus its impossible to make a combination of two muons, the array of pairs for that event is empty (i.e. its “filtered” out).</p></li>
-</ul>
+<p>Since we don’t know where the muons originated from and whether or not it came from the decay of a <span class="math notranslate nohighlight">\(Z\)</span>, we will find all possible combinations of two muons in each event. For this we use <code class="docutils literal notranslate"><span class="pre">ak.combinations()</span></code>. One of the convenient things with this function is that if there is less than 2 muons in an event, and thus its impossible to make a combination of two muons, the array of pairs for that event is empty (i.e. its “filtered” out).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairs</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">muons</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -452,9 +460,7 @@ document.write(`
 </div>
 </div>
 </div>
-<ul class="simple">
-<li><p>Now we separate each pair of muons into their own arrays. This will allows us to do computations with these in a simple way.</p></li>
-</ul>
+<p>Now we separate each pair of muons into their own arrays. This will simplify the desired computations later on and make the code readable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
@@ -462,14 +468,11 @@ document.write(`
 </div>
 </div>
 </div>
-<ul class="simple">
-<li><p>We can now use the mass formula we used before to compute the dimuon mass.
-$<span class="math notranslate nohighlight">\(
-m_{\mu\mu} = \sqrt{
-  2p_{T,0} p_{T,1} * \left(\cosh(\eta_0 - \eta_1) - \cos(\phi_0- \phi_1)\right)
-}
-\)</span>$</p></li>
-</ul>
+<p>Let’s now use the mass formula we used before to compute the dimuon mass.</p>
+<div class="math notranslate nohighlight">
+\[m_{\mu\mu} = \sqrt{
+    2p_{T,0} p_{T,1} * \left(\cosh(\eta_0 - \eta_1) - \cos(\phi_0- \phi_1)\right)
+}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m_dimuon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
@@ -480,17 +483,15 @@ m_{\mu\mu} = \sqrt{
 </div>
 </div>
 </div>
-<ul class="simple">
-<li><p>We now want to plot these mass values in a histogram. However, you can’t plot a jagged array directly. You must first use a function such as <code class="docutils literal notranslate"><span class="pre">ak.ravel()</span></code> to “unravel” the array into a flat array. We then pass that into a histogram object and plot it using Matplotlib.</p></li>
-</ul>
+<p>We now want to plot these mass values in a histogram. However, you can’t plot a jagged array directly. You must first use a function such as <code class="docutils literal notranslate"><span class="pre">ak.ravel()</span></code> to “unravel” the array into a flat array. We then pass that into a <code class="docutils literal notranslate"><span class="pre">hist.Hist</span></code> object and plot it using Matplotlib.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-<span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span>
-    <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mass [GeV]&quot;</span><span class="p">)</span>
-<span class="p">)</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">m_dimuon</span><span class="p">))</span><span class="o">.</span><span class="n">plot1d</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">&quot;step&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$m_{\mu\mu}$&quot;</span><span class="p">)</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span><span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mass [GeV]&quot;</span><span class="p">))</span>
+<span class="n">h</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">m_dimuon</span><span class="p">))</span>
 
+<span class="n">h</span><span class="o">.</span><span class="n">plot1d</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">&quot;step&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$m_{\mu\mu}$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Dimuon Mass&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Mass (GeV)&quot;</span><span class="p">)</span>
@@ -501,65 +502,103 @@ m_{\mu\mu} = \sqrt{
 </div>
 </div>
 </div>
+<p>Uh-oh. We seem to have made things worse! The Z peak now looks very small compared to what we obtained before. In order to fix this, we can take into account certain physical considerations which may allow us to reject more of the background. Here are some things to consider:</p>
 <ul class="simple">
-<li><p>This seems to have made things worse! Now the Z peak is very small compared to before. We will need to fix this.</p></li>
-<li><p>Another thing we can try it plotting the maximum dimuon mass for each event. Doing this can help us in the following ways</p>
-<ul>
-<li><p>Background reduction: background tends to have lower invariant mass compared to the Z boson</p></li>
-<li><p>Highest dimuon mass is more likely to have come from the direct decay of a heavy particle like the Z rather than from lower mass background processes</p></li>
-<li><p>Helps reduce contribution of random low-mass pairs that are more likely to be background, increasing StoN ratio.</p></li>
+<li><p>The highest dimuon mass is more likely to have come from the direct decay of a heavy particle like the Z rather than from lower mass background processes.</p></li>
+<li><p>The Z boson is electrically neutral so the muons must be of opposite charge in order for there to be charge conservation.</p></li>
+<li><p>Due to momentum conservation, we expect the muons to not be too far apart in space. (Next chapter!)</p></li>
 </ul>
-</li>
-</ul>
+<section id="choosing-oppositely-charged-muons">
+<h2>Choosing oppositely charged muons<a class="headerlink" href="#choosing-oppositely-charged-muons" title="Link to this heading">#</a></h2>
+<p>We first make a mask using <code class="docutils literal notranslate"><span class="pre">mu1</span></code> and <code class="docutils literal notranslate"><span class="pre">mu2</span></code> that selects muon pairs of opposite charge.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_m_dimuon</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">m_dimuon</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="c1"># This next step removes any `None` values that arrise in events for which there are zero entries in m_dimuon</span>
-<span class="n">max_m_dimuon</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">max_m_dimuon</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">max_m_dimuon</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">opp_charge_mask</span> <span class="o">=</span> <span class="n">mu1</span><span class="p">[</span><span class="s2">&quot;charge&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">mu2</span><span class="p">[</span><span class="s2">&quot;charge&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="n">pairs_opposite_charge</span> <span class="o">=</span> <span class="n">pairs</span><span class="p">[</span><span class="n">opp_charge_mask</span><span class="p">]</span>
+<span class="n">mu1_opposite</span><span class="p">,</span> <span class="n">mu2_opposite</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">pairs_opposite_charge</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>We now compute the mass of these new set of oppositely charged muons.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m_dimuon_opposite</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+    <span class="mi">2</span> <span class="o">*</span> <span class="n">mu1_opposite</span><span class="p">[</span><span class="s2">&quot;pt&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">mu2_opposite</span><span class="p">[</span><span class="s2">&quot;pt&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">mu1_opposite</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">mu2_opposite</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">mu1_opposite</span><span class="p">[</span><span class="s2">&quot;phi&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">mu2_opposite</span><span class="p">[</span><span class="s2">&quot;phi&quot;</span><span class="p">]))</span>
+<span class="p">)</span>
+<span class="n">m_dimuon_opposite</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we plot the masses, making sure to flatten the array.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-<span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span>
+<span class="c1"># Making hist</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span>
     <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mass [GeV]&quot;</span><span class="p">)</span>
-<span class="p">)</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">max_m_dimuon</span><span class="p">)</span><span class="o">.</span><span class="n">plot1d</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">&quot;step&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$m_{\mu\mu}$&quot;</span><span class="p">)</span>
+<span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Dimuon Mass&quot;</span><span class="p">)</span>
+<span class="c1"># Filling hist</span>
+<span class="n">h</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span>
+    <span class="n">ak</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">m_dimuon_opposite</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Plotting hist</span>
+<span class="n">h</span><span class="o">.</span><span class="n">plot1d</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">&quot;step&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$m_{\mu\mu}$ (opposite charge)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Dimuon Mass (Opposite Charge)&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Mass (GeV)&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Exercises</strong>:</p>
-<ol class="arabic simple">
-<li><p>Select pairs of muons with opposite charges.</p></li>
-<li><p>Plot the one mass candidate per event that is strictly closest to the Z mass. Use <code class="docutils literal notranslate"><span class="pre">zmass</span> <span class="pre">=</span> <span class="pre">91</span></code>. Alternatively, use the value obtained from the Particle library.</p></li>
-</ol>
+</section>
+<section id="choosing-highest-dimuon-mass">
+<h2>Choosing highest dimuon mass<a class="headerlink" href="#choosing-highest-dimuon-mass" title="Link to this heading">#</a></h2>
+<p>We first get the maximum per-event mass from the computation we did before.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Answer 1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Highest dimuon mass with opposite charge</span>
+<span class="n">max_m_dimuon_opposite</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">m_dimuon_opposite</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">max_m_dimuon_opposite</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>The array can’t be used as-is, because it contains <code class="docutils literal notranslate"><span class="pre">None</span></code> values which we cannot use to fill out histogram. Fortunately, a neat feature of <code class="docutils literal notranslate"><span class="pre">ak.flatten</span></code> is that it can be used to remove the <code class="docutils literal notranslate"><span class="pre">None</span></code> values from a flat array.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Answer 2</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">particle</span><span class="o">,</span><span class="w"> </span><span class="nn">hepunits</span>
-<span class="n">zmass</span> <span class="o">=</span> <span class="n">particle</span><span class="o">.</span><span class="n">Particle</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;Z0&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mass</span> <span class="o">/</span> <span class="n">hepunits</span><span class="o">.</span><span class="n">GeV</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ak.flatten is used here to remove None values</span>
+<span class="n">max_m_dimuon_opposite</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">max_m_dimuon_opposite</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">max_m_dimuon_opposite</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>We are now ready to plot!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Highest dimuon mass with opposite charge plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span>
+    <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mass [GeV]&quot;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">max_m_dimuon_opposite</span><span class="p">)</span><span class="o">.</span><span class="n">plot1d</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">&quot;step&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$m_{\mu\mu}$ (max mass, opposite charge)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Max Dimuon Mass (Opposite Charge)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Mass (GeV)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercises</strong>: Instead of maximizing the mass of the dimuon we choose from each event, try selecting the mass closest to the known mass of the <span class="math notranslate nohighlight">\(Z\)</span> boson. (Hint: look up <code class="docutils literal notranslate"><span class="pre">ak.argmin</span></code> in Google)</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -598,7 +637,7 @@ m_{\mu\mu} = \sqrt{
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">PURSUE Python for HEP: Combinatronics</p>
+        <p class="prev-next-title">Combinatronics</p>
       </div>
     </a>
     <a class="right-next"
@@ -616,6 +655,22 @@ m_{\mu\mu} = \sqrt{
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-oppositely-charged-muons">Choosing oppositely charged muons</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-highest-dimuon-mass">Choosing highest dimuon mass</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
