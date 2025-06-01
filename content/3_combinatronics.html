@@ -187,8 +187,8 @@
 <li class="toctree-l1"><a class="reference internal" href="2_awksim.html">Awkward Arrays for Simulated Data</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Combinatronics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_dimuons.html">Dimuons Revisited</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5_vecthist.html">PURSUE Python for HEP: Vectors and Histograms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="project-workbook.html">CoDaS-HEP Columnar Data Analysis, hands-on project workbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_vecthist.html">Vectors and Multi-dimensional Histograms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project-workbook.html">Project: Discover the Higgs!</a></li>
 </ul>
 
     </div>
@@ -623,8 +623,8 @@ document.write(`
 <h2>Combinatronics<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>Because we don’t know exactly which process each detected particle originated from (i.e., whether it is part of the signal or background), we must use combinatorics to consider all possible combinations of muons within each event. This combinatorial approach, together with physical constraints such as conservation of charge and energy, allows us to reconstruct the properties of parent particle while helping to suppress background events. Awkward Array provides two key functions for these tasks:</p>
 <ul class="simple">
-<li><p>ak.cartesian(): Computes the Cartesian product (cross product) of multiple arrays, generating all possible pairs (or tuples) of elements, one from each array. This is useful for pairing different types of particles or objects within events.</p></li>
-<li><p>ak.combinations(): Computes all unique combinations of elements from a single array, sampled without replacement. This is especially useful for finding all possible pairs, triplets, etc., of the same particle type within an event, without repeating the same element.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ak.cartesian()</span></code>: Computes the Cartesian product (cross product) of multiple arrays, generating all possible pairs (or tuples) of elements, one from each array. This is useful for pairing different types of particles or objects within events.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ak.combinations()</span></code>: Computes all unique combinations of elements from a single array, sampled without replacement. This is especially useful for finding all possible pairs, triplets, etc., of the same particle type within an event, without repeating the same element.</p></li>
 </ul>
 <p>In the next chapter, we will be applying these functions to our data in order to improve our dimuon mass spectrum. For now, we will finish this chapter by just seeing how these two functions work.</p>
 <section id="ak-cartesian">

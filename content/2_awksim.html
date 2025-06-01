@@ -187,8 +187,8 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Awkward Arrays for Simulated Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_combinatronics.html">Combinatronics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_dimuons.html">Dimuons Revisited</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5_vecthist.html">PURSUE Python for HEP: Vectors and Histograms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="project-workbook.html">CoDaS-HEP Columnar Data Analysis, hands-on project workbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_vecthist.html">Vectors and Multi-dimensional Histograms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project-workbook.html">Project: Discover the Higgs!</a></li>
 </ul>
 
     </div>
@@ -399,20 +399,14 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="awkward-arrays-for-simulated-data">
 <h1>Awkward Arrays for Simulated Data<a class="headerlink" href="#awkward-arrays-for-simulated-data" title="Link to this heading">#</a></h1>
+<p>In this chapter, we will be using Uproot and Awkard arrays to open and work simulated data.</p>
 <section id="loading-the-data">
 <h2>Loading the Data<a class="headerlink" href="#loading-the-data" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Uproot can open not just local ROOT files, but it can also open remote files. We will be working with a file which is hosted by CERN’s Open Data Portal.</p></li>
-<li><p>Note: If you are unable to access the remote file, uncomment the next cell and run it to download an alternative, smaller file.</p></li>
-</ul>
-<p>Run the following command to copy another, smaller file in your working directory</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://cernbox.cern.ch/remote.php/dav/public-files/d0FqsjN68SsBlul/uproot-tutorial-file.root
-</pre></div>
-</div>
+<p>First things first: we need the data. Run the following cell to download the simulated data we will be using.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uncomment the following line and run to download the data file directly from the notebook</span>
-<span class="c1"># !wget wget https://cernbox.cern.ch/remote.php/dav/public-files/d0FqsjN68SsBlul/uproot-tutorial-file.root</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The ! command is used to run shell commands in a Jupyter notebook or similar environment.</span>
+<span class="o">!</span>wget<span class="w"> </span>wget<span class="w"> </span>https://cernbox.cern.ch/remote.php/dav/public-files/d0FqsjN68SsBlul/uproot-tutorial-file.root
 </pre></div>
 </div>
 </div>

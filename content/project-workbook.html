@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>CoDaS-HEP Columnar Data Analysis, hands-on project workbook &#8212; My sample book</title>
+    <title>Project: Discover the Higgs! &#8212; My sample book</title>
   
   
   
@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'content/project-workbook';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="PURSUE Python for HEP: Vectors and Histograms" href="5_vecthist.html" />
+    <link rel="prev" title="Vectors and Multi-dimensional Histograms" href="5_vecthist.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -186,8 +186,8 @@
 <li class="toctree-l1"><a class="reference internal" href="2_awksim.html">Awkward Arrays for Simulated Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_combinatronics.html">Combinatronics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_dimuons.html">Dimuons Revisited</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5_vecthist.html">PURSUE Python for HEP: Vectors and Histograms</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">CoDaS-HEP Columnar Data Analysis, hands-on project workbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_vecthist.html">Vectors and Multi-dimensional Histograms</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Project: Discover the Higgs!</a></li>
 </ul>
 
     </div>
@@ -373,7 +373,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>CoDaS-HEP Columnar Data Analysis, hands-on project workbook</h1>
+    <h1>Project: Discover the Higgs!</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -383,9 +383,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-discover-the-higgs">Project: discover the Higgs!</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-setup">Data Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-4-leptons-of-the-same-flavor">Higgs mass peak: 4 leptons of the same flavor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#libraries">Libraries</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-setup">Data Setup</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-4-leptons-of-the-same-flavor">Higgs mass peak: 4 leptons of the same flavor</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#charge-based-collections">Charge-based collections</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-the-h-zz-22e-final-state">Higgs mass peak: the H → ZZ → 2μ2e final state</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-on-shell-z-in-the-22e-final-state">Select on-shell Z in the 2μ2e final state</a></li>
@@ -406,22 +410,24 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="codas-hep-columnar-data-analysis-hands-on-project-workbook">
-<h1>CoDaS-HEP Columnar Data Analysis, hands-on project workbook<a class="headerlink" href="#codas-hep-columnar-data-analysis-hands-on-project-workbook" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="project-discover-the-higgs">
+<h1>Project: Discover the Higgs!<a class="headerlink" href="#project-discover-the-higgs" title="Link to this heading">#</a></h1>
 <p>CREDIT: This notebook was developed by Jim Pivarski and Ioana Ifrim for the <a class="reference external" href="https://indico.cern.ch/event/1287965/timetable/#41-columnar-data-analysis">columnar data analysis</a> tutorial, presented at CoDaS-HEP on July 20, 2023. For full material, please visit please visit this <a class="reference external" href="https://github.com/ioanaif/columnar-data-analysis-codas-hep-2023">repository</a>.</p>
-<section id="project-discover-the-higgs">
-<h2>Project: discover the Higgs!<a class="headerlink" href="#project-discover-the-higgs" title="Link to this heading">#</a></h2>
 <p>Gather into groups of 2 or 3 to work on the problems posed in the rest of this notebook. Mentors will be available to answer questions and provide hints.</p>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
 </section>
-<section id="data-setup">
-<h2>Data Setup<a class="headerlink" href="#data-setup" title="Link to this heading">#</a></h2>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
+<section id="libraries">
+<h3>Libraries<a class="headerlink" href="#libraries" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">hist</span><span class="o">,</span><span class="w"> </span><span class="nn">vector</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">hist</span><span class="o">,</span><span class="w"> </span><span class="nn">vector</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uproot</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">awkward</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ak</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">awkward</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ak</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">uproot</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 <span class="n">vector</span><span class="o">.</span><span class="n">register_awkward</span><span class="p">()</span>
@@ -429,56 +435,90 @@ document.write(`
 </div>
 </div>
 </div>
+</section>
+<section id="data-setup">
+<h3>Data Setup<a class="headerlink" href="#data-setup" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlopen</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-
-<span class="n">URL</span> <span class="o">=</span> <span class="s2">&quot;https://cernbox.cern.ch/remote.php/dav/public-files/RG1Xg8y1evEqFMA/worbook-data.json&quot;</span>
-
-<span class="n">response</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
-<span class="n">data_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run to download the dataset</span>
+<span class="o">!</span>wget<span class="w"> </span>https://cernbox.cern.ch/files/spaces/eos/user/r/rcruzcan/public_downloads/SMHiggsToZZTo4L.root
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_data</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data_json</span><span class="p">))</span>
-<span class="n">events</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">({</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get a handle to the ROOT file and show the available branches in the tree</span>
+<span class="n">file</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;./SMHiggsToZZTo4L.root&quot;</span><span class="p">)</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">]</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the data into an awkward array</span>
+<span class="n">events</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For future convenience, and to be able to use <code class="docutils literal notranslate"><span class="pre">vector</span></code>, we will reformat the loaded data into a more manageable format. Note that this is not neccesary, but is just to make life a bit simpler.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">({</span>
     <span class="s2">&quot;PV&quot;</span><span class="p">:</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">({</span>
-        <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;PV_x&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;PV_y&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;PV_z&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;PV_x&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;PV_y&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;PV_z&quot;</span><span class="p">],</span>
     <span class="p">},</span> <span class="n">with_name</span><span class="o">=</span><span class="s2">&quot;Vector3D&quot;</span><span class="p">),</span>
     <span class="s2">&quot;muon&quot;</span><span class="p">:</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">({</span>
-        <span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;phi&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_phi&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;eta&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_eta&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;mass&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_mass&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;charge&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_charge&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;pfRelIso03&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_pfRelIso03_all&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;pfRelIso04&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Muon_pfRelIso04_all&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;Muon_pt&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;phi&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;Muon_phi&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;eta&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;Muon_eta&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;mass&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;Muon_mass&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;charge&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;Muon_charge&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;pfRelIso03&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;Muon_pfRelIso03_all&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;pfRelIso04&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;Muon_pfRelIso04_all&quot;</span><span class="p">],</span>
     <span class="p">},</span> <span class="n">with_name</span><span class="o">=</span><span class="s2">&quot;Momentum4D&quot;</span><span class="p">),</span>
     <span class="s2">&quot;electron&quot;</span><span class="p">:</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">({</span>
-        <span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Electron_pt&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;phi&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Electron_phi&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;eta&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Electron_eta&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;mass&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Electron_mass&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;charge&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Electron_charge&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;pfRelIso03&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;Electron_pfRelIso03_all&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;Electron_pt&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;phi&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;Electron_phi&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;eta&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;Electron_eta&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;mass&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;Electron_mass&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;charge&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;Electron_charge&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;pfRelIso03&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;Electron_pfRelIso03_all&quot;</span><span class="p">],</span>
     <span class="p">},</span> <span class="n">with_name</span><span class="o">=</span><span class="s2">&quot;Momentum4D&quot;</span><span class="p">),</span>
     <span class="s2">&quot;MET&quot;</span><span class="p">:</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">({</span>
-        <span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;MET_pt&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;phi&quot;</span><span class="p">:</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;MET_phi&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;MET_pt&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;phi&quot;</span><span class="p">:</span> <span class="n">events</span><span class="p">[</span><span class="s2">&quot;MET_phi&quot;</span><span class="p">],</span>
     <span class="p">},</span> <span class="n">with_name</span><span class="o">=</span><span class="s2">&quot;Momentum2D&quot;</span><span class="p">),</span>
 <span class="p">},</span> <span class="n">depth_limit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example of accesing some data through dict-like syntax</span>
+<span class="n">events</span><span class="p">[</span><span class="s2">&quot;muon&quot;</span><span class="p">][</span><span class="s2">&quot;pt&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example of accessing data through the awkward array syntax</span>
+<span class="n">events</span><span class="o">.</span><span class="n">muon</span><span class="o">.</span><span class="n">pt</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
 <section id="higgs-mass-peak-4-leptons-of-the-same-flavor">
-<h3>Higgs mass peak: 4 leptons of the same flavor<a class="headerlink" href="#higgs-mass-peak-4-leptons-of-the-same-flavor" title="Link to this heading">#</a></h3>
+<h2>Higgs mass peak: 4 leptons of the same flavor<a class="headerlink" href="#higgs-mass-peak-4-leptons-of-the-same-flavor" title="Link to this heading">#</a></h2>
 <p>Instead of a Z mass peak, formed with 2 muons (or 2 electrons), draw a Higgs mass peak with 4 muons (or 4 electrons).</p>
 <p>No need for any cuts, yet. Focus only on the combinatorics.</p>
 <p><strong>Hint:</strong> look at the <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.combinations.html">ak.combinations</a> documentation to find the argument you need to change.</p>
@@ -492,7 +532,6 @@ document.write(`
 </div>
 <p>Should look like:</p>
 <p><img alt="image.png" src="content/attachment:eb9d1a70-c990-49b5-9c3f-98afcaf4478c.png" /></p>
-</section>
 <section id="charge-based-collections">
 <h3>Charge-based collections<a class="headerlink" href="#charge-based-collections" title="Link to this heading">#</a></h3>
 <p>Because of the way that particles are measured and reconstructed, different particle types (electron versus muon) are in different collections, but different charges are not.</p>
@@ -815,7 +854,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">PURSUE Python for HEP: Vectors and Histograms</p>
+        <p class="prev-next-title">Vectors and Multi-dimensional Histograms</p>
       </div>
     </a>
 </div>
@@ -834,9 +873,13 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-discover-the-higgs">Project: discover the Higgs!</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-setup">Data Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-4-leptons-of-the-same-flavor">Higgs mass peak: 4 leptons of the same flavor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#libraries">Libraries</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-setup">Data Setup</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-4-leptons-of-the-same-flavor">Higgs mass peak: 4 leptons of the same flavor</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#charge-based-collections">Charge-based collections</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-the-h-zz-22e-final-state">Higgs mass peak: the H → ZZ → 2μ2e final state</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-on-shell-z-in-the-22e-final-state">Select on-shell Z in the 2μ2e final state</a></li>

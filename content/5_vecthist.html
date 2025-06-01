@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PURSUE Python for HEP: Vectors and Histograms &#8212; My sample book</title>
+    <title>Vectors and Multi-dimensional Histograms &#8212; My sample book</title>
   
   
   
@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'content/5_vecthist';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="CoDaS-HEP Columnar Data Analysis, hands-on project workbook" href="project-workbook.html" />
+    <link rel="next" title="Project: Discover the Higgs!" href="project-workbook.html" />
     <link rel="prev" title="Dimuons Revisited" href="4_dimuons.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -187,8 +187,8 @@
 <li class="toctree-l1"><a class="reference internal" href="2_awksim.html">Awkward Arrays for Simulated Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_combinatronics.html">Combinatronics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_dimuons.html">Dimuons Revisited</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">PURSUE Python for HEP: Vectors and Histograms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="project-workbook.html">CoDaS-HEP Columnar Data Analysis, hands-on project workbook</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Vectors and Multi-dimensional Histograms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project-workbook.html">Project: Discover the Higgs!</a></li>
 </ul>
 
     </div>
@@ -374,7 +374,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>PURSUE Python for HEP: Vectors and Histograms</h1>
+    <h1>Vectors and Multi-dimensional Histograms</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -384,9 +384,15 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-dimension-histogram">Single Dimension Histogram</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-dimension-histograms">Multiple Dimension Histograms</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vectors">Vectors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vectors">Vectors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#awkward-arrays-and-vector">Awkward arrays and Vector</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hist">Hist</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#universal-histogram-indexing-uhi">Universal Histogram Indexing (UHI)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-dimensional-histograms">Multi-dimensional histograms</a></li>
 </ul>
             </nav>
         </div>
@@ -398,153 +404,17 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="pursue-python-for-hep-vectors-and-histograms">
-<h1>PURSUE Python for HEP: Vectors and Histograms<a class="headerlink" href="#pursue-python-for-hep-vectors-and-histograms" title="Link to this heading">#</a></h1>
-<ul class="simple">
-<li><p>So far, we have been using a limit set of features of the Hist library. In this notebook, we will take a closer look into this library and some of its very powerful features.</p></li>
-<li><p>Additionally,</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skhep_testdata</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">uproot</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">awkward</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ak</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">hist</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">vector</span>
-</pre></div>
-</div>
-</div>
-</div>
-<section id="single-dimension-histogram">
-<h2>Single Dimension Histogram<a class="headerlink" href="#single-dimension-histogram" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Numpy has basic histogramming features. It includes a function, <code class="docutils literal notranslate"><span class="pre">np.histogram</span></code>, which, when given an array of data, bins data and returns the bin heights and bin edges.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">skhep_testdata</span><span class="o">.</span><span class="n">data_path</span><span class="p">(</span><span class="s2">&quot;uproot-Zmumu.root&quot;</span><span class="p">))[</span><span class="s2">&quot;events&quot;</span><span class="p">]</span>
-<span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">array</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>As we saw briefly, Matplotlib also has some plotting features for histograms.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">array</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>However, for specialized uses like those in HEP, the features Numpy and Matplotlib provide are limited.</p></li>
-<li><p>The hist library offers advanced histogramming tools. It is built on top of boost-histogram, which is in itself a very fast histogramming library.</p></li>
-<li><p>The two powerful features we will take a look at are multidimensional histograms with named axis and slicing of histograms.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">hist</span>
-
-<span class="n">h</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span><span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mass&quot;</span><span class="p">))</span>
-
-<span class="n">h</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">array</span><span class="p">())</span>
-
-<span class="n">h</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Slicing bins. Numbers here are NOT coordinate values, but the idx for the bin</span>
-<span class="n">h</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">110</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># To select by coordinate value</span>
-<span class="n">h</span><span class="p">[</span><span class="n">hist</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="mi">90</span><span class="p">):]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here is how you rebin by a factor</span>
-<span class="n">h</span><span class="p">[</span><span class="n">hist</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="mi">70</span><span class="p">):</span><span class="n">hist</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="mi">110</span><span class="p">):</span><span class="n">hist</span><span class="o">.</span><span class="n">rebin</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Integrating over a range</span>
-<span class="n">h</span><span class="p">[</span><span class="n">hist</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="mi">80</span><span class="p">):</span><span class="n">hist</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span><span class="nb">sum</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="multiple-dimension-histograms">
-<h2>Multiple Dimension Histograms<a class="headerlink" href="#multiple-dimension-histograms" title="Link to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">picodst</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
-    <span class="s2">&quot;https://pivarski-princeton.s3.amazonaws.com/pythia_ppZee_run17emb.picoDst.root:PicoDst&quot;</span>
-<span class="p">)</span>
-
-<span class="n">vertex_data</span> <span class="o">=</span> <span class="n">picodst</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="s2">&quot;*mPrimaryVertex[XYZ]&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vertexhist</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span>
-    <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">),</span>
-    <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">),</span>
-    <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="o">-</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">),</span>
-<span class="p">)</span>
-
-<span class="n">vertexhist</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span>
-    <span class="n">ak</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">vertex_data</span><span class="p">[</span><span class="s2">&quot;Event.mPrimaryVertexX&quot;</span><span class="p">]),</span>
-    <span class="n">ak</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">vertex_data</span><span class="p">[</span><span class="s2">&quot;Event.mPrimaryVertexY&quot;</span><span class="p">]),</span>
-    <span class="n">ak</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">vertex_data</span><span class="p">[</span><span class="s2">&quot;Event.mPrimaryVertexZ&quot;</span><span class="p">]),</span>
-<span class="p">)</span>
-
-<span class="n">main_art</span><span class="p">,</span> <span class="n">top_art</span><span class="p">,</span> <span class="n">side_art</span> <span class="o">=</span> <span class="n">vertexhist</span><span class="p">[</span>
-    <span class="n">hist</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="o">-</span><span class="mf">0.25</span><span class="p">)</span> <span class="p">:</span> <span class="n">hist</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span> <span class="n">hist</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="o">-</span><span class="mf">0.25</span><span class="p">)</span> <span class="p">:</span> <span class="n">hist</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span> <span class="nb">sum</span> <span class="c1"># x and y from -0.25 to 0.25, z is intregrated over</span>
-<span class="p">]</span><span class="o">.</span><span class="n">plot2d_full</span><span class="p">()</span> <span class="c1"># Allows marginal histograms along x and y</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Exercise</strong>: Using the dimuon data we loaded from opendata, plot a 2d histogram of eta vs phi. Explain what you are looking at in the histogram.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Answer</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
+  <section class="tex2jax_ignore mathjax_ignore" id="vectors-and-multi-dimensional-histograms">
+<h1>Vectors and Multi-dimensional Histograms<a class="headerlink" href="#vectors-and-multi-dimensional-histograms" title="Link to this heading">#</a></h1>
 <section id="vectors">
 <h2>Vectors<a class="headerlink" href="#vectors" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>We are dealing with physics data, so wouldn’t it be cool to have some kind of data structure specifically made for this sort of purpose? Well, there is!</p></li>
-<li><p>Suppose you want to compute <span class="math notranslate nohighlight">\(\Delta R\)</span>. We know that this is given by
-$<span class="math notranslate nohighlight">\(
-      \Delta R = \sqrt{(\Delta \eta)^2 + (\Delta \phi)^2}
-  \)</span><span class="math notranslate nohighlight">\(
-  Now suppose you only have \)</span>p_x<span class="math notranslate nohighlight">\(, \)</span>p_y<span class="math notranslate nohighlight">\( and \)</span>p_z<span class="math notranslate nohighlight">\(. Although you have all the information you need to compute \)</span>\Delta R$, it is a bit annoying and you will have to do some extra computations, making your code filled with intermediate steps and forcing you to define functions that should be common. This is where Vector can help! It automatically computes these values when requested.</p></li>
-<li><p>With vector, we can construct 2D, 3D and Lorentz vectors.</p></li>
-</ul>
+<p>So far, to compute the mass for the dimuon spectrum, we have been using the equation</p>
+<div class="math notranslate nohighlight">
+\[m_{\mu\mu} = \sqrt{
+    2p_{T,0} p_{T,1} * \left(\cosh(\eta_0 - \eta_1) - \cos(\phi_0- \phi_1)\right)
+}\]</div>
+<p>However, having to implement things like this and other equations that are common in HEP involving vector quantities can get annoying quickly. Luckily, Scikit-HEP has a solution for this: the <code class="docutils literal notranslate"><span class="pre">vector</span></code> library! This library can handle different types of vectors such as 4-vectors, 3D spatial vectors, and more, and it can seamlessly compute derived quantities. Moreover, these vectors can be represented in a variety of coordinate systems: cartesian, cylindrical, spherical, and any combination of these with time and proper time for Lorentz vectors.</p>
+<p>As an example, lets define two 3-momentum vectors. and add them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">vector</span>
@@ -553,40 +423,388 @@ $<span class="math notranslate nohighlight">\(
 <span class="n">two</span> <span class="o">=</span> <span class="n">vector</span><span class="o">.</span><span class="n">obj</span><span class="p">(</span><span class="n">px</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">py</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pz</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">one</span> <span class="o">+</span> <span class="n">two</span>
-
-<span class="n">one</span><span class="o">.</span><span class="n">deltaR</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
-
-<span class="n">one</span><span class="o">.</span><span class="n">to_rhophieta</span><span class="p">()</span>
-<span class="n">two</span><span class="o">.</span><span class="n">to_rhophieta</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also get the magnitude of the “distance” between these two vectors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">one</span><span class="o">.</span><span class="n">deltaR</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And we can very easily change the coordinate system.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">one</span><span class="o">.</span><span class="n">to_rhophieta</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">skhep_testdata</span><span class="o">.</span><span class="n">data_path</span><span class="p">(</span><span class="s2">&quot;uproot-Zmumu.root&quot;</span><span class="p">))[</span><span class="s2">&quot;events&quot;</span><span class="p">]</span>
-
-<span class="n">one</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;E1&quot;</span><span class="p">,</span> <span class="s2">&quot;p[xyz]1&quot;</span><span class="p">]))</span>
-<span class="n">two</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;E2&quot;</span><span class="p">,</span> <span class="s2">&quot;p[xyz]2&quot;</span><span class="p">]))</span>
-
-<span class="c1"># Changing dtype.names field</span>
-<span class="n">one</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;px&quot;</span><span class="p">,</span> <span class="s2">&quot;py&quot;</span><span class="p">,</span> <span class="s2">&quot;pz&quot;</span><span class="p">)</span>
-<span class="n">two</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;px&quot;</span><span class="p">,</span> <span class="s2">&quot;py&quot;</span><span class="p">,</span> <span class="s2">&quot;pz&quot;</span><span class="p">)</span>
-
-<span class="c1"># Changing view of data</span>
-<span class="n">one</span> <span class="o">=</span> <span class="n">one</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">vector</span><span class="o">.</span><span class="n">MomentumNumpy4D</span><span class="p">)</span>
-<span class="n">two</span> <span class="o">=</span> <span class="n">two</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">vector</span><span class="o">.</span><span class="n">MomentumNumpy4D</span><span class="p">)</span>
-
-<span class="n">one</span> <span class="o">+</span> <span class="n">two</span>
-
-<span class="n">one</span><span class="o">.</span><span class="n">deltaR</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
-
-<span class="n">one</span><span class="o">.</span><span class="n">to_rhophieta</span><span class="p">()</span>
-<span class="n">two</span><span class="o">.</span><span class="n">to_rhophieta</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">one</span> <span class="o">+</span> <span class="n">two</span><span class="p">)</span><span class="o">.</span><span class="n">to_rhophieta</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Notice that we can get derived quantities not explicitly given to the object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">one</span><span class="o">.</span><span class="n">to_Vector4D</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This library includes the classes <code class="docutils literal notranslate"><span class="pre">MomentumNumpy2D</span></code>, <code class="docutils literal notranslate"><span class="pre">MomentumNumpy3D</span></code> and <code class="docutils literal notranslate"><span class="pre">MomentumNumpy4D</span></code> which are NumPy array sub-types, so NumPy arrays can be cast to these types and get all the <code class="docutils literal notranslate"><span class="pre">vector</span></code> function. As an example, lets use the <code class="docutils literal notranslate"><span class="pre">skhep_testdata</span></code> library to load some test data which contains simulated events of <span class="math notranslate nohighlight">\(Z \to \mu\mu\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">uproot</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">skhep_testdata</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">awkward</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ak</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">skhep_testdata</span><span class="o">.</span><span class="n">data_path</span><span class="p">(</span><span class="s2">&quot;uproot-Zmumu.root&quot;</span><span class="p">))[</span><span class="s2">&quot;events&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zmumu</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">()</span>
+<span class="n">zmumu</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Loading data into `ndarrays`</span>
+<span class="c1"># Each column in the ndarray has a name, which is the name of the branch in the tree.</span>
+<span class="n">mu1</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;E1&quot;</span><span class="p">,</span> <span class="s2">&quot;p[xyz]1&quot;</span><span class="p">]))</span>
+<span class="n">mu2</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;E1&quot;</span><span class="p">,</span> <span class="s2">&quot;p[xyz]2&quot;</span><span class="p">]))</span>
+<span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Changing name of columns</span>
+<span class="n">mu1</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;px&quot;</span><span class="p">,</span> <span class="s2">&quot;py&quot;</span><span class="p">,</span> <span class="s2">&quot;pz&quot;</span><span class="p">)</span>
+<span class="n">mu2</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;px&quot;</span><span class="p">,</span> <span class="s2">&quot;py&quot;</span><span class="p">,</span> <span class="s2">&quot;pz&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Casting to vector.MomentumNumpy4D</span>
+<span class="n">mu1_vector</span> <span class="o">=</span> <span class="n">mu1</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">vector</span><span class="o">.</span><span class="n">MomentumNumpy4D</span><span class="p">)</span>
+<span class="n">mu2_vector</span> <span class="o">=</span> <span class="n">mu2</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">vector</span><span class="o">.</span><span class="n">MomentumNumpy4D</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have access to a lot of useful methods for 4-vectors (4-momentum in this case). Let’s see some examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mu1_vector.t</span></code>: gives you the array of energy (<span class="math notranslate nohighlight">\(E\)</span>) values. In the context of a 4-momentum vector <span class="math notranslate nohighlight">\((E, p_x, p_y, p_z)\)</span>, <code class="docutils literal notranslate"><span class="pre">.t</span></code> refers to the time-like (energy) component.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1_vector</span><span class="o">.</span><span class="n">t</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">mu1_vector.beta</span></code> gives you the speed of each muon in the lab frame as a fraction of the speed of light, <span class="math notranslate nohighlight">\(c\)</span>. In relativistic kinematics, <span class="math notranslate nohighlight">\(\beta\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+    \beta = \frac{|\vec{p}|}{E} = \frac{v}{c}
+    \]</div>
+<p>where <span class="math notranslate nohighlight">\(|\vec{p}|\)</span> is the magnitude of the muon’s momentum and <span class="math notranslate nohighlight">\(E\)</span> is its energy. The value of <span class="math notranslate nohighlight">\(\beta\)</span> ranges from 0 (at rest) to nearly 1 (ultra-relativistic).</p>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Getting the speed of the muon in the lab frame</span>
+<span class="n">mu1_vector</span><span class="o">.</span><span class="n">beta</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">mu1_vector.boostX()</span></code> applies a Lorentz boost to each muon 4-vector in the <strong>x direction</strong>. A Lorentz boost changes the reference frame, simulating what the particle’s energy and momentum would look like if observed from a frame moving with velocity <span class="math notranslate nohighlight">\(\beta\)</span> along the x-axis.</p>
+<p>The boost matrix in the x direction is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{pmatrix}
+    \gamma &amp; -\beta\gamma &amp; 0 &amp; 0 \\
+    -\beta\gamma &amp; \gamma &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 1 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 1
+    \end{pmatrix}
+    \end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\beta = v/c\)</span> is the velocity as a fraction of the speed of light, and <span class="math notranslate nohighlight">\(\gamma = 1/\sqrt{1-\beta^2}\)</span>.</p>
+<p>Applying this matrix to a 4-vector <span class="math notranslate nohighlight">\((E, p_x, p_y, p_z)\)</span> transforms the energy and <span class="math notranslate nohighlight">\(p_x\)</span> components, leaving <span class="math notranslate nohighlight">\(p_y\)</span> and <span class="math notranslate nohighlight">\(p_z\)</span> unchanged. In practice, <code class="docutils literal notranslate"><span class="pre">mu1_vector.boostX()</span></code> returns a new array of 4-vectors, each boosted in the x direction by their own velocity. This is useful for transforming to the rest frame of a particle or for simulating different reference frames in relativistic kinematics.</p>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1_vector</span><span class="o">.</span><span class="n">boostX</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">mu1_vector.Et</span></code> gives you the transverse energy (<span class="math notranslate nohighlight">\(E_T\)</span>) of a particle which is defined as the component of its energy perpendicular to the beam (z) axis. It is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+    E_T = E \cdot \sin\theta
+    \]</div>
+<p>where <span class="math notranslate nohighlight">\(E\)</span> is the total energy of the particle and <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between the particle’s momentum and the beam axis. In collider experiments, <span class="math notranslate nohighlight">\(E_T\)</span> is important because it is less sensitive to the unknown longitudinal motion of the initial state and is often used in event selection and analysis.</p>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can now use vector to get derived quantities</span>
+<span class="c1">#$E_T = E \cdot \sin\theta$</span>
+<span class="n">mu1_vector</span><span class="o">.</span><span class="n">Et</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">mu1_vector.mt</span></code> gives you the <strong>transverse mass</strong> (<span class="math notranslate nohighlight">\(m_T\)</span>) which is a quantity used to describe the mass of a particle or system as projected onto the plane perpendicular to the beam (the transverse plane). It is especially useful in collider experiments where the longitudinal momentum (along the beam axis) is not fully known or is less relevant. For a single particle, the transverse mass is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+    m_T = \sqrt{E^2 - p_z^2}
+    \]</div>
+<p>where <span class="math notranslate nohighlight">\(E\)</span> is the total energy of the particle, and <span class="math notranslate nohighlight">\(p_z\)</span> is the component of the particle’s momentum along the beam (z) axis. The transverse mass represents the minimum possible invariant mass the particle could have, given its energy and longitudinal momentum. It is often used in analyses involving missing energy, such as searches for new particles or studies of neutrinos, because it is less sensitive to unknown or unmeasured longitudinal motion.</p>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Another derived quantity</span>
+<span class="c1">#$m_T = \sqrt{E^2 - p_z^2}$</span>
+<span class="n">mu1_vector</span><span class="o">.</span><span class="n">mt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">mu1_vector.deltaR()</span></code>, given another 4-momentum or array of 4-momentums, computes the quantity <span class="math notranslate nohighlight">\(\Delta R\)</span> which a measure of the separation between two particles in the detector, combining their differences in pseudorapidity (<span class="math notranslate nohighlight">\(\eta\)</span>) and azimuthal angle (<span class="math notranslate nohighlight">\(\phi\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[
+    \Delta R = \sqrt{(\Delta \eta)^2 + (\Delta \phi)^2}
+    \]</div>
+<p><span class="math notranslate nohighlight">\(\Delta R\)</span> is used quantify how close two particles are in the detector’s angular coordinates. It is especially important for jet clustering algorithms and for defining isolation criteria.</p>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#$$\Delta R = \sqrt{\Delta\phi^2 + \Delta\eta^2}$$</span>
+<span class="n">mu1_vector</span><span class="o">.</span><span class="n">deltaR</span><span class="p">(</span><span class="n">mu2_vector</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">mu1_vector.tau</span></code> returns the proper time (or “invariant interval”) associated with the vector. Mathematically, <code class="docutils literal notranslate"><span class="pre">vector</span></code> defines it as:</p>
+<div class="math notranslate nohighlight">
+\[
+    \tau = \text{copysign}\left(\sqrt{\left| t^2 - |\vec{p}|^2 \right|},\ t^2 - |\vec{p}|^2 \right)
+    \]</div>
+<p>where <span class="math notranslate nohighlight">\(t\)</span> is the time-like (energy) component, and <span class="math notranslate nohighlight">\(|\vec{p}|\)</span> is the magnitude of the spatial momentum.  For a particle’s 4-momentum, <span class="math notranslate nohighlight">\(\tau\)</span> is related to the particle’s rest mass (for massive particles, <span class="math notranslate nohighlight">\(\tau = m\)</span>). If <span class="math notranslate nohighlight">\(t^2 - |\vec{p}|^2 &gt; 0\)</span>, the interval is “time-like” (as for massive particles); if <span class="math notranslate nohighlight">\(t^2 - |\vec{p}|^2 &lt; 0\)</span>, it is “space-like” (as for virtual particles or spacelike separations). In summary, <code class="docutils literal notranslate"><span class="pre">.tau</span></code> gives you the invariant mass (or proper time) associated with the 4-momentum, taking into account the sign of the interval.</p>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1_vector</span><span class="o">.</span><span class="n">tau</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mu1_vector.to_rhophieta()</span></code> converts each 4-momentum vector in <code class="docutils literal notranslate"><span class="pre">mu1_vector</span></code> to a cylindrical coordinate representation, returning a new array of vectors with the components <span class="math notranslate nohighlight">\(\rho\)</span>, <span class="math notranslate nohighlight">\(\phi\)</span>, <span class="math notranslate nohighlight">\(\eta\)</span>, and <span class="math notranslate nohighlight">\(E\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1_vector</span><span class="o">.</span><span class="n">to_rhophieta</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="awkward-arrays-and-vector">
+<h3>Awkward arrays and Vector<a class="headerlink" href="#awkward-arrays-and-vector" title="Link to this heading">#</a></h3>
+<p>If you do <code class="docutils literal notranslate"><span class="pre">vector.register_awkward()</span></code>, if you name Awkward records “Momentum2D”, “Momentum3D”, or “Momentum4D”, Awkward will recognize this and you will be able to use <code class="docutils literal notranslate"><span class="pre">vector</span></code> methods.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vector</span><span class="o">.</span><span class="n">register_awkward</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">skhep_testdata</span><span class="o">.</span><span class="n">data_path</span><span class="p">(</span><span class="s2">&quot;uproot-HZZ.root&quot;</span><span class="p">))[</span><span class="s2">&quot;events&quot;</span><span class="p">]</span>
+<span class="n">array</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Muon_E&quot;</span><span class="p">,</span> <span class="s2">&quot;Muon_P[xyz]&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muons</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;px&quot;</span><span class="p">:</span> <span class="n">array</span><span class="o">.</span><span class="n">Muon_Px</span><span class="p">,</span> 
+        <span class="s2">&quot;py&quot;</span><span class="p">:</span> <span class="n">array</span><span class="o">.</span><span class="n">Muon_Py</span><span class="p">,</span> 
+        <span class="s2">&quot;pz&quot;</span><span class="p">:</span> <span class="n">array</span><span class="o">.</span><span class="n">Muon_Pz</span><span class="p">,</span> 
+        <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="n">array</span><span class="o">.</span><span class="n">Muon_E</span>
+    <span class="p">},</span> <span class="n">with_name</span><span class="o">=</span><span class="s2">&quot;Momentum4D&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">muons</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span> <span class="o">+</span> <span class="n">mu2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span><span class="o">.</span><span class="n">deltaR</span><span class="p">(</span><span class="n">mu2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muons</span><span class="o">.</span><span class="n">to_rhophieta</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span><span class="o">.</span><span class="n">p</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Now that you know how to use vector, try making the dimuon mass spectrum again, but now only include the mass of muon pairs which are close in <span class="math notranslate nohighlight">\(\eta\)</span>-<span class="math notranslate nohighlight">\(\phi\)</span> space. You may use the thresholds <span class="math notranslate nohighlight">\(\Delta R &lt; 0.4\)</span> and <span class="math notranslate nohighlight">\(\Delta R &lt; 0.8\)</span> and see if it makes a significant difference.</p>
+</section>
+</section>
+<section id="hist">
+<h2>Hist<a class="headerlink" href="#hist" title="Link to this heading">#</a></h2>
+<section id="universal-histogram-indexing-uhi">
+<h3>Universal Histogram Indexing (UHI)<a class="headerlink" href="#universal-histogram-indexing-uhi" title="Link to this heading">#</a></h3>
+<p>This indexing system is being developed within Scikit-HEP in order to standardize what it means to do array-like slices for histograms. Let’s first load data to use in our examples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">skhep_testdata</span><span class="o">.</span><span class="n">data_path</span><span class="p">(</span><span class="s2">&quot;uproot-Zmumu.root&quot;</span><span class="p">))[</span><span class="s2">&quot;events&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">arrays</span><span class="p">()</span>
+<span class="n">data</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Lets now make a 1D histogram of the mass.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">hist</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span><span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mass&quot;</span><span class="p">))</span>
+<span class="n">h</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">])</span>
+<span class="n">h</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Firstly, integer slices select a range of bins.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Selecting from bin 10 to bin 110</span>
+<span class="n">h</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">110</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we want to slice by coordinate value, we can just include a <code class="docutils literal notranslate"><span class="pre">j</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Slicing the histogram to get from coordinate 90 to the end</span>
+<span class="n">h</span><span class="p">[</span><span class="mi">90</span><span class="n">j</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we want to rebin by a certain factor, it can be done also through slicing syntax.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Selecting all bins and then rebinning by a factor of 5</span>
+<span class="n">h</span><span class="p">[::</span><span class="mi">20</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And you can sum over a range by doing the following.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Slicing from coordinate 90 to 100 and the summing</span>
+<span class="n">h</span><span class="p">[</span><span class="mi">90</span><span class="n">j</span><span class="p">:</span><span class="mi">100</span><span class="n">j</span><span class="p">:</span><span class="nb">sum</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="multi-dimensional-histograms">
+<h2>Multi-dimensional histograms<a class="headerlink" href="#multi-dimensional-histograms" title="Link to this heading">#</a></h2>
+<p>A powerful feature of <code class="docutils literal notranslate"><span class="pre">hist</span></code> is that it allows you to handle histograms with many dimensions (even more than the amount you could plot!).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">uproot</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hist</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">awkward</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ak</span>
+
+<span class="n">picodst</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+    <span class="s2">&quot;https://pivarski-princeton.s3.amazonaws.com/pythia_ppZee_run17emb.picoDst.root:PicoDst&quot;</span>
+<span class="p">)</span>
+
+<span class="n">vertexhist</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">Hist</span><span class="p">(</span>
+    <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">),</span>
+    <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">),</span>
+    <span class="n">hist</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">Regular</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="o">-</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">vertex_data</span> <span class="o">=</span> <span class="n">picodst</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">filter_name</span><span class="o">=</span><span class="s2">&quot;*mPrimaryVertex[XYZ]&quot;</span><span class="p">)</span>
+
+<span class="n">vertexhist</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span>
+    <span class="n">ak</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">vertex_data</span><span class="p">[</span><span class="s2">&quot;Event.mPrimaryVertexX&quot;</span><span class="p">]),</span>
+    <span class="n">ak</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">vertex_data</span><span class="p">[</span><span class="s2">&quot;Event.mPrimaryVertexY&quot;</span><span class="p">]),</span>
+    <span class="n">ak</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">vertex_data</span><span class="p">[</span><span class="s2">&quot;Event.mPrimaryVertexZ&quot;</span><span class="p">]),</span>
+<span class="p">)</span>
+
+<span class="n">vertexhist</span><span class="p">[:,</span> <span class="p">:,</span> <span class="nb">sum</span><span class="p">]</span><span class="o">.</span><span class="n">plot2d_full</span><span class="p">()</span>
+<span class="n">vertexhist</span><span class="p">[</span><span class="o">-</span><span class="mf">0.25</span><span class="n">j</span><span class="p">:</span><span class="mf">0.25</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="n">j</span><span class="p">:</span><span class="mf">0.25</span><span class="n">j</span><span class="p">,</span> <span class="nb">sum</span><span class="p">]</span><span class="o">.</span><span class="n">plot2d_full</span><span class="p">()</span>
+<span class="n">vertexhist</span><span class="p">[</span><span class="nb">sum</span><span class="p">,</span> <span class="nb">sum</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">vertexhist</span><span class="p">[</span><span class="o">-</span><span class="mf">0.25</span><span class="n">j</span><span class="p">:</span><span class="mf">0.25</span><span class="n">j</span><span class="p">:</span><span class="nb">sum</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="n">j</span><span class="p">:</span><span class="mf">0.25</span><span class="n">j</span><span class="p">:</span><span class="nb">sum</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise</strong>: Using the <span class="math notranslate nohighlight">\(Z \to \mu\mu\)</span> data we downoaded before, plot a 2d histogram of eta vs phi of the muons. Explain what you are looking at in the histogram. (Hint: Refer back to the Figure of the CMS coordinate system)</p>
 </section>
 </section>
 
@@ -634,7 +852,7 @@ $<span class="math notranslate nohighlight">\(
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">CoDaS-HEP Columnar Data Analysis, hands-on project workbook</p>
+        <p class="prev-next-title">Project: Discover the Higgs!</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -654,9 +872,15 @@ $<span class="math notranslate nohighlight">\(
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-dimension-histogram">Single Dimension Histogram</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-dimension-histograms">Multiple Dimension Histograms</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vectors">Vectors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vectors">Vectors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#awkward-arrays-and-vector">Awkward arrays and Vector</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hist">Hist</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#universal-histogram-indexing-uhi">Universal Histogram Indexing (UHI)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-dimensional-histograms">Multi-dimensional histograms</a></li>
 </ul>
   </nav></div>
 
