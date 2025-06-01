@@ -691,7 +691,10 @@ document.write(`
 </div>
 </div>
 </div>
-<p><strong>Exercise:</strong> The <code class="docutils literal notranslate"><span class="pre">dimuon</span></code> array we constructed to reconstruct the mass only has a single filter applied to it which makes sure there are exactly two muons in each event. Why is this a problem? What other things might we want to ensure from the muons that we will use to reconstruct the mass of <span class="math notranslate nohighlight">\(A\)</span> particle?</p>
+<div class="exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dimuon</span></code> array we constructed to reconstruct the mass only has a single filter applied to it which makes sure there are exactly two muons in each event. Why is this a problem? What other things might we want to ensure from the muons that we will use to reconstruct the mass of <span class="math notranslate nohighlight">\(A\)</span> particle?</p>
+</div>
 <p>The raw data for the reconstructed mass is difficult to interpret without an effective way to visualize it. One of the most common tools in a high energy physicist’s toolkit is the histogram. Histograms display the frequency of data values within specified ranges (bins). This allows us to see the distribution and identify features such as peaks or tails in the data and will make it much easier for us to understand the underlying physics represented by the reconstructed mass values.</p>
 <p>To make the histogram, we will use the Hist library, one of the many tools offered by Scikit-HEP. This library offers a user-friendly API for the Boost-histogram Python library which offers a highly efficient and flexible histogramming framework. You can find detailed information about this libarry in the documentation, which you can access through this link: <a class="reference external" href="https://hist.readthedocs.io/en/latest/user-guide/axes.html">link</a>.</p>
 <p>In addition, to easily make our plot look pretty and to follow the conventions used in HEP publications, we will use the <code class="docutils literal notranslate"><span class="pre">mplhep</span></code> library, also from Scikit-HEP. This library provides convenient plotting styles and functions for HEP data, making it straightforward to produce publication-quality figures that match the look and feel of experiments like CMS or ATLAS. By combining <code class="docutils literal notranslate"><span class="pre">Hist</span></code> for efficient histogramming and <code class="docutils literal notranslate"><span class="pre">mplhep</span></code> for styling, we can quickly generate insightful and professional plots of our reconstructed mass distributions.</p>
@@ -860,12 +863,15 @@ document.write(`
 <p><span class="caption-number">Fig. 7 </span><span class="caption-text">Dimuon mass spectrum</span><a class="headerlink" href="#dimuon-spectrum" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p><strong>Exercise</strong>: Take the non-logarithmic version of the dimuon spectrum histogram plot we made and modify it by changing the following three things:</p>
+<div class="exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Take the non-logarithmic version of the dimuon spectrum histogram plot we made and modify it by changing the following three things:</p>
 <ul class="simple">
 <li><p>Change the color and style of the histogram line.</p></li>
 <li><p>Add grid lines to the plot for better readability.</p></li>
 <li><p>Adjust the x-axis range to focus on the region around the Z boson peak (e.g., 60 to 120 GeV).</p></li>
 </ul>
+</div>
 </section>
 </section>
 

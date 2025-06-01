@@ -753,7 +753,10 @@ The most common types that are used as keys that obey these requirements are <co
 </div>
 </div>
 </div>
-<p><strong>Exercise:</strong> Slice the previous 3D array so that you are left with the elements highlighted in the following figure.</p>
+<div class="exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Slice the previous 3D array so that you are left with the elements highlighted in the following figure.</p>
+</div>
 <figure class="align-default" id="arrs3d-2">
 <a class="reference internal image-reference" href="../_images/array3d-highlight2.png"><img alt="../_images/array3d-highlight2.png" src="../_images/array3d-highlight2.png" style="height: 150px;" />
 </a>
@@ -813,7 +816,10 @@ The most common types that are used as keys that obey these requirements are <co
 </div>
 </div>
 </div>
-<p><strong>Quiz:</strong> Why wouldn’t making <code class="docutils literal notranslate"><span class="pre">event_data</span></code> an array itself help?</p>
+<div class="exercise admonition">
+<p class="admonition-title">Quiz</p>
+<p>Why wouldn’t making <code class="docutils literal notranslate"><span class="pre">event_data</span></code> an array itself help?</p>
+</div>
 <p>Another serious limitation is with NumPy itself, which only allows us to construct homogeneous multi-dimensional arrays. However, in HEP, data is often <em>not</em> homogeneous. For instance, if you want an array where each element is an array with the <span class="math notranslate nohighlight">\(p_T\)</span> of the muons in a certain event, because the amount of muons can be different for each event, you would be required to make a jagged array (assuming you want efficient computations)! NumPy does not like this…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

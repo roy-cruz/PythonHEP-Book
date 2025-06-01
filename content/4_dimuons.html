@@ -444,13 +444,13 @@ document.write(`
 </div>
 </div>
 <p>Before continuing, keep in mind that the process of interest is the decay of the <span class="math notranslate nohighlight">\(Z\)</span> into a pair of leptons. The Feynman diagram for this can be seen below.</p>
-<div class="highlight-{figure}./assets/Zdimuon.png notranslate"><div class="highlight"><pre><span></span>---
-height: 350px
-name: Z2mumu
----
-$Z\to\mu\mu$ Feynman diagram
-</pre></div>
-</div>
+<figure class="align-default" id="z2mumu">
+<a class="reference internal image-reference" href="../_images/Zdimuon.png"><img alt="../_images/Zdimuon.png" src="../_images/Zdimuon.png" style="height: 350px;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text"><span class="math notranslate nohighlight">\(Z\to\mu\mu\)</span> Feynman diagram</span><a class="headerlink" href="#z2mumu" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 <p>Since we don’t know where the muons originated from and whether or not it came from the decay of a <span class="math notranslate nohighlight">\(Z\)</span>, we will find all possible combinations of two muons in each event. For this we use <code class="docutils literal notranslate"><span class="pre">ak.combinations()</span></code>. One of the convenient things with this function is that if there is less than 2 muons in an event, and thus its impossible to make a combination of two muons, the array of pairs for that event is empty (i.e. its “filtered” out).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -597,7 +597,10 @@ $Z\to\mu\mu$ Feynman diagram
 </div>
 </div>
 </div>
-<p><strong>Exercises</strong>: Instead of maximizing the mass of the dimuon we choose from each event, try selecting the mass closest to the known mass of the <span class="math notranslate nohighlight">\(Z\)</span> boson. (Hint: look up <code class="docutils literal notranslate"><span class="pre">ak.argmin</span></code> in Google)</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Instead of maximizing the mass of the dimuon we choose from each event, try selecting the mass closest to the known mass of the <span class="math notranslate nohighlight">\(Z\)</span> boson. (Hint: look up <code class="docutils literal notranslate"><span class="pre">ak.argmin</span></code> in Google)</p>
+</div>
 </section>
 </section>
 

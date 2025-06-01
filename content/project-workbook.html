@@ -383,7 +383,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#libraries">Libraries</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-setup">Data Setup</a></li>
@@ -391,7 +390,9 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-4-leptons-of-the-same-flavor">Higgs mass peak: 4 leptons of the same flavor</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#charge-based-collections">Charge-based collections</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-the-h-zz-22e-final-state">Higgs mass peak: the H → ZZ → 2μ2e final state</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-the-h-zz-22e-final-state">Higgs mass peak: the H → ZZ → 2μ2e final state</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-on-shell-z-in-the-22e-final-state">Select on-shell Z in the 2μ2e final state</a></li>
 </ul>
 </li>
@@ -413,10 +414,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="project-discover-the-higgs">
 <h1>Project: Discover the Higgs!<a class="headerlink" href="#project-discover-the-higgs" title="Link to this heading">#</a></h1>
 <p>CREDIT: This notebook was developed by Jim Pivarski and Ioana Ifrim for the <a class="reference external" href="https://indico.cern.ch/event/1287965/timetable/#41-columnar-data-analysis">columnar data analysis</a> tutorial, presented at CoDaS-HEP on July 20, 2023. For full material, please visit please visit this <a class="reference external" href="https://github.com/ioanaif/columnar-data-analysis-codas-hep-2023">repository</a>.</p>
-<p>Gather into groups of 2 or 3 to work on the problems posed in the rest of this notebook. Mentors will be available to answer questions and provide hints.</p>
-<section id="background">
-<h2>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
-</section>
+<p>Gather into groups of 2 or 3 to work on the problems posed in the rest of this notebook.</p>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
 <section id="libraries">
@@ -428,7 +426,6 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">awkward</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ak</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 <span class="n">vector</span><span class="o">.</span><span class="n">register_awkward</span><span class="p">()</span>
 </pre></div>
@@ -464,7 +461,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>For future convenience, and to be able to use <code class="docutils literal notranslate"><span class="pre">vector</span></code>, we will reformat the loaded data into a more manageable format. Note that this is not neccesary, but is just to make life a bit simpler.</p>
+<p>For future convenience, and to be able to use <code class="docutils literal notranslate"><span class="pre">vector</span></code> more easily, we will reformat the loaded data into a more manageable format. Note that this is not neccesary, but is just to make life a bit simpler.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">zip</span><span class="p">({</span>
@@ -519,23 +516,20 @@ document.write(`
 </section>
 <section id="higgs-mass-peak-4-leptons-of-the-same-flavor">
 <h2>Higgs mass peak: 4 leptons of the same flavor<a class="headerlink" href="#higgs-mass-peak-4-leptons-of-the-same-flavor" title="Link to this heading">#</a></h2>
-<p>Instead of a Z mass peak, formed with 2 muons (or 2 electrons), draw a Higgs mass peak with 4 muons (or 4 electrons).</p>
-<p>No need for any cuts, yet. Focus only on the combinatorics.</p>
-<p><strong>Hint:</strong> look at the <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.combinations.html">ak.combinations</a> documentation to find the argument you need to change.</p>
-<p><strong>Hint:</strong> do it in small steps! That’s what an interactive environment is for.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your work goes here. Make new cells if you need to!</span>
-</pre></div>
-</div>
-</div>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Instead of a Z mass peak, formed with 2 muons (or 2 electrons), draw a Higgs mass peak with 4 muons (or 4 electrons). No need for any cuts, yet. Focus only on the combinatorics.</p>
+<p><strong>Hint:</strong> Look at the <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.combinations.html">ak.combinations</a> documentation to find the argument you need to change.</p>
+<p><strong>Hint:</strong> Do it in small steps! That’s what an interactive environment is for.</p>
 </div>
 <p>Should look like:</p>
-<p><img alt="image.png" src="content/attachment:eb9d1a70-c990-49b5-9c3f-98afcaf4478c.png" /></p>
+<figure class="align-default" id="wbimg1">
+<a class="reference internal image-reference" href="../_images/wbimg1.png"><img alt="../_images/wbimg1.png" src="../_images/wbimg1.png" style="height: 350px;" />
+</a>
+</figure>
 <section id="charge-based-collections">
 <h3>Charge-based collections<a class="headerlink" href="#charge-based-collections" title="Link to this heading">#</a></h3>
-<p>Because of the way that particles are measured and reconstructed, different particle types (electron versus muon) are in different collections, but different charges are not.</p>
-<p>But physically, charge is a quantum number just like flavor (particle type), and it can be convenient to put different charges into different collections.</p>
+<p>Because of the way that particles are measured and reconstructed, different particle types (electron versus muon) are in different collections, but different charges are not. But physically, charge is a quantum number just like flavor (particle type), and it can be convenient to put different charges into different collections.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muons_plus</span>  <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">muons</span><span class="p">[</span><span class="n">events</span><span class="o">.</span><span class="n">muons</span><span class="o">.</span><span class="n">charge</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
@@ -546,8 +540,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Now we can make opposite-sign Z peaks without applying a cut to the combinations.</p>
-<p>Also, the <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.combinations.html">ak.combinations</a> problem (picking <span class="math notranslate nohighlight">\(n\)</span> items from a single collection) has become an <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.cartesian.html">ak.cartesian</a> problem (finding all pairs of items drawn from different collections).</p>
+<p>Now we can make opposite-sign Z peaks without applying a cut to the combinations. Also, the <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.combinations.html">ak.combinations</a> problem (picking <span class="math notranslate nohighlight">\(n\)</span> items from a single collection) has become an <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.cartesian.html">ak.cartesian</a> problem (finding all pairs of items drawn from different collections).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">cartesian</span><span class="p">((</span><span class="n">muons_plus</span><span class="p">,</span> <span class="n">muons_minus</span><span class="p">)))</span>
@@ -558,24 +551,23 @@ document.write(`
 </div>
 <p>(This section doesn’t have any questions; it’s to set things up for the next section.)</p>
 </section>
+</section>
 <section id="higgs-mass-peak-the-h-zz-22e-final-state">
-<h3>Higgs mass peak: the H → ZZ → 2μ2e final state<a class="headerlink" href="#higgs-mass-peak-the-h-zz-22e-final-state" title="Link to this heading">#</a></h3>
+<h2>Higgs mass peak: the H → ZZ → 2μ2e final state<a class="headerlink" href="#higgs-mass-peak-the-h-zz-22e-final-state" title="Link to this heading">#</a></h2>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
 <p>Now that you have <code class="docutils literal notranslate"><span class="pre">muons_plus</span></code>, <code class="docutils literal notranslate"><span class="pre">muons_minus</span></code>, <code class="docutils literal notranslate"><span class="pre">electrons_plus</span></code>, and <code class="docutils literal notranslate"><span class="pre">electrons_minus</span></code>, how would you make a Higgs mass peak for decays into 2 muons and 2 electrons?</p>
 <p><strong>Hint:</strong> <a class="reference external" href="https://awkward-array.readthedocs.io/en/latest/_auto/ak.cartesian.html">ak.cartesian</a> can take more than two input collections.</p>
-<p><strong>Hint:</strong> still no need for cuts, thanks to the input collections already having the charge-cut applied.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your work goes here. Make new cells if you need to!</span>
-</pre></div>
-</div>
-</div>
+<p><strong>Hint:</strong> Still no need for cuts, thanks to the input collections already having the charge-cut applied.</p>
 </div>
 <p>Should look like:</p>
-<p><img alt="image.png" src="content/attachment:1b990144-5727-4197-a3e9-3723a853a454.png" /></p>
-</section>
+<figure class="align-default" id="wbimg2">
+<a class="reference internal image-reference" href="../_images/wbimg2.png"><img alt="../_images/wbimg2.png" src="../_images/wbimg2.png" style="height: 350px;" />
+</a>
+</figure>
 <section id="select-on-shell-z-in-the-22e-final-state">
 <h3>Select on-shell Z in the 2μ2e final state<a class="headerlink" href="#select-on-shell-z-in-the-22e-final-state" title="Link to this heading">#</a></h3>
-<p>In H → ZZ, one of the two Z bosons will usually be close to its “on-shell” mass of 91 GeV.</p>
+<p>In <span class="math notranslate nohighlight">\(H \to ZZ\)</span>, one of the two <span class="math notranslate nohighlight">\(Z\)</span> bosons will usually be close to its “on-shell” mass of 91 GeV.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">particle</span>
@@ -618,7 +610,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>When this is close enough—let’s say 20 GeV—we can call a given dimuon pair to be “on shell.”</p>
+<p>When this is close enough, maybe let’s say 20 GeV, we can call a given dimuon pair to be “on shell.”</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">onshell_mumu</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="n">mu1</span> <span class="o">+</span> <span class="n">mu2</span><span class="p">)</span><span class="o">.</span><span class="n">mass</span> <span class="o">-</span> <span class="n">ZMASS</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">20</span>
@@ -634,34 +626,30 @@ document.write(`
 </div>
 </div>
 </div>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
 <p>In this section, make another 2μ2e mass peak in which <em>either</em> the 2μ is on-shell <em>or</em> the 2e is on-shell.</p>
 <p>(That’s an “inclusive or”: having both be close to 91 GeV is allowed.)</p>
 <p><strong>Hint:</strong> You’ll have to compute the Z mass constraint from muons and electrons in a 4-way Cartesian product, not just the 2 muons as in my example above.</p>
 <p><strong>Hint:</strong> To make logical combinations of cuts, use <code class="docutils literal notranslate"><span class="pre">|</span></code> for “or” and <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> for “and”. Also, put parentheses around any comparisons: e.g. <code class="docutils literal notranslate"><span class="pre">is_good</span> <span class="pre">&amp;</span> <span class="pre">((1</span> <span class="pre">&lt;</span> <span class="pre">x)</span> <span class="pre">|</span> <span class="pre">(x</span> <span class="pre">&lt;</span> <span class="pre">2))</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your work goes here. Make new cells if you need to!</span>
-</pre></div>
-</div>
-</div>
 </div>
 <p>Should look like:</p>
-<p><img alt="image.png" src="content/attachment:c1dbdd8a-bb09-479b-97c7-3037ec7c0930.png" /></p>
+<figure class="align-default" id="wbimg3">
+<a class="reference internal image-reference" href="../_images/wbimg3.png"><img alt="../_images/wbimg3.png" src="../_images/wbimg3.png" style="height: 350px;" />
+</a>
+</figure>
 </section>
 </section>
 <section id="select-on-shell-z-in-the-4-final-state">
 <h2>Select on-shell Z in the 4μ final state<a class="headerlink" href="#select-on-shell-z-in-the-4-final-state" title="Link to this heading">#</a></h2>
-<p>Addressing Z boson properties in the 2μ2e case is easier than in the 4μ or 4e cases because with each (μ⁺, μ⁻, e⁺, e⁻) quad-tuple, there is only one way to identify each of the two Z bosons: Zᵤᵤ → μ⁺μ⁻ and Zₑₑ → e⁺e⁻.</p>
-<p>In a same-flavor final state, you have quad-tuples like (μ⁺₁, μ⁻₁, μ⁺₂, μ⁻₂).</p>
+<p>Addressing Z boson properties in the 2<span class="math notranslate nohighlight">\(\mu\)</span>2<span class="math notranslate nohighlight">\(e\)</span> case is easier than in the 4<span class="math notranslate nohighlight">\(\mu\)</span> or 4<span class="math notranslate nohighlight">\(e\)</span> cases because with each (<span class="math notranslate nohighlight">\(\mu^+\)</span>, <span class="math notranslate nohighlight">\(\mu^-\)</span>, <span class="math notranslate nohighlight">\(e^+\)</span>, <span class="math notranslate nohighlight">\(e^-\)</span>) quad-tuple, there is only one way to identify each of the two <span class="math notranslate nohighlight">\(Z\)</span> bosons: <span class="math notranslate nohighlight">\(Z_{\mu\mu}\to\mu^+\mu^-\)</span> and <span class="math notranslate nohighlight">\(Z_{ee}\to e^+e^-\)</span>. In a same-flavor final state, you have quad-tuples like (<span class="math notranslate nohighlight">\(\mu^+_1\)</span>, <span class="math notranslate nohighlight">\(\mu^-_1\)</span>, <span class="math notranslate nohighlight">\(\mu^+_2\)</span>, <span class="math notranslate nohighlight">\(\mu^-_2\)</span>).</p>
 <p>The possible decays are</p>
 <ul class="simple">
-<li><p>Z₁₁ → μ⁺₁, μ⁻₁ and Z₂₂ → μ⁺₂, μ⁻₂</p></li>
-<li><p>Z₁₂ → μ⁺₁, μ⁻₂ and Z₂₁ → μ⁺₂, μ⁻₁</p></li>
+<li><p><span class="math notranslate nohighlight">\(Z_{11} \to \mu^+_1\mu^-_1\)</span> and <span class="math notranslate nohighlight">\(Z_{22}\to \mu^+_2,\mu^-_2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(Z_{12} \to \mu^+_1\mu^-_2\)</span> and <span class="math notranslate nohighlight">\(Z_{21}\to \mu^+_2,\mu^-_1\)</span></p></li>
 </ul>
 <p>and within each of the two possibilities, only one of the Z bosons will be on-shell. (The Higgs doesn’t have enough mass for both to be on-shell.)</p>
-<p>To apply Z cuts in this case, we need to apply a combinatoric primitive to the result of a combinatoric primitive: nested combinatorics.</p>
-<p>First, from the <code class="docutils literal notranslate"><span class="pre">muons_plus</span></code> collection, we draw two distinct muons and call them <code class="docutils literal notranslate"><span class="pre">muplus1</span></code> and <code class="docutils literal notranslate"><span class="pre">muplus2</span></code>.</p>
-<p>Then, from the <code class="docutils literal notranslate"><span class="pre">muons_minus</span></code> collection, we draw two distinct muons and call them <code class="docutils literal notranslate"><span class="pre">muminus1</span></code> and <code class="docutils literal notranslate"><span class="pre">muminus2</span></code>.</p>
+<p>To apply Z cuts in this case, we need to apply a combinatoric primitive to the result of a combinatoric primitive: nested combinatorics. First, from the <code class="docutils literal notranslate"><span class="pre">muons_plus</span></code> collection, we draw two distinct muons and call them <code class="docutils literal notranslate"><span class="pre">muplus1</span></code> and <code class="docutils literal notranslate"><span class="pre">muplus2</span></code>. Then, from the <code class="docutils literal notranslate"><span class="pre">muons_minus</span></code> collection, we draw two distinct muons and call them <code class="docutils literal notranslate"><span class="pre">muminus1</span></code> and <code class="docutils literal notranslate"><span class="pre">muminus2</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">muplus1</span><span class="p">,</span> <span class="n">muplus2</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">ak</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">muons_plus</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
@@ -759,7 +747,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Now let’s look at a Z → 2μ mass plot of “11” in which “11” is the closest to being on-shell.</p>
+<p>Now let’s look at a <span class="math notranslate nohighlight">\(Z\to 2\mu\)</span> mass plot of “11” in which “11” is the closest to being on-shell.</p>
 <p>Naturally, there’s a more pronounced peak.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -772,7 +760,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Now let’s look at H → ZZ → 4μ for</p>
+<p>Now let’s look at <span class="math notranslate nohighlight">\(H \to ZZ\to 4\mu\)</span> for</p>
 <ul class="simple">
 <li><p>“11” and “22” if “11” is on-shell or “22” is on-shell</p></li>
 <li><p>“12” and “21” if “12” is on-shell or “21” is on-shell</p></li>
@@ -797,16 +785,15 @@ document.write(`
 </div>
 </div>
 </div>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
 <p>Now re-make the above plot, but require whichever muon pair is closest to being on-shell to be within 20 GeV of it.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your work goes here. Make new cells if you need to!</span>
-</pre></div>
-</div>
-</div>
 </div>
 <p>Should look like:</p>
-<p><img alt="image.png" src="content/attachment:532c2bed-fb68-4d0f-872d-b35b43b1c51c.png" /></p>
+<figure class="align-default" id="wbimg4">
+<a class="reference internal image-reference" href="../_images/wbimg4.png"><img alt="../_images/wbimg4.png" src="../_images/wbimg4.png" style="height: 350px;" />
+</a>
+</figure>
 <p>(And compare that to the 4 muon mass without any Z mass constraints!)</p>
 <section id="commentary">
 <h3>Commentary<a class="headerlink" href="#commentary" title="Link to this heading">#</a></h3>
@@ -873,7 +860,6 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#libraries">Libraries</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-setup">Data Setup</a></li>
@@ -881,7 +867,9 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-4-leptons-of-the-same-flavor">Higgs mass peak: 4 leptons of the same flavor</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#charge-based-collections">Charge-based collections</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-the-h-zz-22e-final-state">Higgs mass peak: the H → ZZ → 2μ2e final state</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#higgs-mass-peak-the-h-zz-22e-final-state">Higgs mass peak: the H → ZZ → 2μ2e final state</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-on-shell-z-in-the-22e-final-state">Select on-shell Z in the 2μ2e final state</a></li>
 </ul>
 </li>
